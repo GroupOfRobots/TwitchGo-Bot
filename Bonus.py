@@ -28,3 +28,6 @@ class Bonus:
 
     def set_name(self, new_name: str) -> None:
         self._name = new_name
+
+    def __str__(self) -> str:
+        return f'{self._name:14}{self._position}'
