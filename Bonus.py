@@ -1,8 +1,9 @@
 class Bonus:
-    def __init__(self, bonus_points: int, position: tuple, tex_file="") -> None:
+    def __init__(self, name: str, bonus_points: int, position: tuple, tex_file="") -> None:
         self._bonus_points = bonus_points
         self._texture_path = tex_file
         self._position = position
+        self._name = name
 
     def bonus_points(self) -> int:
         return self._bonus_points
@@ -21,3 +22,9 @@ class Bonus:
 
     def set_position(self, new_position: tuple) -> None:
         self._position = new_position
+
+    def name(self) -> str:
+        return self._name
+
+    def set_name(self, new_name: str) -> None:
+        self._name = new_name
