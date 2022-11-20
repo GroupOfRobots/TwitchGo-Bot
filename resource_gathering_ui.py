@@ -36,21 +36,76 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.resources_list)
 
-        self.resources_view = QScrollArea(self.centralwidget)
-        self.resources_view.setObjectName(u"resources_view")
-        self.resources_view.setWidgetResizable(True)
-        self.scrollAreaWidgetContents = QWidget()
-        self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 385, 434))
-        self.resources_view.setWidget(self.scrollAreaWidgetContents)
+        self.resource_view = QStackedWidget(self.centralwidget)
+        self.resource_view.setObjectName(u"resource_view")
+        self.page = QWidget()
+        self.page.setObjectName(u"page")
+        self.verticalLayout_2 = QVBoxLayout(self.page)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.choose_resource = QLabel(self.page)
+        self.choose_resource.setObjectName(u"choose_resource")
+        self.choose_resource.setAlignment(Qt.AlignCenter)
 
-        self.horizontalLayout.addWidget(self.resources_view)
+        self.verticalLayout_2.addWidget(self.choose_resource)
+
+        self.resource_view.addWidget(self.page)
+        self.page_2 = QWidget()
+        self.page_2.setObjectName(u"page_2")
+        self.verticalLayout_3 = QVBoxLayout(self.page_2)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.resource_name = QLabel(self.page_2)
+        self.resource_name.setObjectName(u"resource_name")
+
+        self.verticalLayout_3.addWidget(self.resource_name)
+
+        self.resource_description = QLabel(self.page_2)
+        self.resource_description.setObjectName(u"resource_description")
+
+        self.verticalLayout_3.addWidget(self.resource_description)
+
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.add_resource_to_first = QPushButton(self.page_2)
+        self.add_resource_to_first.setObjectName(u"add_resource_to_first")
+        palette = QPalette()
+        brush = QBrush(QColor(255, 0, 0, 255))
+        brush.setStyle(Qt.SolidPattern)
+        palette.setBrush(QPalette.Active, QPalette.Button, brush)
+        palette.setBrush(QPalette.Inactive, QPalette.Button, brush)
+        palette.setBrush(QPalette.Disabled, QPalette.Button, brush)
+        self.add_resource_to_first.setPalette(palette)
+        self.add_resource_to_first.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.horizontalLayout_2.addWidget(self.add_resource_to_first)
+
+        self.add_resource_to_second = QPushButton(self.page_2)
+        self.add_resource_to_second.setObjectName(u"add_resource_to_second")
+        palette1 = QPalette()
+        brush1 = QBrush(QColor(0, 85, 255, 255))
+        brush1.setStyle(Qt.SolidPattern)
+        palette1.setBrush(QPalette.Active, QPalette.Button, brush1)
+        palette1.setBrush(QPalette.Inactive, QPalette.Button, brush1)
+        palette1.setBrush(QPalette.Disabled, QPalette.Button, brush1)
+        self.add_resource_to_second.setPalette(palette1)
+        self.add_resource_to_second.setCursor(QCursor(Qt.SizeBDiagCursor))
+
+        self.horizontalLayout_2.addWidget(self.add_resource_to_second)
+
+
+        self.verticalLayout_3.addLayout(self.horizontalLayout_2)
+
+        self.resource_view.addWidget(self.page_2)
+
+        self.horizontalLayout.addWidget(self.resource_view)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.score = QLabel(self.centralwidget)
         self.score.setObjectName(u"score")
+        font = QFont()
+        font.setPointSize(20)
+        self.score.setFont(font)
         self.score.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout.addWidget(self.score)
@@ -59,17 +114,15 @@ class Ui_MainWindow(object):
         self.gridLayout.setObjectName(u"gridLayout")
         self.add_goal_second = QPushButton(self.centralwidget)
         self.add_goal_second.setObjectName(u"add_goal_second")
-        palette = QPalette()
-        brush = QBrush(QColor(0, 85, 255, 255))
-        brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Active, QPalette.Button, brush)
-        palette.setBrush(QPalette.Inactive, QPalette.Button, brush)
-        palette.setBrush(QPalette.Disabled, QPalette.Button, brush)
-        self.add_goal_second.setPalette(palette)
-        font = QFont()
-        font.setBold(False)
-        font.setWeight(50)
-        self.add_goal_second.setFont(font)
+        palette2 = QPalette()
+        palette2.setBrush(QPalette.Active, QPalette.Button, brush1)
+        palette2.setBrush(QPalette.Inactive, QPalette.Button, brush1)
+        palette2.setBrush(QPalette.Disabled, QPalette.Button, brush1)
+        self.add_goal_second.setPalette(palette2)
+        font1 = QFont()
+        font1.setBold(False)
+        font1.setWeight(50)
+        self.add_goal_second.setFont(font1)
         self.add_goal_second.setCursor(QCursor(Qt.PointingHandCursor))
         self.add_goal_second.setAutoFillBackground(True)
 
@@ -77,35 +130,33 @@ class Ui_MainWindow(object):
 
         self.add_goal_first = QPushButton(self.centralwidget)
         self.add_goal_first.setObjectName(u"add_goal_first")
-        palette1 = QPalette()
-        brush1 = QBrush(QColor(255, 0, 0, 255))
-        brush1.setStyle(Qt.SolidPattern)
-        palette1.setBrush(QPalette.Active, QPalette.Button, brush1)
-        palette1.setBrush(QPalette.Inactive, QPalette.Button, brush1)
-        palette1.setBrush(QPalette.Disabled, QPalette.Button, brush1)
-        self.add_goal_first.setPalette(palette1)
+        palette3 = QPalette()
+        palette3.setBrush(QPalette.Active, QPalette.Button, brush)
+        palette3.setBrush(QPalette.Inactive, QPalette.Button, brush)
+        palette3.setBrush(QPalette.Disabled, QPalette.Button, brush)
+        self.add_goal_first.setPalette(palette3)
         self.add_goal_first.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.gridLayout.addWidget(self.add_goal_first, 0, 0, 1, 1)
 
         self.subtract_goal_first = QPushButton(self.centralwidget)
         self.subtract_goal_first.setObjectName(u"subtract_goal_first")
-        palette2 = QPalette()
-        palette2.setBrush(QPalette.Active, QPalette.Button, brush1)
-        palette2.setBrush(QPalette.Inactive, QPalette.Button, brush1)
-        palette2.setBrush(QPalette.Disabled, QPalette.Button, brush1)
-        self.subtract_goal_first.setPalette(palette2)
+        palette4 = QPalette()
+        palette4.setBrush(QPalette.Active, QPalette.Button, brush)
+        palette4.setBrush(QPalette.Inactive, QPalette.Button, brush)
+        palette4.setBrush(QPalette.Disabled, QPalette.Button, brush)
+        self.subtract_goal_first.setPalette(palette4)
         self.subtract_goal_first.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.gridLayout.addWidget(self.subtract_goal_first, 1, 0, 1, 1)
 
         self.subtract_goal_second = QPushButton(self.centralwidget)
         self.subtract_goal_second.setObjectName(u"subtract_goal_second")
-        palette3 = QPalette()
-        palette3.setBrush(QPalette.Active, QPalette.Button, brush)
-        palette3.setBrush(QPalette.Inactive, QPalette.Button, brush)
-        palette3.setBrush(QPalette.Disabled, QPalette.Button, brush)
-        self.subtract_goal_second.setPalette(palette3)
+        palette5 = QPalette()
+        palette5.setBrush(QPalette.Active, QPalette.Button, brush1)
+        palette5.setBrush(QPalette.Inactive, QPalette.Button, brush1)
+        palette5.setBrush(QPalette.Disabled, QPalette.Button, brush1)
+        self.subtract_goal_second.setPalette(palette5)
         self.subtract_goal_second.setCursor(QCursor(Qt.PointingHandCursor))
 
         self.gridLayout.addWidget(self.subtract_goal_second, 1, 1, 1, 1)
@@ -129,6 +180,9 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
+        self.resource_view.setCurrentIndex(0)
+
+
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
@@ -136,6 +190,11 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.actionAdd_Bonus.setText(QCoreApplication.translate("MainWindow", u"Add Bonus", None))
         self.game_logo.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.choose_resource.setText(QCoreApplication.translate("MainWindow", u"Choose Resource", None))
+        self.resource_name.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.resource_description.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.add_resource_to_first.setText(QCoreApplication.translate("MainWindow", u"Add resource", None))
+        self.add_resource_to_second.setText(QCoreApplication.translate("MainWindow", u"Add resource", None))
         self.score.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.add_goal_second.setText(QCoreApplication.translate("MainWindow", u"Add Goal", None))
         self.add_goal_first.setText(QCoreApplication.translate("MainWindow", u"Add Goal", None))
