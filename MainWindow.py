@@ -1,5 +1,5 @@
 from resource_gathering_ui import Ui_MainWindow
-from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem
+from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QListWidget
 import sys
 from functools import partial
 from Bonus import Bonus
@@ -9,8 +9,8 @@ class MainWindow(QMainWindow):
     def __init__(self, parent=None) -> None:
         super().__init__(parent=parent)
         self._score = (0, 0)
-        self._curent_bonus_first = None
-        self._curent_bonus_second = None
+        self._curent_item_first = None
+        self._curent_item_second = None
         self._bonuses = [Bonus('first bonus', -2, (1, 2)), Bonus('second bonus', 3, (4, 3))]
         self._ui = Ui_MainWindow()
         self._ui.setupUi(self)
@@ -52,8 +52,6 @@ class MainWindow(QMainWindow):
         self._ui.add_resource_to_second.clicked.connect(self._add_curent_bonus_second)
         self._ui.first_t_bonus_list.itemClicked.connect(self._set_up_bonus_view_first)
         self._ui.second_t_bonus_list.itemClicked.connect(self._set_up_bonus_view_second)
-        # self._ui.add_resource_to_first.clicked.connect(self._add_curent_bonus_first)
-        # self._ui.add_resource_to_second.clicked.connect(self._add_curent_bonus_second)
 
     def _add_goal_first(self):
         self._score = (self._score[0]+1, self._score[1])
@@ -74,23 +72,27 @@ class MainWindow(QMainWindow):
             self._ui.score.setText(f'{self._score[0]} - {self._score[1]}')
 
     def _add_curent_bonus_first(self):
-        self._score = (self._score[0]+self._curent_bonus_first.bonus_points(), self._score[1])
+        self._score = (self._score[0]+self._curent_item_first.bonus.bonus_points(), self._score[1])
+        self._ui.second_t_bonus_list.takeItem(self._ui.second_t_bonus_list.row(self._curent_item_first.second_one))
+        self._ui.first_t_bonus_list.takeItem(self._ui.first_t_bonus_list.row(self._curent_item_first))
+        self._bonuses.remove(self._curent_item_first.bonus)
+        self._ui.first_team_bonuses.setCurrentIndex(0)
         self._ui.score.setText(f'{self._score[0]} - {self._score[1]}')
 
     def _add_curent_bonus_second(self):
-        self._score = (self._score[0], self._score[1]+self._curent_bonus_second.bonus_points())
+        self._score = (self._score[0], self._score[1]+self._curent_item_second.bonus.bonus_points())
         self._ui.score.setText(f'{self._score[0]} - {self._score[1]}')
 
     def _set_up_bonus_view_first(self, item):
         self._ui.first_team_bonuses.setCurrentIndex(1)
         bonus = item.bonus
-        self._curent_bonus_first = bonus
+        self._curent_item_first = item
         self._ui.resource_description.setText(self._create_bonus_description(bonus))
 
     def _set_up_bonus_view_second(self, item):
         self._ui.second_team_bonuses.setCurrentIndex(1)
         bonus = item.bonus
-        self._curent_bonus_second = bonus
+        self._curent_item_second = item
         self._ui.resource_description_2.setText(self._create_bonus_description(bonus))
 
     def _create_bonus_description(self, bonus: Bonus):
@@ -110,6 +112,9 @@ class MainWindow(QMainWindow):
         self._ui.go_back_2.clicked.connect(_go_back_second)
 
 
+
+
+
 def gui_main(args):
     app = QApplication(args)
     window = MainWindow()
@@ -119,4 +124,3 @@ def gui_main(args):
 
 if(__name__ == "__main__"):
     gui_main(sys.argv)
-    print('a')
