@@ -58,10 +58,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_5.addWidget(self.resource_name_2)
 
-        self.resource_description_2 = QLabel(self.page_6)
-        self.resource_description_2.setObjectName(u"resource_description_2")
+        self.resource_description = QLabel(self.page_6)
+        self.resource_description.setObjectName(u"resource_description")
 
-        self.verticalLayout_5.addWidget(self.resource_description_2)
+        self.verticalLayout_5.addWidget(self.resource_description)
 
         self.add_resource_to_first = QPushButton(self.page_6)
         self.add_resource_to_first.setObjectName(u"add_resource_to_first")
@@ -112,10 +112,10 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.resource_name)
 
-        self.resource_description = QLabel(self.page_2)
-        self.resource_description.setObjectName(u"resource_description")
+        self.resource_description_2 = QLabel(self.page_2)
+        self.resource_description_2.setObjectName(u"resource_description_2")
 
-        self.verticalLayout_3.addWidget(self.resource_description)
+        self.verticalLayout_3.addWidget(self.resource_description_2)
 
         self.add_resource_to_second = QPushButton(self.page_2)
         self.add_resource_to_second.setObjectName(u"add_resource_to_second")
@@ -221,8 +221,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.first_team_bonuses.setCurrentIndex(0)
-        self.second_team_bonuses.setCurrentIndex(0)
+        self.first_team_bonuses.setCurrentIndex(1)
+        self.second_team_bonuses.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -234,12 +234,12 @@ class Ui_MainWindow(object):
         self.game_logo.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"First Team", None))
         self.resource_name_2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.resource_description_2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.resource_description.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.add_resource_to_first.setText(QCoreApplication.translate("MainWindow", u"Add resource", None))
         self.go_back_1.setText(QCoreApplication.translate("MainWindow", u"Go back", None))
         self.sec_t.setText(QCoreApplication.translate("MainWindow", u"Second Team", None))
         self.resource_name.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.resource_description.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.resource_description_2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.add_resource_to_second.setText(QCoreApplication.translate("MainWindow", u"Add resource", None))
         self.go_back_2.setText(QCoreApplication.translate("MainWindow", u"Go back", None))
         self.score.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
