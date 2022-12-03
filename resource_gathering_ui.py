@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'resource_gathering_ui.ui'
+## Form generated from reading UI file 'resource_gathering_ui_v2.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -31,24 +31,78 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.resources_list = QListWidget(self.centralwidget)
-        self.resources_list.setObjectName(u"resources_list")
+        self.first_team_bonuses = QStackedWidget(self.centralwidget)
+        self.first_team_bonuses.setObjectName(u"first_team_bonuses")
+        self.page_5 = QWidget()
+        self.page_5.setObjectName(u"page_5")
+        self.verticalLayout_4 = QVBoxLayout(self.page_5)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.label = QLabel(self.page_5)
+        self.label.setObjectName(u"label")
+        self.label.setAlignment(Qt.AlignCenter)
 
-        self.horizontalLayout.addWidget(self.resources_list)
+        self.verticalLayout_4.addWidget(self.label)
 
-        self.resource_view = QStackedWidget(self.centralwidget)
-        self.resource_view.setObjectName(u"resource_view")
+        self.first_t_bonus_list = QListWidget(self.page_5)
+        self.first_t_bonus_list.setObjectName(u"first_t_bonus_list")
+
+        self.verticalLayout_4.addWidget(self.first_t_bonus_list)
+
+        self.first_team_bonuses.addWidget(self.page_5)
+        self.page_6 = QWidget()
+        self.page_6.setObjectName(u"page_6")
+        self.verticalLayout_5 = QVBoxLayout(self.page_6)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.resource_name_2 = QLabel(self.page_6)
+        self.resource_name_2.setObjectName(u"resource_name_2")
+
+        self.verticalLayout_5.addWidget(self.resource_name_2)
+
+        self.resource_description_2 = QLabel(self.page_6)
+        self.resource_description_2.setObjectName(u"resource_description_2")
+
+        self.verticalLayout_5.addWidget(self.resource_description_2)
+
+        self.add_resource_to_first = QPushButton(self.page_6)
+        self.add_resource_to_first.setObjectName(u"add_resource_to_first")
+        palette = QPalette()
+        brush = QBrush(QColor(255, 0, 0, 255))
+        brush.setStyle(Qt.SolidPattern)
+        palette.setBrush(QPalette.Active, QPalette.Button, brush)
+        palette.setBrush(QPalette.Inactive, QPalette.Button, brush)
+        palette.setBrush(QPalette.Disabled, QPalette.Button, brush)
+        self.add_resource_to_first.setPalette(palette)
+        self.add_resource_to_first.setCursor(QCursor(Qt.PointingHandCursor))
+
+        self.verticalLayout_5.addWidget(self.add_resource_to_first)
+
+        self.go_back_1 = QPushButton(self.page_6)
+        self.go_back_1.setObjectName(u"go_back_1")
+
+        self.verticalLayout_5.addWidget(self.go_back_1)
+
+        self.first_team_bonuses.addWidget(self.page_6)
+
+        self.horizontalLayout.addWidget(self.first_team_bonuses)
+
+        self.second_team_bonuses = QStackedWidget(self.centralwidget)
+        self.second_team_bonuses.setObjectName(u"second_team_bonuses")
         self.page = QWidget()
         self.page.setObjectName(u"page")
         self.verticalLayout_2 = QVBoxLayout(self.page)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.choose_resource = QLabel(self.page)
-        self.choose_resource.setObjectName(u"choose_resource")
-        self.choose_resource.setAlignment(Qt.AlignCenter)
+        self.sec_t = QLabel(self.page)
+        self.sec_t.setObjectName(u"sec_t")
+        self.sec_t.setAlignment(Qt.AlignCenter)
 
-        self.verticalLayout_2.addWidget(self.choose_resource)
+        self.verticalLayout_2.addWidget(self.sec_t)
 
-        self.resource_view.addWidget(self.page)
+        self.second_t_bonus_list = QListWidget(self.page)
+        self.second_t_bonus_list.setObjectName(u"second_t_bonus_list")
+
+        self.verticalLayout_2.addWidget(self.second_t_bonus_list)
+
+        self.second_team_bonuses.addWidget(self.page)
         self.page_2 = QWidget()
         self.page_2.setObjectName(u"page_2")
         self.verticalLayout_3 = QVBoxLayout(self.page_2)
@@ -63,21 +117,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.resource_description)
 
-        self.horizontalLayout_2 = QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.add_resource_to_first = QPushButton(self.page_2)
-        self.add_resource_to_first.setObjectName(u"add_resource_to_first")
-        palette = QPalette()
-        brush = QBrush(QColor(255, 0, 0, 255))
-        brush.setStyle(Qt.SolidPattern)
-        palette.setBrush(QPalette.Active, QPalette.Button, brush)
-        palette.setBrush(QPalette.Inactive, QPalette.Button, brush)
-        palette.setBrush(QPalette.Disabled, QPalette.Button, brush)
-        self.add_resource_to_first.setPalette(palette)
-        self.add_resource_to_first.setCursor(QCursor(Qt.PointingHandCursor))
-
-        self.horizontalLayout_2.addWidget(self.add_resource_to_first)
-
         self.add_resource_to_second = QPushButton(self.page_2)
         self.add_resource_to_second.setObjectName(u"add_resource_to_second")
         palette1 = QPalette()
@@ -89,14 +128,16 @@ class Ui_MainWindow(object):
         self.add_resource_to_second.setPalette(palette1)
         self.add_resource_to_second.setCursor(QCursor(Qt.SizeBDiagCursor))
 
-        self.horizontalLayout_2.addWidget(self.add_resource_to_second)
+        self.verticalLayout_3.addWidget(self.add_resource_to_second)
 
+        self.go_back_2 = QPushButton(self.page_2)
+        self.go_back_2.setObjectName(u"go_back_2")
 
-        self.verticalLayout_3.addLayout(self.horizontalLayout_2)
+        self.verticalLayout_3.addWidget(self.go_back_2)
 
-        self.resource_view.addWidget(self.page_2)
+        self.second_team_bonuses.addWidget(self.page_2)
 
-        self.horizontalLayout.addWidget(self.resource_view)
+        self.horizontalLayout.addWidget(self.second_team_bonuses)
 
 
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -180,7 +221,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.resource_view.setCurrentIndex(0)
+        self.first_team_bonuses.setCurrentIndex(0)
+        self.second_team_bonuses.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -190,11 +232,16 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.actionAdd_Bonus.setText(QCoreApplication.translate("MainWindow", u"Add Bonus", None))
         self.game_logo.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.choose_resource.setText(QCoreApplication.translate("MainWindow", u"Choose Resource", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"First Team", None))
+        self.resource_name_2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.resource_description_2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.add_resource_to_first.setText(QCoreApplication.translate("MainWindow", u"Add resource", None))
+        self.go_back_1.setText(QCoreApplication.translate("MainWindow", u"Go back", None))
+        self.sec_t.setText(QCoreApplication.translate("MainWindow", u"Second Team", None))
         self.resource_name.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.resource_description.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.add_resource_to_first.setText(QCoreApplication.translate("MainWindow", u"Add resource", None))
         self.add_resource_to_second.setText(QCoreApplication.translate("MainWindow", u"Add resource", None))
+        self.go_back_2.setText(QCoreApplication.translate("MainWindow", u"Go back", None))
         self.score.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.add_goal_second.setText(QCoreApplication.translate("MainWindow", u"Add Goal", None))
         self.add_goal_first.setText(QCoreApplication.translate("MainWindow", u"Add Goal", None))
