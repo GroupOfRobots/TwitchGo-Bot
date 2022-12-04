@@ -1,7 +1,7 @@
 from Bonus import Bonus
 
 
-class Time_Bonus (Bonus):
+class TimeBonus (Bonus):
     def __init__(self, name: str, multiplier: int, position: tuple, bonus_time, tex_file="") -> None:
         super().__init__(name, multiplier, position, tex_file)
         self._bonus_time = bonus_time
