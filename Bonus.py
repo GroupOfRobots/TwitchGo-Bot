@@ -30,4 +30,4 @@ class Bonus:
         self._name = new_name
 
     def __str__(self) -> str:
-        return f'{self._name:14}{self._position}'
+        return f'{self._name:14}\nPosition: {self._position}\n Bonus points: {self._bonus_points}'
