@@ -11,3 +11,6 @@ class TimeBonus (Bonus):
 
     def set_bonus_time(self, new_time):
         self._bonus_time = new_time
+
+    def __str__(self) -> str:
+        return f'{self._name:14}\nPosition: {self._position}\nBonus points: {self._bonus_points}\nBonus duration: {self._bonus_time}'

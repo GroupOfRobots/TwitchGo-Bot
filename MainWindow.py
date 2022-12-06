@@ -1,7 +1,6 @@
 from resource_gathering_ui import Ui_MainWindow
-from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QListWidget
+from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem
 import sys
-from functools import partial
 from Bonus import Bonus
 from Time_Bonus import TimeBonus
 from datetime import datetime, timedelta
@@ -74,7 +73,7 @@ class MainWindow(QMainWindow):
 
     def _add_curent_bonus_first(self):
         if type(self._current_item_first.bonus) == TimeBonus:
-            self._current_time_bonuses[0] = (self._current_item_first.bonus.bonus_points(), datetime.now() + timedelta(minutes= self._current_item_first.bonus.bonus_time()))
+            self._current_time_bonuses[0] = (self._current_item_first.bonus.bonus_points(), datetime.now() + timedelta(minutes=self._current_item_first.bonus.bonus_time()))
         else:
             self._set_score((self._current_item_first.bonus.bonus_points(), 0))
         self._ui.second_t_bonus_list.takeItem(self._ui.second_t_bonus_list.row(self._current_item_first.second_one))
@@ -84,7 +83,7 @@ class MainWindow(QMainWindow):
 
     def _add_curent_bonus_second(self):
         if type(self._current_item_second.bonus) == TimeBonus:
-            self._current_time_bonuses[1] = (self._current_item_second.bonus.bonus_points(), datetime.now() + timedelta(minutes= self._current_item_second.bonus.bonus_time()))
+            self._current_time_bonuses[1] = (self._current_item_second.bonus.bonus_points(), datetime.now() + timedelta(minutes=self._current_item_second.bonus.bonus_time()))
         else:
             self._set_score((self._current_item_second.bonus.bonus_points(), 0))
         self._ui.first_t_bonus_list.takeItem(self._ui.first_t_bonus_list.row(self._current_item_second.second_one))
@@ -138,4 +137,3 @@ def gui_main(args):
 
 if(__name__ == "__main__"):
     gui_main(sys.argv)
-    #print(datetime.now() + timedelta(minutes=2))
