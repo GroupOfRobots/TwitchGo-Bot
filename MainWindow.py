@@ -40,10 +40,10 @@ class MainWindow(QMainWindow):
 
     def _set_up_bonusses_list(self):
         for bonus in self._bonuses:
-            item = QListWidgetItem(str(bonus))
+            item = QListWidgetItem(self._create_bonus_description(bonus))
             item.bonus = bonus
             item.team_num = 0
-            item_s = QListWidgetItem(str(bonus))
+            item_s = QListWidgetItem(self._create_bonus_description(bonus))
             item_s.bonus = bonus
             item_s.team_num = 1
             item.second_one = item_s
@@ -95,7 +95,7 @@ class MainWindow(QMainWindow):
         self._ui.first_team_bonuses.setCurrentIndex(1)
         bonus = item.bonus
         self._current_item_first = item
-        self._ui.resource_description.setText(self._create_bonus_description(bonus))
+        self._ui.resource_description.setText(str(bonus))
 
     def _set_up_bonus_view_second(self, item):
         self._ui.second_team_bonuses.setCurrentIndex(1)
@@ -104,9 +104,11 @@ class MainWindow(QMainWindow):
         self._ui.resource_description_2.setText(self._create_bonus_description(bonus))
 
     def _create_bonus_description(self, bonus: Bonus):
-        description = bonus.name()
-        description += f'\nPosition: {bonus.position()}'
-        description += f'\nAdded points: {bonus.bonus_points()}'
+        description = f'{bonus.name():15}'
+        pos = str(bonus.position())
+        description += f'{pos:8}'
+        if type(bonus) == TimeBonus:
+            description += '(t)'
         return description
 
     def _set_up_go_back_buttons(self):
