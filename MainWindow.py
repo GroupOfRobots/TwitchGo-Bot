@@ -12,6 +12,7 @@ class MainWindow(QMainWindow):
         self._score = (0, 0)
         self._current_item_first = None
         self._current_item_second = None
+        self._current_item_general = None
         self._current_time_bonuses = [(None, datetime.now()), (None, datetime.now())]
         self._bonuses = [Bonus('first bonus', -2, (1, 2)), Bonus('second bonus', 3, (4, 3)), TimeBonus('time_bonus', 2, (6, 7), .5)]
         self._ui = Ui_MainWindow()
@@ -59,8 +60,10 @@ class MainWindow(QMainWindow):
             self._ui.general_bonus_list.addItem(item_general)
         self._ui.add_resource_to_first.clicked.connect(self._add_curent_bonus_first)
         self._ui.add_resource_to_second.clicked.connect(self._add_curent_bonus_second)
+        self._ui.add_bonus_all.clicked.connect(self._add_curent_bonus_general)
         self._ui.first_t_bonus_list.itemClicked.connect(self._set_up_bonus_view_first)
         self._ui.second_t_bonus_list.itemClicked.connect(self._set_up_bonus_view_second)
+        self._ui.general_bonus_list.itemClicked.connect(self._set_up_bonus_viem_general)
 
     def _add_goal_first(self):
         self._set_score((1, 0))
@@ -100,6 +103,18 @@ class MainWindow(QMainWindow):
         self._bonuses.remove(self._current_item_second.bonus)
         self._ui.second_team_bonuses.setCurrentIndex(0)
 
+    def _add_curent_bonus_general(self):
+        if type(self._current_item_general.bonus) == TimeBonus:
+            self._current_time_bonuses[1] = (self._current_item_general.bonus.bonus_points(), datetime.now() + timedelta(minutes=self._current_item_general.bonus.bonus_time()))
+            self._current_time_bonuses[0] = (self._current_item_general.bonus.bonus_points(), datetime.now() + timedelta(minutes=self._current_item_general.bonus.bonus_time()))
+        else:
+            self._set_score((self._current_item_general.bonus.bonus_points(), self._current_item_general.bonus.bonus_points()))
+        self._ui.second_t_bonus_list.takeItem(self._ui.second_t_bonus_list.row(self._current_item_general.second_team))
+        self._ui.first_t_bonus_list.takeItem(self._ui.first_t_bonus_list.row(self._current_item_general.first_team))
+        self._ui.general_bonus_list.takeItem(self._ui.general_bonus_list.row(self._current_item_general))
+        self._bonuses.remove(self._current_item_general.bonus)
+        self._ui.general_bonuses.setCurrentIndex(0)
+
     def _set_up_bonus_view_first(self, item):
         self._ui.first_team_bonuses.setCurrentIndex(1)
         bonus = item.bonus
@@ -111,6 +126,12 @@ class MainWindow(QMainWindow):
         bonus = item.bonus
         self._current_item_second = item
         self._ui.resource_description_2.setText(str(bonus))
+
+    def _set_up_bonus_viem_general(self, item):
+        self._ui.general_bonuses.setCurrentIndex(1)
+        bonus = item.bonus
+        self._current_item_general = item
+        self._ui.bonus_desceiption_general.setText(str(bonus))
 
     def _create_bonus_description(self, bonus: Bonus):
         description = f'{bonus.name():15}'
@@ -127,8 +148,12 @@ class MainWindow(QMainWindow):
         def _go_back_second():
             self._ui.second_team_bonuses.setCurrentIndex(0)
 
+        def _go_back_general():
+            self._ui.general_bonuses.setCurrentIndex(0)
+
         self._ui.go_back_1.clicked.connect(_go_back_first)
         self._ui.go_back_2.clicked.connect(_go_back_second)
+        self._ui.Go_back_general.clicked.connect(_go_back_general)
 
     def _set_score(self, score_to_add: tuple):
         if datetime.now() < self._current_time_bonuses[0][1]:
