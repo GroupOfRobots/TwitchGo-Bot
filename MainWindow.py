@@ -101,7 +101,7 @@ class MainWindow(QMainWindow):
         self._ui.second_team_bonuses.setCurrentIndex(1)
         bonus = item.bonus
         self._current_item_second = item
-        self._ui.resource_description_2.setText(self._create_bonus_description(bonus))
+        self._ui.resource_description_2.setText(str(bonus))
 
     def _create_bonus_description(self, bonus: Bonus):
         description = f'{bonus.name():15}'
