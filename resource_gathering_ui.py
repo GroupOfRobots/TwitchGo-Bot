@@ -85,6 +85,52 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.first_team_bonuses)
 
+        self.general_bonuses = QStackedWidget(self.centralwidget)
+        self.general_bonuses.setObjectName(u"general_bonuses")
+        self.page_3 = QWidget()
+        self.page_3.setObjectName(u"page_3")
+        self.verticalLayout_6 = QVBoxLayout(self.page_3)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.label_2 = QLabel(self.page_3)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout_6.addWidget(self.label_2)
+
+        self.general_bonus_list = QListWidget(self.page_3)
+        self.general_bonus_list.setObjectName(u"general_bonus_list")
+
+        self.verticalLayout_6.addWidget(self.general_bonus_list)
+
+        self.general_bonuses.addWidget(self.page_3)
+        self.page_4 = QWidget()
+        self.page_4.setObjectName(u"page_4")
+        self.verticalLayout_7 = QVBoxLayout(self.page_4)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.bonus_picture_general = QLabel(self.page_4)
+        self.bonus_picture_general.setObjectName(u"bonus_picture_general")
+
+        self.verticalLayout_7.addWidget(self.bonus_picture_general)
+
+        self.bonus_desceiption_general = QLabel(self.page_4)
+        self.bonus_desceiption_general.setObjectName(u"bonus_desceiption_general")
+
+        self.verticalLayout_7.addWidget(self.bonus_desceiption_general)
+
+        self.add_bonus_all = QPushButton(self.page_4)
+        self.add_bonus_all.setObjectName(u"add_bonus_all")
+
+        self.verticalLayout_7.addWidget(self.add_bonus_all)
+
+        self.Go_back_general = QPushButton(self.page_4)
+        self.Go_back_general.setObjectName(u"Go_back_general")
+
+        self.verticalLayout_7.addWidget(self.Go_back_general)
+
+        self.general_bonuses.addWidget(self.page_4)
+
+        self.horizontalLayout.addWidget(self.general_bonuses)
+
         self.second_team_bonuses = QStackedWidget(self.centralwidget)
         self.second_team_bonuses.setObjectName(u"second_team_bonuses")
         self.page = QWidget()
@@ -221,7 +267,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.first_team_bonuses.setCurrentIndex(1)
+        self.first_team_bonuses.setCurrentIndex(0)
+        self.general_bonuses.setCurrentIndex(0)
         self.second_team_bonuses.setCurrentIndex(1)
 
 
@@ -237,6 +284,11 @@ class Ui_MainWindow(object):
         self.resource_description.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.add_resource_to_first.setText(QCoreApplication.translate("MainWindow", u"Add resource", None))
         self.go_back_1.setText(QCoreApplication.translate("MainWindow", u"Go back", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"General", None))
+        self.bonus_picture_general.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.bonus_desceiption_general.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.add_bonus_all.setText(QCoreApplication.translate("MainWindow", u"Add resource", None))
+        self.Go_back_general.setText(QCoreApplication.translate("MainWindow", u"Go back", None))
         self.sec_t.setText(QCoreApplication.translate("MainWindow", u"Second Team", None))
         self.resource_name.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.resource_description_2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
