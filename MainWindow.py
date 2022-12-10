@@ -46,10 +46,17 @@ class MainWindow(QMainWindow):
             item_s = QListWidgetItem(self._create_bonus_description(bonus))
             item_s.bonus = bonus
             item_s.team_num = 1
+            item_general = QListWidgetItem(self._create_bonus_description(bonus))
+            item_general.bonus = bonus
             item.second_one = item_s
+            item.general = item_general
             item_s.second_one = item
+            item_s.general = item_general
+            item_general.first_team = item
+            item_general.second_team = item_s
             self._ui.second_t_bonus_list.addItem(item_s)
             self._ui.first_t_bonus_list.addItem(item)
+            self._ui.general_bonus_list.addItem(item_general)
         self._ui.add_resource_to_first.clicked.connect(self._add_curent_bonus_first)
         self._ui.add_resource_to_second.clicked.connect(self._add_curent_bonus_second)
         self._ui.first_t_bonus_list.itemClicked.connect(self._set_up_bonus_view_first)
@@ -78,6 +85,7 @@ class MainWindow(QMainWindow):
             self._set_score((self._current_item_first.bonus.bonus_points(), 0))
         self._ui.second_t_bonus_list.takeItem(self._ui.second_t_bonus_list.row(self._current_item_first.second_one))
         self._ui.first_t_bonus_list.takeItem(self._ui.first_t_bonus_list.row(self._current_item_first))
+        self._ui.general_bonus_list.takeItem(self._ui.general_bonus_list.row(self._current_item_first.general))
         self._bonuses.remove(self._current_item_first.bonus)
         self._ui.first_team_bonuses.setCurrentIndex(0)
 
@@ -88,6 +96,7 @@ class MainWindow(QMainWindow):
             self._set_score((self._current_item_second.bonus.bonus_points(), 0))
         self._ui.first_t_bonus_list.takeItem(self._ui.first_t_bonus_list.row(self._current_item_second.second_one))
         self._ui.second_t_bonus_list.takeItem(self._ui.second_t_bonus_list.row(self._current_item_second))
+        self._ui.general_bonus_list.takeItem(self._ui.general_bonus_list.row(self._current_item_second.general))
         self._bonuses.remove(self._current_item_second.bonus)
         self._ui.second_team_bonuses.setCurrentIndex(0)
 
