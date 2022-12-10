@@ -1,5 +1,6 @@
 from resource_gathering_ui import Ui_MainWindow
 from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem
+from PySide2.QtGui import QBrush, QColor
 import sys
 from Bonus import Bonus
 from Time_Bonus import TimeBonus
@@ -40,6 +41,10 @@ class MainWindow(QMainWindow):
         self._bonuses = new_bonuses
 
     def _set_up_bonusses_list(self):
+        def custom_sort(bon):
+            return bon.bonus_points()
+
+        self._bonuses.sort(reverse=True, key=custom_sort)
         for bonus in self._bonuses:
             item = QListWidgetItem(self._create_bonus_description(bonus))
             item.bonus = bonus
@@ -55,6 +60,11 @@ class MainWindow(QMainWindow):
             item_s.general = item_general
             item_general.first_team = item
             item_general.second_team = item_s
+            if bonus.bonus_points() < 0:
+                item.setForeground(QBrush(QColor("Magenta")))
+                item_s.setForeground(QBrush(QColor("Magenta")))
+                item_general.setForeground(QBrush(QColor("Magenta")))
+
             self._ui.second_t_bonus_list.addItem(item_s)
             self._ui.first_t_bonus_list.addItem(item)
             self._ui.general_bonus_list.addItem(item_general)
