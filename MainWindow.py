@@ -19,10 +19,7 @@ class MainWindow(QMainWindow):
         self._ui = Ui_MainWindow()
         self._ui.setupUi(self)
         self._ui.score.setText(f'{self._score[0]} - {self._score[1]}')
-        self._ui.add_goal_first.clicked.connect(self._add_goal_first)
-        self._ui.add_goal_second.clicked.connect(self._add_goal_second)
-        self._ui.subtract_goal_first.clicked.connect(self._sub_goal_first)
-        self._ui.subtract_goal_second.clicked.connect(self._sub_goal_second)
+        self._set_up_buttons()
         self._set_up_go_back_buttons()
         self._set_up_bonusses_list()
         self._ui.first_team_bonuses.setCurrentIndex(0)
@@ -68,9 +65,6 @@ class MainWindow(QMainWindow):
             self._ui.second_t_bonus_list.addItem(item_s)
             self._ui.first_t_bonus_list.addItem(item)
             self._ui.general_bonus_list.addItem(item_general)
-        self._ui.add_resource_to_first.clicked.connect(self._add_curent_bonus_first)
-        self._ui.add_resource_to_second.clicked.connect(self._add_curent_bonus_second)
-        self._ui.add_bonus_all.clicked.connect(self._add_curent_bonus_general)
         self._ui.first_t_bonus_list.itemClicked.connect(self._set_up_bonus_view_first)
         self._ui.second_t_bonus_list.itemClicked.connect(self._set_up_bonus_view_second)
         self._ui.general_bonus_list.itemClicked.connect(self._set_up_bonus_viem_general)
@@ -172,6 +166,16 @@ class MainWindow(QMainWindow):
             score_to_add = (score_to_add[0], score_to_add[1] * self._current_time_bonuses[1][0])
         self._score = (self._score[0]+score_to_add[0], self._score[1] + score_to_add[1])
         self._ui.score.setText(f'{self._score[0]} - {self._score[1]}')
+
+    def _set_up_buttons(self):
+        self._set_up_go_back_buttons()
+        self._ui.add_goal_first.clicked.connect(self._add_goal_first)
+        self._ui.add_goal_second.clicked.connect(self._add_goal_second)
+        self._ui.subtract_goal_first.clicked.connect(self._sub_goal_first)
+        self._ui.subtract_goal_second.clicked.connect(self._sub_goal_second)
+        self._ui.add_resource_to_first.clicked.connect(self._add_curent_bonus_first)
+        self._ui.add_resource_to_second.clicked.connect(self._add_curent_bonus_second)
+        self._ui.add_bonus_all.clicked.connect(self._add_curent_bonus_general)
 
 
 def gui_main(args):
