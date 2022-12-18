@@ -1,6 +1,7 @@
 from resource_gathering_ui import Ui_MainWindow
 from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem
-from PySide2.QtGui import QBrush, QColor
+from PySide2.QtGui import QBrush, QColor, QPalette, QPixmap
+from PySide2.QtCore import Qt
 import sys
 from Bonus import Bonus
 from Time_Bonus import TimeBonus
@@ -11,6 +12,10 @@ class MainWindow(QMainWindow):
     def __init__(self, parent=None) -> None:
         super().__init__(parent=parent)
         self._score = (0, 0)
+        palette = self.palette()
+        palette.setColor(QPalette.Window, QColor(162, 213, 198))
+        self.setPalette(palette)
+        self.setAutoFillBackground(True)
         with open('score.txt', 'w') as file_handle:
             file_handle.write(f'{self._score[0]} : {self._score[0]}')
         self._current_item_first = None
@@ -26,6 +31,9 @@ class MainWindow(QMainWindow):
         self._set_up_bonusses_list()
         self._ui.first_team_bonuses.setCurrentIndex(0)
         self._ui.second_team_bonuses.setCurrentIndex(0)
+        self._ui.game_logo.setText("")
+        self._ui.game_logo.setPixmap(QPixmap("logo.png"))
+        self._ui.game_logo.setAlignment(Qt.AlignCenter)
 
     def score(self):
         return self._score
