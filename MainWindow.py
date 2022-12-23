@@ -3,6 +3,7 @@ from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem
 from PySide2.QtGui import QBrush, QColor, QPalette, QPixmap
 from PySide2.QtCore import Qt
 import sys
+from bonus_adding import BonusAdding
 from Bonus import Bonus
 from Time_Bonus import TimeBonus
 from datetime import datetime, timedelta
@@ -11,6 +12,7 @@ from datetime import datetime, timedelta
 class MainWindow(QMainWindow):
     def __init__(self, parent=None) -> None:
         super().__init__(parent=parent)
+        self._bonus_widwo = BonusAdding()
         self._score = (0, 0)
         palette = self.palette()
         palette.setColor(QPalette.Window, QColor(162, 213, 198))
@@ -186,6 +188,10 @@ class MainWindow(QMainWindow):
         self._ui.add_resource_to_first.clicked.connect(self._add_curent_bonus_first)
         self._ui.add_resource_to_second.clicked.connect(self._add_curent_bonus_second)
         self._ui.add_bonus_all.clicked.connect(self._add_curent_bonus_general)
+        self._ui.actionAdd_Bonus.triggered.connect(self._show_bonus_adding)
+
+    def _show_bonus_adding(self):
+        self._bonus_widwo.show()
 
 
 def gui_main(args):
