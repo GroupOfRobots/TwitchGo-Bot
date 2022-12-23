@@ -1,5 +1,5 @@
 from resource_gathering_ui import Ui_MainWindow
-from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem
+from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QDialogButtonBox
 from PySide2.QtGui import QBrush, QColor, QPalette, QPixmap
 from PySide2.QtCore import Qt
 import sys
@@ -189,10 +189,27 @@ class MainWindow(QMainWindow):
         self._ui.add_resource_to_second.clicked.connect(self._add_curent_bonus_second)
         self._ui.add_bonus_all.clicked.connect(self._add_curent_bonus_general)
         self._ui.actionAdd_Bonus.triggered.connect(self._show_bonus_adding)
+        self._bonus_widwo._ui.decision_buttons.accepted.connect(self._add_bonus)
+        # button = self._bonus_widwo._ui.decision_buttons.button(QDialogButtonBox.Apply)
+        # button.clicked.connect(self._add_goal_first)
 
     def _show_bonus_adding(self):
         self._bonus_widwo.show()
 
+    def _add_bonus(self):
+        name = self._bonus_widwo._ui.bonus_name.text()
+        file_name = self._bonus_widwo._ui.file_name.text()
+        bonus_vla = self._bonus_widwo._ui.bonus_value.value()
+        position = (self._bonus_widwo._ui.position_x.value(), self._bonus_widwo._ui.position_y.value())
+        if self._bonus_widwo._ui.ponus_creation.currentIndex() == 0:
+            self._bonuses.append(Bonus(name, bonus_vla, position, file_name))
+        else:
+            bonus_time = self._bonus_widwo._ui.bonus_duration.value()
+            self._bonuses.append(TimeBonus(name, bonus_vla, position, bonus_time, file_name))
+        self._ui.second_t_bonus_list.clear()
+        self._ui.first_t_bonus_list.clear()
+        self._ui.general_bonus_list.clear()
+        self._set_up_bonusses_list()
 
 def gui_main(args):
     app = QApplication(args)
