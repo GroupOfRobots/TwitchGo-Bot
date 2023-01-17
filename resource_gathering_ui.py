@@ -188,6 +188,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout)
 
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.bonus_time_first = QLabel(self.centralwidget)
+        self.bonus_time_first.setObjectName(u"bonus_time_first")
+        self.bonus_time_first.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.horizontalLayout_2.addWidget(self.bonus_time_first)
+
         self.score = QLabel(self.centralwidget)
         self.score.setObjectName(u"score")
         font = QFont()
@@ -195,7 +203,15 @@ class Ui_MainWindow(object):
         self.score.setFont(font)
         self.score.setAlignment(Qt.AlignCenter)
 
-        self.verticalLayout.addWidget(self.score)
+        self.horizontalLayout_2.addWidget(self.score)
+
+        self.bonus_time_second = QLabel(self.centralwidget)
+        self.bonus_time_second.setObjectName(u"bonus_time_second")
+
+        self.horizontalLayout_2.addWidget(self.bonus_time_second)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
 
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
@@ -269,7 +285,7 @@ class Ui_MainWindow(object):
 
         self.first_team_bonuses.setCurrentIndex(0)
         self.general_bonuses.setCurrentIndex(0)
-        self.second_team_bonuses.setCurrentIndex(1)
+        self.second_team_bonuses.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -294,7 +310,9 @@ class Ui_MainWindow(object):
         self.resource_description_2.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.add_resource_to_second.setText(QCoreApplication.translate("MainWindow", u"Add resource", None))
         self.go_back_2.setText(QCoreApplication.translate("MainWindow", u"Go back", None))
+        self.bonus_time_first.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.score.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.bonus_time_second.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.add_goal_second.setText(QCoreApplication.translate("MainWindow", u"Add Goal", None))
         self.add_goal_first.setText(QCoreApplication.translate("MainWindow", u"Add Goal", None))
         self.subtract_goal_first.setText(QCoreApplication.translate("MainWindow", u"Subtract", None))

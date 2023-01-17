@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         self._current_item_first = None
         self._current_item_second = None
         self._current_item_general = None
-        self._current_time_bonuses = [(None, datetime.now()), (None, datetime.now())]
+        self._current_time_bonuses = [[1, datetime.now()], [1, datetime.now()]]
         self._bonuses = [Bonus('first bonus', -2, (1, 2)), Bonus('second bonus', 3, (4, 3)), TimeBonus('time_bonus', 2, (6, 7), .5)]
         self._ui = Ui_MainWindow()
         self._ui.setupUi(self)
@@ -36,6 +36,7 @@ class MainWindow(QMainWindow):
         self._ui.game_logo.setText("")
         self._ui.game_logo.setPixmap(QPixmap("logo.png"))
         self._ui.game_logo.setAlignment(Qt.AlignCenter)
+        self._set_up_bonus_time()
 
     def score(self):
         return self._score
@@ -155,6 +156,17 @@ class MainWindow(QMainWindow):
             description += '(t)'
         return description
 
+    def _set_up_bonus_time(self):
+        self._ui.bonus_time_first.setText(f'{(self._current_time_bonuses[0][1] -datetime.now()) if self._current_time_bonuses[0][1] > datetime.now() else ""}')
+        self._ui.bonus_time_second.setText(f'{(self._current_time_bonuses[1][1] -datetime.now()) if self._current_time_bonuses[1][1] > datetime.now() else ""}')
+        with open('score.txt', 'w') as file_handle:
+            file_handle.write(f'{self._score[0]}\n')
+            file_handle.write(f'{self._score[1]}\n')
+            file_handle.write(f'{(self._current_time_bonuses[0][1] -datetime.now()) if self._current_time_bonuses[0][1] > datetime.now() else ""}')
+            file_handle.write('\n')
+            file_handle.write(f'{(self._current_time_bonuses[1][1] -datetime.now()) if self._current_time_bonuses[1][1] > datetime.now() else ""}')
+
+
     def _set_up_go_back_buttons(self):
         def _go_back_first():
             self._ui.first_team_bonuses.setCurrentIndex(0)
@@ -177,7 +189,8 @@ class MainWindow(QMainWindow):
         self._score = (self._score[0]+score_to_add[0], self._score[1] + score_to_add[1])
         self._ui.score.setText(f'{self._score[0]} - {self._score[1]}')
         with open('score.txt', 'w') as file_handle:
-            file_handle.write(f'{self._score[0]} : {self._score[1]}')
+            file_handle.write(f'{self._score[0]}\n')
+            file_handle.write(f'{self._score[1]}\n')
 
     def _set_up_buttons(self):
         self._set_up_go_back_buttons()
@@ -211,11 +224,14 @@ class MainWindow(QMainWindow):
         self._ui.general_bonus_list.clear()
         self._set_up_bonusses_list()
 
+
 def gui_main(args):
     app = QApplication(args)
     window = MainWindow()
     window.show()
-    return app.exec_()
+    while window.isVisible():
+        window._set_up_bonus_time()
+        app.processEvents()
 
 
 if(__name__ == "__main__"):
