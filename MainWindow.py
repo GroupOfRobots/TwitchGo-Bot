@@ -159,12 +159,13 @@ class MainWindow(QMainWindow):
     def _set_up_bonus_time(self):
         self._ui.bonus_time_first.setText(f'{(self._current_time_bonuses[0][1] -datetime.now()) if self._current_time_bonuses[0][1] > datetime.now() else ""}')
         self._ui.bonus_time_second.setText(f'{(self._current_time_bonuses[1][1] -datetime.now()) if self._current_time_bonuses[1][1] > datetime.now() else ""}')
-        with open('score.txt', 'w') as file_handle:
-            file_handle.write(f'{self._score[0]}\n')
-            file_handle.write(f'{self._score[1]}\n')
-            file_handle.write(f'{(self._current_time_bonuses[0][1] -datetime.now()) if self._current_time_bonuses[0][1] > datetime.now() else ""}')
-            file_handle.write('\n')
-            file_handle.write(f'{(self._current_time_bonuses[1][1] -datetime.now()) if self._current_time_bonuses[1][1] > datetime.now() else ""}')
+        if datetime.now().microsecond//500 % 2 == 0:
+            with open('score.txt', 'w') as file_handle:
+                file_handle.write(f'{self._score[0]}\n')
+                file_handle.write(f'{self._score[1]}\n')
+                file_handle.write(f'{(self._current_time_bonuses[0][1] -datetime.now()).seconds if self._current_time_bonuses[0][1] > datetime.now() else ""}')
+                file_handle.write('\n')
+                file_handle.write(f'{(self._current_time_bonuses[1][1] -datetime.now()).seconds if self._current_time_bonuses[1][1] > datetime.now() else ""}')
 
 
     def _set_up_go_back_buttons(self):
@@ -236,3 +237,7 @@ def gui_main(args):
 
 if(__name__ == "__main__"):
     gui_main(sys.argv)
+    # now = datetime.now()
+    # now2 = datetime.now()
+    # dif = now2 - now
+    # print(dif.seconds)
