@@ -36,7 +36,7 @@ class MainWindow(QMainWindow):
         self._ui.game_logo.setText("")
         self._ui.game_logo.setPixmap(QPixmap("logo.png"))
         self._ui.game_logo.setAlignment(Qt.AlignCenter)
-        self._set_up_bonus_time()
+        self._display_bonus_time_left()
 
     def score(self):
         return self._score
@@ -156,9 +156,9 @@ class MainWindow(QMainWindow):
             description += '(t)'
         return description
 
-    def _set_up_bonus_time(self):
-        self._ui.bonus_time_first.setText(f'{(self._current_time_bonuses[0][1] -datetime.now()) if self._current_time_bonuses[0][1] > datetime.now() else ""}')
-        self._ui.bonus_time_second.setText(f'{(self._current_time_bonuses[1][1] -datetime.now()) if self._current_time_bonuses[1][1] > datetime.now() else ""}')
+    def _display_bonus_time_left(self):
+        self._ui.bonus_time_first.setText(f'{(self._current_time_bonuses[0][1] -datetime.now()).seconds if self._current_time_bonuses[0][1] > datetime.now() else ""}')
+        self._ui.bonus_time_second.setText(f'{(self._current_time_bonuses[1][1] -datetime.now()).seconds if self._current_time_bonuses[1][1] > datetime.now() else ""}')
         if datetime.now().microsecond//500 % 2 == 0:
             with open('score.txt', 'w') as file_handle:
                 file_handle.write(f'{self._score[0]}\n')
@@ -231,7 +231,7 @@ def gui_main(args):
     window = MainWindow()
     window.show()
     while window.isVisible():
-        window._set_up_bonus_time()
+        window._display_bonus_time_left()
         app.processEvents()
 
 
