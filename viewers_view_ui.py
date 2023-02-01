@@ -20,21 +20,90 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 600)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.verticalLayout = QVBoxLayout(self.centralwidget)
+        self.background_image = QLabel(self.centralwidget)
+        self.background_image.setObjectName(u"background_image")
+        self.background_image.setGeometry(QRect(0, 0, 59, 15))
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(1)
+        sizePolicy.setHeightForWidth(self.background_image.sizePolicy().hasHeightForWidth())
+        self.background_image.setSizePolicy(sizePolicy)
+        self.layoutWidget = QWidget(self.centralwidget)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(280, 0, 382, 83))
+        self.verticalLayout = QVBoxLayout(self.layoutWidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
-        self.label = QLabel(self.centralwidget)
-        self.label.setObjectName(u"label")
-        font = QFont()
-        font.setPointSize(20)
-        self.label.setFont(font)
+        self.bonus_time_first = QLabel(self.layoutWidget)
+        self.bonus_time_first.setObjectName(u"bonus_time_first")
+        palette = QPalette()
+        brush = QBrush(QColor(255, 255, 255, 255))
+        brush.setStyle(Qt.SolidPattern)
+        palette.setBrush(QPalette.Active, QPalette.WindowText, brush)
+        palette.setBrush(QPalette.Active, QPalette.Text, brush)
+        brush1 = QBrush(QColor(255, 255, 255, 128))
+        brush1.setStyle(Qt.SolidPattern)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+        palette.setBrush(QPalette.Active, QPalette.PlaceholderText, brush1)
+#endif
+        palette.setBrush(QPalette.Inactive, QPalette.WindowText, brush)
+        palette.setBrush(QPalette.Inactive, QPalette.Text, brush)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+        palette.setBrush(QPalette.Inactive, QPalette.PlaceholderText, brush1)
+#endif
+        brush2 = QBrush(QColor(190, 190, 190, 255))
+        brush2.setStyle(Qt.SolidPattern)
+        palette.setBrush(QPalette.Disabled, QPalette.WindowText, brush2)
+        palette.setBrush(QPalette.Disabled, QPalette.Text, brush2)
+        brush3 = QBrush(QColor(0, 0, 0, 128))
+        brush3.setStyle(Qt.SolidPattern)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+        palette.setBrush(QPalette.Disabled, QPalette.PlaceholderText, brush3)
+#endif
+        self.bonus_time_first.setPalette(palette)
 
-        self.horizontalLayout.addWidget(self.label)
+        self.horizontalLayout.addWidget(self.bonus_time_first)
+
+        self.score = QLabel(self.layoutWidget)
+        self.score.setObjectName(u"score")
+        palette1 = QPalette()
+        palette1.setBrush(QPalette.Active, QPalette.WindowText, brush)
+        palette1.setBrush(QPalette.Active, QPalette.Text, brush)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+        palette1.setBrush(QPalette.Active, QPalette.PlaceholderText, brush1)
+#endif
+        palette1.setBrush(QPalette.Inactive, QPalette.WindowText, brush)
+        palette1.setBrush(QPalette.Inactive, QPalette.Text, brush)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+        palette1.setBrush(QPalette.Inactive, QPalette.PlaceholderText, brush1)
+#endif
+        palette1.setBrush(QPalette.Disabled, QPalette.WindowText, brush2)
+        palette1.setBrush(QPalette.Disabled, QPalette.Text, brush2)
+#if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+        palette1.setBrush(QPalette.Disabled, QPalette.PlaceholderText, brush3)
+#endif
+        self.score.setPalette(palette1)
+        font = QFont()
+        font.setPointSize(36)
+        self.score.setFont(font)
+
+        self.horizontalLayout.addWidget(self.score)
+
+        self.bonus_time_second = QLabel(self.layoutWidget)
+        self.bonus_time_second.setObjectName(u"bonus_time_second")
+        palette2 = QPalette()
+        palette2.setBrush(QPalette.Active, QPalette.WindowText, brush)
+        palette2.setBrush(QPalette.Inactive, QPalette.WindowText, brush)
+        palette2.setBrush(QPalette.Disabled, QPalette.WindowText, brush2)
+        self.bonus_time_second.setPalette(palette2)
+
+        self.horizontalLayout.addWidget(self.bonus_time_second)
 
         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -63,6 +132,9 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.background_image.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.bonus_time_first.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.score.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.bonus_time_second.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
     # retranslateUi
 
