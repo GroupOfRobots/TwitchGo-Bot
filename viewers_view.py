@@ -27,31 +27,11 @@ if __name__ == "__main__":
     window = ViewersView()
     window.setFixedSize(800, 600)
     window.show()
-    camer = QCamera(QCamera.BackFace)
-
-    if not camer.isCaptureModeSupported(QCamera.CaptureStillImage):
-        print("Image capture not supported !")
-        exit()
-    camer.setViewfinder(window._ui.background_image)
-    camer.setCaptureMode(QCamera.CaptureStillImage)
-    Capture = QCameraImageCapture(camer)
-    Capture.setCaptureDestination(QCameraImageCapture.CaptureToBuffer)
-
-    viewfinder = QCameraViewfinderSettings()
-    viewfinder.setResolution(640, 480)
-    viewfinder.setMinimumFrameRate(15.0)
-    viewfinder.setMaximumFrameRate(30.0)
-
-    video_wid = QVideoWidget()
-
-    camer.setViewfinder(video_wid)
 
     window._ui.bonus_time_first.setText("")
     window._ui.bonus_time_second.setText("")
 
-    print(QMediaDevices.videoInputs())
     line = None
-    latest_score = [0, 0]
     while window.isVisible():
         if datetime.now().microsecond//500 % 2 == 1:
             with open("score.txt", 'r') as file_handle:
