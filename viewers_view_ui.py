@@ -20,27 +20,17 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 600)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.background_image = QLabel(self.centralwidget)
-        self.background_image.setObjectName(u"background_image")
-        self.background_image.setGeometry(QRect(0, 0, 59, 15))
-        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(1)
-        sizePolicy.setHeightForWidth(self.background_image.sizePolicy().hasHeightForWidth())
-        self.background_image.setSizePolicy(sizePolicy)
-        self.layoutWidget = QWidget(self.centralwidget)
-        self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(280, 0, 382, 83))
-        self.verticalLayout = QVBoxLayout(self.layoutWidget)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_4 = QVBoxLayout(self.centralwidget)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
-        self.bonus_time_first = QLabel(self.layoutWidget)
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.bonus_time_first = QLabel(self.centralwidget)
         self.bonus_time_first.setObjectName(u"bonus_time_first")
         palette = QPalette()
         brush = QBrush(QColor(255, 255, 255, 255))
@@ -67,10 +57,20 @@ class Ui_MainWindow(object):
         palette.setBrush(QPalette.Disabled, QPalette.PlaceholderText, brush3)
 #endif
         self.bonus_time_first.setPalette(palette)
+        self.bonus_time_first.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
 
-        self.horizontalLayout.addWidget(self.bonus_time_first)
+        self.verticalLayout_2.addWidget(self.bonus_time_first)
 
-        self.score = QLabel(self.layoutWidget)
+        self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_2.addItem(self.verticalSpacer_3)
+
+
+        self.horizontalLayout.addLayout(self.verticalLayout_2)
+
+        self.verticalLayout_3 = QVBoxLayout()
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.score = QLabel(self.centralwidget)
         self.score.setObjectName(u"score")
         palette1 = QPalette()
         palette1.setBrush(QPalette.Active, QPalette.WindowText, brush)
@@ -93,28 +93,45 @@ class Ui_MainWindow(object):
         font.setPointSize(36)
         self.score.setFont(font)
 
-        self.horizontalLayout.addWidget(self.score)
+        self.verticalLayout_3.addWidget(self.score)
 
-        self.bonus_time_second = QLabel(self.layoutWidget)
+        self.verticalSpacer_4 = QSpacerItem(20, 264, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_3.addItem(self.verticalSpacer_4)
+
+
+        self.horizontalLayout.addLayout(self.verticalLayout_3)
+
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.bonus_time_second = QLabel(self.centralwidget)
         self.bonus_time_second.setObjectName(u"bonus_time_second")
         palette2 = QPalette()
         palette2.setBrush(QPalette.Active, QPalette.WindowText, brush)
         palette2.setBrush(QPalette.Inactive, QPalette.WindowText, brush)
         palette2.setBrush(QPalette.Disabled, QPalette.WindowText, brush2)
         self.bonus_time_second.setPalette(palette2)
+        self.bonus_time_second.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
 
-        self.horizontalLayout.addWidget(self.bonus_time_second)
+        self.verticalLayout.addWidget(self.bonus_time_second)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer)
+
+
+        self.horizontalLayout.addLayout(self.verticalLayout)
 
         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer_2)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout)
+        self.verticalLayout_4.addLayout(self.horizontalLayout)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+        self.verticalSpacer_2 = QSpacerItem(20, 232, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.verticalLayout.addItem(self.verticalSpacer)
+        self.verticalLayout_4.addItem(self.verticalSpacer_2)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
@@ -132,7 +149,6 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.background_image.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.bonus_time_first.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.score.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.bonus_time_second.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))

@@ -2,9 +2,6 @@ from viewers_view_ui import Ui_MainWindow
 from PySide2.QtWidgets import QMainWindow, QApplication
 from PySide2.QtGui import QPixmap
 from PySide2.QtCore import Qt
-from PySide2.QtMultimediaWidgets import QVideoWidget
-from PySide2.QtMultimedia import QMediaPlayer, QCamera, QCameraInfo, QCameraImageCapture, QCameraViewfinderSettings
-from PySide6.QtMultimedia import (QMediaDevices)
 import sys
 from datetime import datetime
 from time import sleep
@@ -16,20 +13,20 @@ class ViewersView(QMainWindow):
         self._ui = Ui_MainWindow()
         self._ui.setupUi(self)
         self._ui.score.setText('123')
-        self._ui.background_image.setText("")
-        self._ui.background_image.setFixedSize(800, 600)
-        self._ui.background_image.setPixmap(QPixmap("twitch_go.png"))
-        self._ui.background_image.setAlignment(Qt.AlignCenter)
+        self._stylesheet = 'background-image: url("twitch_go.png");background-repeat:no-repeat;background-position:center;'
+        self.setStyleSheet(self._stylesheet)
+
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = ViewersView()
-    window.setFixedSize(800, 600)
+    #window.setFixedSize(800, 600)
     window.show()
 
     window._ui.bonus_time_first.setText("")
     window._ui.bonus_time_second.setText("")
+
 
     line = None
     while window.isVisible():
