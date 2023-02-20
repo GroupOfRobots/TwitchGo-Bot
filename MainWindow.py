@@ -7,7 +7,7 @@ from bonus_adding import BonusAdding
 from Bonus import Bonus
 from Time_Bonus import TimeBonus
 from datetime import datetime, timedelta
-
+from viewers_view import ViewersView
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None) -> None:
@@ -230,7 +230,10 @@ def gui_main(args):
     app = QApplication(args)
     window = MainWindow()
     window.show()
+    viewers_view = ViewersView(window)
+    viewers_view.show()
     while window.isVisible():
+        viewers_view.run_window()
         window._display_bonus_time_left()
         app.processEvents()
 
