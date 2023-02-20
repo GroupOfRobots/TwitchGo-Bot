@@ -18,8 +18,6 @@ class MainWindow(QMainWindow):
         palette.setColor(QPalette.Window, QColor(162, 213, 198))
         self.setPalette(palette)
         self.setAutoFillBackground(True)
-        with open('score.txt', 'w') as file_handle:
-            file_handle.write(f'{self._score[0]} : {self._score[0]}')
         self._current_item_first = None
         self._current_item_second = None
         self._current_item_general = None
@@ -159,13 +157,6 @@ class MainWindow(QMainWindow):
     def _display_bonus_time_left(self):
         self._ui.bonus_time_first.setText(f'{(self._current_time_bonuses[0][1] -datetime.now()).seconds if self._current_time_bonuses[0][1] > datetime.now() else ""}')
         self._ui.bonus_time_second.setText(f'{(self._current_time_bonuses[1][1] -datetime.now()).seconds if self._current_time_bonuses[1][1] > datetime.now() else ""}')
-        if datetime.now().microsecond//500 % 2 == 0:
-            with open('score.txt', 'w') as file_handle:
-                file_handle.write(f'{self._score[0]}\n')
-                file_handle.write(f'{self._score[1]}\n')
-                file_handle.write(f'{(self._current_time_bonuses[0][1] -datetime.now()).seconds if self._current_time_bonuses[0][1] > datetime.now() else ""}')
-                file_handle.write('\n')
-                file_handle.write(f'{(self._current_time_bonuses[1][1] -datetime.now()).seconds if self._current_time_bonuses[1][1] > datetime.now() else ""}')
 
 
     def _set_up_go_back_buttons(self):
@@ -189,9 +180,6 @@ class MainWindow(QMainWindow):
             score_to_add = (score_to_add[0], score_to_add[1] * self._current_time_bonuses[1][0])
         self._score = (self._score[0]+score_to_add[0], self._score[1] + score_to_add[1])
         self._ui.score.setText(f'{self._score[0]} - {self._score[1]}')
-        with open('score.txt', 'w') as file_handle:
-            file_handle.write(f'{self._score[0]}\n')
-            file_handle.write(f'{self._score[1]}\n')
 
     def _set_up_buttons(self):
         self._set_up_go_back_buttons()

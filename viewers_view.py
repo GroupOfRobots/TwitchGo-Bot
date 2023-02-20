@@ -16,18 +16,14 @@ class ViewersView(QMainWindow):
         self._stylesheet = 'background-image: url("twitch_go.png");background-repeat:no-repeat;background-position:center;'
         self.setStyleSheet(self._stylesheet)
         self._main_window = main_window
+        self._ui.bonus_time_first.setText("")
+        self._ui.bonus_time_second.setText("")
 
     def run_window(self):
-        if datetime.now().microsecond//500 % 2 == 1:
-            with open("score.txt", 'r') as file_handle:
-                score = f'{(file_handle.readline()).strip():>2} : {(file_handle.readline()):2}'
-                self._ui.score.setText(score)
-                line = file_handle.readline()
-                if not line.strip() == "":
-                    self._ui.bonus_time_first.setText(line)
-                line = file_handle.readline()
-                if not line.strip() == "":
-                    self._ui.bonus_time_second.setText(line)
+        score = f'{self._main_window._score[0]:2} : {self._main_window._score[1]:2}'
+        self._ui.score.setText(score)
+        self._ui.bonus_time_first.setText(f'{(self._main_window._current_time_bonuses[0][1] -datetime.now()).seconds if self._main_window._current_time_bonuses[0][1] > datetime.now() else ""}')
+        self._ui.bonus_time_second.setText(f'{(self._main_window._current_time_bonuses[1][1] -datetime.now()).seconds if self._main_window._current_time_bonuses[1][1] > datetime.now() else ""}')
 
 
 
