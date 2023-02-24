@@ -1,5 +1,5 @@
 from resource_gathering_ui import Ui_MainWindow
-from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QDialogButtonBox
+from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem
 from PySide2.QtGui import QBrush, QColor, QPalette, QPixmap
 from PySide2.QtCore import Qt
 import sys

@@ -1,7 +1,5 @@
 from viewers_view_ui import Ui_MainWindow
 from PySide2.QtWidgets import QMainWindow, QApplication
-from PySide2.QtGui import QPixmap
-from PySide2.QtCore import Qt
 import sys
 from datetime import datetime
 from time import sleep
@@ -36,7 +34,6 @@ if __name__ == "__main__":
 
     window._ui.bonus_time_first.setText("")
     window._ui.bonus_time_second.setText("")
-
 
     line = None
     while window.isVisible():
