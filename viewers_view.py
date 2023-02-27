@@ -1,5 +1,5 @@
 from viewers_view_ui import Ui_MainWindow
-from PySide2.QtWidgets import QMainWindow, QApplication
+from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem
 import sys
 from datetime import datetime
 from time import sleep
@@ -16,14 +16,38 @@ class ViewersView(QMainWindow):
         self._main_window = main_window
         self._ui.bonus_time_first.setText("")
         self._ui.bonus_time_second.setText("")
+        self._last_bonuses = [["", "", ""], ["", "", ""]]
+        self._number_of_bonuses_on_display = 3
 
     def run_window(self):
         score = f'{self._main_window._score[0]:2} : {self._main_window._score[1]:2}'
         self._ui.score.setText(score)
         self._ui.bonus_time_first.setText(f'{(self._main_window._current_time_bonuses[0][1] -datetime.now()).seconds if self._main_window._current_time_bonuses[0][1] > datetime.now() else ""}')
         self._ui.bonus_time_second.setText(f'{(self._main_window._current_time_bonuses[1][1] -datetime.now()).seconds if self._main_window._current_time_bonuses[1][1] > datetime.now() else ""}')
+        self._display_previous_bonuses()
 
+    def _display_previous_bonuses(self):
+        self._ui.last_bonuses_first.clear()
+        for bonus in self._last_bonuses[0]:
+            item = QListWidgetItem(bonus)
+            item.setText(bonus)
+            self._ui.last_bonuses_first.addItem(item)
 
+        self._ui.last_bonuses_second.clear()
+        for bonus in self._last_bonuses[1]:
+            item = QListWidgetItem(bonus)
+            item.setText(bonus)
+            self._ui.last_bonuses_second.addItem(item)
+
+    def add_bonus_for_first(self, bonus):
+        new_list = self._last_bonuses[0][1:self._number_of_bonuses_on_display]
+        new_list.append(bonus.name())
+        self._last_bonuses[0] = new_list
+
+    def add_bonus_for_second(self, bonus):
+        new_list = self._last_bonuses[1][1:self._number_of_bonuses_on_display]
+        new_list.append(bonus.name())
+        self._last_bonuses[1] = new_list
 
 
 if __name__ == "__main__":

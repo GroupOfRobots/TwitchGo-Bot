@@ -35,6 +35,7 @@ class MainWindow(QMainWindow):
         self._ui.game_logo.setPixmap(QPixmap("logo.png"))
         self._ui.game_logo.setAlignment(Qt.AlignCenter)
         self._display_bonus_time_left()
+        self._viewers_view = ViewersView(self)
 
     def score(self):
         return self._score
@@ -95,6 +96,7 @@ class MainWindow(QMainWindow):
             self._set_score((0, -1))
 
     def _add_curent_bonus_first(self):
+        self._viewers_view.add_bonus_for_first(self._current_item_first.bonus)
         if type(self._current_item_first.bonus) == TimeBonus:
             self._current_time_bonuses[0] = (self._current_item_first.bonus.bonus_points(), datetime.now() + timedelta(minutes=self._current_item_first.bonus.bonus_time()))
         else:
@@ -106,6 +108,7 @@ class MainWindow(QMainWindow):
         self._ui.first_team_bonuses.setCurrentIndex(0)
 
     def _add_curent_bonus_second(self):
+        self._viewers_view.add_bonus_for_second(self._current_item_second.bonus)
         if type(self._current_item_second.bonus) == TimeBonus:
             self._current_time_bonuses[1] = (self._current_item_second.bonus.bonus_points(), datetime.now() + timedelta(minutes=self._current_item_second.bonus.bonus_time()))
         else:
@@ -117,6 +120,8 @@ class MainWindow(QMainWindow):
         self._ui.second_team_bonuses.setCurrentIndex(0)
 
     def _add_curent_bonus_general(self):
+        self._viewers_view.add_bonus_for_first(self._current_item_general.bonus)
+        self._viewers_view.add_bonus_for_second(self._current_item_general.bonus)
         if type(self._current_item_general.bonus) == TimeBonus:
             self._current_time_bonuses[1] = (self._current_item_general.bonus.bonus_points(), datetime.now() + timedelta(minutes=self._current_item_general.bonus.bonus_time()))
             self._current_time_bonuses[0] = (self._current_item_general.bonus.bonus_points(), datetime.now() + timedelta(minutes=self._current_item_general.bonus.bonus_time()))
@@ -213,6 +218,9 @@ class MainWindow(QMainWindow):
         self._ui.general_bonus_list.clear()
         self._set_up_bonusses_list()
 
+    def set_viewers_view(self, viewers_view: ViewersView):
+        self._viewers_view = viewers_view
+
 
 def gui_main(args):
     app = QApplication(args)
@@ -220,6 +228,7 @@ def gui_main(args):
     window.show()
     viewers_view = ViewersView(window)
     viewers_view.show()
+    window.set_viewers_view(viewers_view)
     while window.isVisible():
         viewers_view.run_window()
         window._display_bonus_time_left()
