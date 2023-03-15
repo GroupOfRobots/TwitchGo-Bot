@@ -17,7 +17,7 @@ class ViewersView(QMainWindow):
         self._ui.bonus_time_first.setText("")
         self._ui.bonus_time_second.setText("")
         self._last_bonuses = [["", "", ""], ["", "", ""]]
-        self._latest_votes = dict()
+        self._latest_votes = {"123": "456"}
         self._number_of_bonuses_on_display = 3
         self._display_last_votes()
 
