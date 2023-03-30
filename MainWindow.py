@@ -8,6 +8,8 @@ from Bonus import Bonus
 from Time_Bonus import TimeBonus
 from datetime import datetime, timedelta
 from viewers_view import ViewersView
+from chat_bot import ChatBot
+
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None) -> None:
@@ -163,7 +165,6 @@ class MainWindow(QMainWindow):
         self._ui.bonus_time_first.setText(f'{(self._current_time_bonuses[0][1] -datetime.now()).seconds if self._current_time_bonuses[0][1] > datetime.now() else ""}')
         self._ui.bonus_time_second.setText(f'{(self._current_time_bonuses[1][1] -datetime.now()).seconds if self._current_time_bonuses[1][1] > datetime.now() else ""}')
 
-
     def _set_up_go_back_buttons(self):
         def _go_back_first():
             self._ui.first_team_bonuses.setCurrentIndex(0)
@@ -229,11 +230,13 @@ def gui_main(args):
     viewers_view = ViewersView(window)
     viewers_view.show()
     window.set_viewers_view(viewers_view)
+    chat_bot = ChatBot(viewers_view.set_latest_votes)
+    chat_bot.run()
+
     while window.isVisible():
         viewers_view.run_window()
         window._display_bonus_time_left()
         app.processEvents()
-
 
 if(__name__ == "__main__"):
     gui_main(sys.argv)

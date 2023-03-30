@@ -17,7 +17,7 @@ class ViewersView(QMainWindow):
         self._ui.bonus_time_first.setText("")
         self._ui.bonus_time_second.setText("")
         self._last_bonuses = [["", "", ""], ["", "", ""]]
-        self._latest_votes = {"123": "456"}
+        self._latest_votes = {"0": "0"}
         self._number_of_bonuses_on_display = 3
         self._display_last_votes()
 
@@ -27,6 +27,7 @@ class ViewersView(QMainWindow):
         self._ui.bonus_time_first.setText(f'{(self._main_window._current_time_bonuses[0][1] -datetime.now()).seconds if self._main_window._current_time_bonuses[0][1] > datetime.now() else ""}')
         self._ui.bonus_time_second.setText(f'{(self._main_window._current_time_bonuses[1][1] -datetime.now()).seconds if self._main_window._current_time_bonuses[1][1] > datetime.now() else ""}')
         self._display_previous_bonuses()
+        self._display_last_votes()
 
     def _display_previous_bonuses(self):
         self._ui.last_bonuses_first.clear()
