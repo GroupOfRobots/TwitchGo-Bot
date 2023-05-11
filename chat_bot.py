@@ -3,7 +3,7 @@ import threading
 
 
 class ChatBot:
-    def __init__(self, set_latest_votes, latest_votes):
+    def __init__(self, set_latest_votes, get_latest_votes):
         self._sock = socket.socket()
         self._server = "irc.chat.twitch.tv"
         self._port = 6667
@@ -13,7 +13,7 @@ class ChatBot:
         self._channel = "#knr_bionik_tv"
         self._channel = "#nienawidzekomarow"
         self._set_votes = set_latest_votes
-        self._latest_votes = latest_votes
+        self._get_latest_votes = get_latest_votes
 
         self.connect()
 
@@ -25,7 +25,11 @@ class ChatBot:
         self._sock.send(f"JOIN {self._channel}\n".encode('utf-8'))
 
     def response(self):
-        resp = self._sock.recv(2048).decode('utf-8')
+        try:
+            resp = self._sock.recv(2048).decode('utf-8')
+        except ConnectionResetError:
+            self.connect()
+            resp = self._sock.recv(2048).decode('utf-8')
 
         if resp == "":
             self.run()
@@ -37,10 +41,11 @@ class ChatBot:
         message = resp.split(self._channel)[-1][2:].strip()
 
         print(username, message)
+        message_list = message.split()
 
-        if len(message.split()) > 1:
-            command = message.split()[0]
-            argument = message.split()[1]
+        if len(message_list) > 1 and message_list[0][0] == '!':
+            command = message_list[0]
+            argument = message_list[1]
             print("Command: ", command, argument)
 
             if command == "!vote":
@@ -49,17 +54,23 @@ class ChatBot:
         self.run()
 
     def run(self):
-        resp = threading.Thread(target=self.response, daemon=True)
-        resp.start()
+        try:
+            resp = threading.Thread(target=self.response, daemon=True)
+            resp.start()
+        except Exception as e:
+            print(e)
 
     def vote(self, username, vote_argument):
         if self.can_vote(username):
-            if vote_argument in self._latest_votes.keys():
-                self._latest_votes[vote_argument].append(username)
-                self._set_votes(self._latest_votes)
+            print(vote_argument)
+            for key in self._get_latest_votes().keys():
+                print(key)
+
+            if vote_argument in self._get_latest_votes().keys():
+                self._get_latest_votes()[vote_argument].add_vote(username)
 
     def can_vote(self, username):
-        for option in self._latest_votes.keys():
-            if username in self._latest_votes[option]:
+        for option in self._get_latest_votes().keys():
+            if username in self._get_latest_votes()[option].get_votes:
                 return False
         return True

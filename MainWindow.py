@@ -239,7 +239,8 @@ def gui_main(args):
         window._display_bonus_time_left()
         app.processEvents()
 
-if(__name__ == "__main__"):
+
+if __name__ == "__main__":
     gui_main(sys.argv)
     # now = datetime.now()
     # now2 = datetime.now()
