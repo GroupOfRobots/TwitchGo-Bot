@@ -17,7 +17,7 @@ class ViewersView(QMainWindow):
         self._ui.bonus_time_first.setText("")
         self._ui.bonus_time_second.setText("")
         self._last_bonuses = [["", "", ""], ["", "", ""]]
-        self._latest_votes = {"0": "0"}
+        self._latest_votes = {"trap1": [], "trap2": [], "trap3": []}
         self._number_of_bonuses_on_display = 3
         self._display_last_votes()
 
@@ -55,12 +55,16 @@ class ViewersView(QMainWindow):
     def _display_last_votes(self):
         vote_string = ""
         for vote in self._latest_votes.keys():
-            vote_string += f'{vote}: {self._latest_votes[vote]}\t'
+            vote_string += f'{vote}: {len(self._latest_votes[vote])}\t'
         self._ui.votesl.setText(vote_string)
 
     def set_latest_votes(self, latest_votes: dict):
         self._latest_votes = latest_votes
         self._display_last_votes
+
+    @property
+    def get_latest_votes(self):
+        return self._latest_votes
 
 
 if __name__ == "__main__":

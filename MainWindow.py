@@ -230,7 +230,8 @@ def gui_main(args):
     viewers_view = ViewersView(window)
     viewers_view.show()
     window.set_viewers_view(viewers_view)
-    chat_bot = ChatBot(viewers_view.set_latest_votes)
+    chat_bot = ChatBot(viewers_view.set_latest_votes,
+                       viewers_view.get_latest_votes)
     chat_bot.run()
 
     while window.isVisible():

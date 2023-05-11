@@ -3,15 +3,17 @@ import threading
 
 
 class ChatBot:
-    def __init__(self, set_latest_votes):
+    def __init__(self, set_latest_votes, latest_votes):
         self._sock = socket.socket()
         self._server = "irc.chat.twitch.tv"
         self._port = 6667
-        self._nickname = "nienawidzekomarow"
+        self._nickname = "TwitchGo_bot"
         self._token = "oauth:nnz481ral6ao5zt5bqhes4mw01womg"
+        self._token = "oauth:he2yw977b6bq42qtsrcwxg40fk1r4w"
         self._channel = "#knr_bionik_tv"
-        self._user_votes = [[], []]
+        self._channel = "#nienawidzekomarow"
         self._set_votes = set_latest_votes
+        self._latest_votes = latest_votes
 
         self.connect()
 
@@ -34,10 +36,15 @@ class ChatBot:
         username = resp.split(self._channel)[0].split('!')[0][1:].strip()
         message = resp.split(self._channel)[-1][2:].strip()
 
-        command, argument = message.split()[:2]
+        print(username, message)
 
-        if command == "!vote":
-            self.vote(username, int(argument))
+        if len(message.split()) > 1:
+            command = message.split()[0]
+            argument = message.split()[1]
+            print("Command: ", command, argument)
+
+            if command == "!vote":
+                self.vote(username, argument)
 
         self.run()
 
@@ -45,19 +52,14 @@ class ChatBot:
         resp = threading.Thread(target=self.response, daemon=True)
         resp.start()
 
-    def vote(self, username, team_number_str):
-        try:
-            team_number = int(team_number_str)
-        except ValueError:
-            return
-        if 0 < team_number < 3:
-            self.save_vote(username, team_number)
+    def vote(self, username, vote_argument):
+        if self.can_vote(username):
+            if vote_argument in self._latest_votes.keys():
+                self._latest_votes[vote_argument].append(username)
+                self._set_votes(self._latest_votes)
 
-    def save_vote(self, username, team_number):
-        if username not in self._user_votes[0] and \
-                username not in self._user_votes[1]:
-            self._user_votes[team_number-1].append(username)
-
-        votes = {len(self._user_votes[0]): len(self._user_votes[1])}
-
-        self._set_votes(votes)
+    def can_vote(self, username):
+        for option in self._latest_votes.keys():
+            if username in self._latest_votes[option]:
+                return False
+        return True
