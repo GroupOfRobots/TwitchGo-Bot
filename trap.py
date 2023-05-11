@@ -12,12 +12,13 @@ class Trap:
     def get_votes(self):
         return self._votes
 
-    def set_votes(self, votes: list):
-        self._votes = votes
+    def clear_votes(self):
+        self._votes = []
 
     def add_vote(self, username):
         self._votes.append(username)
 
     def run(self):
+        print(f"{self.get_name} is running")
         if self._command is not None:
             self._command()
