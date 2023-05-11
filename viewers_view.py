@@ -26,12 +26,13 @@ class ViewersView(QMainWindow):
         self._display_last_votes()
         self._time_start = int(time.time())
         self._time_between_commands = 10
+        self._number_of_traps_on_display = 3
+        self._choose_random_traps(self._number_of_traps_on_display)
 
     def run_window(self):
         if (int(time.time()) - self._time_start) > self._time_between_commands:
             self._time_start = int(time.time())
-            self.choose_random_traps(3)
-            # TODO: execute chosen trap and clear votes
+            self._finish_voting()
 
         score = f'{self._main_window._score[0]:2} : {self._main_window._score[1]:2}'
         self._ui.score.setText(score)
@@ -73,7 +74,7 @@ class ViewersView(QMainWindow):
         self._latest_votes = latest_votes
         self._display_last_votes
 
-    def choose_random_traps(self, number_of_traps):
+    def _choose_random_traps(self, number_of_traps):
         traps = random.sample(self._available_traps, number_of_traps)
         traps_dict = {}
 
@@ -84,6 +85,31 @@ class ViewersView(QMainWindow):
 
     def get_latest_votes(self):
         return self._latest_votes
+
+    def _clear_votes(self):
+        for trap in self._available_traps:
+            trap.clear_votes()
+
+    def _run_trap_with_most_votes(self):
+        max_votes = 0
+        winning_traps = []
+
+        for trap_name in self._latest_votes.keys():
+            trap = self._latest_votes[trap_name]
+            max_votes = max(max_votes, len(trap.get_votes))
+
+        for trap_name in self._latest_votes.keys():
+            trap = self._latest_votes[trap_name]
+
+            if len(trap.get_votes) == max_votes:
+                winning_traps.append(trap)
+
+        random.choice(winning_traps).run()
+
+    def _finish_voting(self):
+        self._run_trap_with_most_votes()
+        self._choose_random_traps(self._number_of_traps_on_display)
+        self._clear_votes()
 
 
 if __name__ == "__main__":
@@ -99,4 +125,4 @@ if __name__ == "__main__":
     while window.isVisible():
         window.run_window()
         app.processEvents()
-        sleep(0.2)
+        time.sleep(0.2)

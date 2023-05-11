@@ -9,9 +9,7 @@ class ChatBot:
         self._port = 6667
         self._nickname = "TwitchGo_bot"
         self._token = "oauth:nnz481ral6ao5zt5bqhes4mw01womg"
-        self._token = "oauth:he2yw977b6bq42qtsrcwxg40fk1r4w"
         self._channel = "#knr_bionik_tv"
-        self._channel = "#nienawidzekomarow"
         self._set_votes = set_latest_votes
         self._get_latest_votes = get_latest_votes
 
@@ -40,13 +38,12 @@ class ChatBot:
         username = resp.split(self._channel)[0].split('!')[0][1:].strip()
         message = resp.split(self._channel)[-1][2:].strip()
 
-        print(username, message)
+        print(f"{username}: {message}")
         message_list = message.split()
 
         if len(message_list) > 1 and message_list[0][0] == '!':
             command = message_list[0]
             argument = message_list[1]
-            print("Command: ", command, argument)
 
             if command == "!vote":
                 self.vote(username, argument)
@@ -54,18 +51,11 @@ class ChatBot:
         self.run()
 
     def run(self):
-        try:
-            resp = threading.Thread(target=self.response, daemon=True)
-            resp.start()
-        except Exception as e:
-            print(e)
+        resp = threading.Thread(target=self.response, daemon=True)
+        resp.start()
 
     def vote(self, username, vote_argument):
         if self.can_vote(username):
-            print(vote_argument)
-            for key in self._get_latest_votes().keys():
-                print(key)
-
             if vote_argument in self._get_latest_votes().keys():
                 self._get_latest_votes()[vote_argument].add_vote(username)
 
