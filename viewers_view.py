@@ -67,7 +67,7 @@ class ViewersView(QMainWindow):
     def _display_last_votes(self):
         vote_string = ""
         for vote in self._latest_votes.keys():
-            vote_string += f'{vote}: {len(self._latest_votes[vote].get_votes)}\t'
+            vote_string += f'{str(self._latest_votes[vote])}        '
         self._ui.votesl.setText(vote_string)
 
     def set_latest_votes(self, latest_votes: dict):

@@ -22,3 +22,6 @@ class Trap:
         print(f"{self.get_name} is running")
         if self._command is not None:
             self._command()
+
+    def __str__(self):
+        return f"{self._name}: {len(self._votes)}"
