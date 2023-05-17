@@ -37,7 +37,7 @@ class MainWindow(QMainWindow):
         self._ui.game_logo.setPixmap(QPixmap("logo.png"))
         self._ui.game_logo.setAlignment(Qt.AlignCenter)
         self._display_bonus_time_left()
-        self._viewers_view = ViewersView(self)
+        self._viewers_view = None
 
     def score(self):
         return self._score
