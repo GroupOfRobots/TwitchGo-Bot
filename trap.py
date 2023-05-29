@@ -1,4 +1,6 @@
 from obstacle import ObstacleActivator
+import logging
+
 
 class Trap:
     obstacleActivator = ObstacleActivator([])
@@ -25,6 +27,8 @@ class Trap:
 
     def run(self):
         print(f"{self.get_name} is running")
+        logging.info(f"[TRAP] {self._name} is running")
+
         if self._command is not None:
             self._command()
         else:
