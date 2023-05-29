@@ -1,5 +1,6 @@
 import socket
 import threading
+import logging
 
 
 class ChatBot:
@@ -39,6 +40,7 @@ class ChatBot:
         message = resp.split(self._channel)[-1][2:].strip()
 
         print(f"{username}: {message}")
+        logging.info(f"[MESSAGE] {username}: {message}")
         message_list = message.split()
 
         if len(message_list) > 1 and message_list[0][0] == '!':
