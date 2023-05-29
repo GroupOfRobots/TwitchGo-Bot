@@ -6,7 +6,8 @@ import sys
 from bonus_adding import BonusAdding
 from Bonus import Bonus
 from Time_Bonus import TimeBonus
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
+import logging
 from viewers_view import ViewersView
 from chat_bot import ChatBot
 
@@ -38,6 +39,14 @@ class MainWindow(QMainWindow):
         self._ui.game_logo.setAlignment(Qt.AlignCenter)
         self._display_bonus_time_left()
         self._viewers_view = None
+
+        today = date.today().strftime("%Y-%m-%d")
+
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="[%(asctime)s] %(message)s",
+            filename=f"logs/{today}.log"
+        )
 
     def score(self):
         return self._score
