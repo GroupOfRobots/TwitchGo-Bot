@@ -10,6 +10,7 @@ from datetime import datetime, timedelta, date
 import logging
 from viewers_view import ViewersView
 from chat_bot import ChatBot
+from logger import Logger
 
 
 class MainWindow(QMainWindow):
@@ -25,10 +26,14 @@ class MainWindow(QMainWindow):
         self._current_item_second = None
         self._current_item_general = None
         self._current_time_bonuses = [[1, datetime.now()], [1, datetime.now()]]
-        self._bonuses = [Bonus('first bonus', -2, (1, 2)), Bonus('second bonus', 3, (4, 3)), TimeBonus('time_bonus', 2, (6, 7), .5)]
+        self._bonuses = [
+            Bonus("first bonus", -2, (1, 2)),
+            Bonus("second bonus", 3, (4, 3)),
+            TimeBonus("time_bonus", 2, (6, 7), 0.5),
+        ]
         self._ui = Ui_MainWindow()
         self._ui.setupUi(self)
-        self._ui.score.setText(f'{self._score[0]} - {self._score[1]}')
+        self._ui.score.setText(f"{self._score[0]} - {self._score[1]}")
         self._set_up_buttons()
         self._set_up_go_back_buttons()
         self._set_up_bonusses_list()
@@ -45,7 +50,7 @@ class MainWindow(QMainWindow):
         logging.basicConfig(
             level=logging.DEBUG,
             format="[%(asctime)s] %(message)s",
-            filename=f"logs/{today}.log"
+            filename=f"logs/{today}.log",
         )
 
     def score(self):
@@ -109,24 +114,44 @@ class MainWindow(QMainWindow):
     def _add_curent_bonus_first(self):
         self._viewers_view.add_bonus_for_first(self._current_item_first.bonus)
         if type(self._current_item_first.bonus) == TimeBonus:
-            self._current_time_bonuses[0] = (self._current_item_first.bonus.bonus_points(), datetime.now() + timedelta(minutes=self._current_item_first.bonus.bonus_time()))
+            self._current_time_bonuses[0] = (
+                self._current_item_first.bonus.bonus_points(),
+                datetime.now()
+                + timedelta(minutes=self._current_item_first.bonus.bonus_time()),
+            )
         else:
             self._set_score((self._current_item_first.bonus.bonus_points(), 0))
-        self._ui.second_t_bonus_list.takeItem(self._ui.second_t_bonus_list.row(self._current_item_first.second_one))
-        self._ui.first_t_bonus_list.takeItem(self._ui.first_t_bonus_list.row(self._current_item_first))
-        self._ui.general_bonus_list.takeItem(self._ui.general_bonus_list.row(self._current_item_first.general))
+        self._ui.second_t_bonus_list.takeItem(
+            self._ui.second_t_bonus_list.row(self._current_item_first.second_one)
+        )
+        self._ui.first_t_bonus_list.takeItem(
+            self._ui.first_t_bonus_list.row(self._current_item_first)
+        )
+        self._ui.general_bonus_list.takeItem(
+            self._ui.general_bonus_list.row(self._current_item_first.general)
+        )
         self._bonuses.remove(self._current_item_first.bonus)
         self._ui.first_team_bonuses.setCurrentIndex(0)
 
     def _add_curent_bonus_second(self):
         self._viewers_view.add_bonus_for_second(self._current_item_second.bonus)
         if type(self._current_item_second.bonus) == TimeBonus:
-            self._current_time_bonuses[1] = (self._current_item_second.bonus.bonus_points(), datetime.now() + timedelta(minutes=self._current_item_second.bonus.bonus_time()))
+            self._current_time_bonuses[1] = (
+                self._current_item_second.bonus.bonus_points(),
+                datetime.now()
+                + timedelta(minutes=self._current_item_second.bonus.bonus_time()),
+            )
         else:
             self._set_score((self._current_item_second.bonus.bonus_points(), 0))
-        self._ui.first_t_bonus_list.takeItem(self._ui.first_t_bonus_list.row(self._current_item_second.second_one))
-        self._ui.second_t_bonus_list.takeItem(self._ui.second_t_bonus_list.row(self._current_item_second))
-        self._ui.general_bonus_list.takeItem(self._ui.general_bonus_list.row(self._current_item_second.general))
+        self._ui.first_t_bonus_list.takeItem(
+            self._ui.first_t_bonus_list.row(self._current_item_second.second_one)
+        )
+        self._ui.second_t_bonus_list.takeItem(
+            self._ui.second_t_bonus_list.row(self._current_item_second)
+        )
+        self._ui.general_bonus_list.takeItem(
+            self._ui.general_bonus_list.row(self._current_item_second.general)
+        )
         self._bonuses.remove(self._current_item_second.bonus)
         self._ui.second_team_bonuses.setCurrentIndex(0)
 
@@ -134,13 +159,32 @@ class MainWindow(QMainWindow):
         self._viewers_view.add_bonus_for_first(self._current_item_general.bonus)
         self._viewers_view.add_bonus_for_second(self._current_item_general.bonus)
         if type(self._current_item_general.bonus) == TimeBonus:
-            self._current_time_bonuses[1] = (self._current_item_general.bonus.bonus_points(), datetime.now() + timedelta(minutes=self._current_item_general.bonus.bonus_time()))
-            self._current_time_bonuses[0] = (self._current_item_general.bonus.bonus_points(), datetime.now() + timedelta(minutes=self._current_item_general.bonus.bonus_time()))
+            self._current_time_bonuses[1] = (
+                self._current_item_general.bonus.bonus_points(),
+                datetime.now()
+                + timedelta(minutes=self._current_item_general.bonus.bonus_time()),
+            )
+            self._current_time_bonuses[0] = (
+                self._current_item_general.bonus.bonus_points(),
+                datetime.now()
+                + timedelta(minutes=self._current_item_general.bonus.bonus_time()),
+            )
         else:
-            self._set_score((self._current_item_general.bonus.bonus_points(), self._current_item_general.bonus.bonus_points()))
-        self._ui.second_t_bonus_list.takeItem(self._ui.second_t_bonus_list.row(self._current_item_general.second_team))
-        self._ui.first_t_bonus_list.takeItem(self._ui.first_t_bonus_list.row(self._current_item_general.first_team))
-        self._ui.general_bonus_list.takeItem(self._ui.general_bonus_list.row(self._current_item_general))
+            self._set_score(
+                (
+                    self._current_item_general.bonus.bonus_points(),
+                    self._current_item_general.bonus.bonus_points(),
+                )
+            )
+        self._ui.second_t_bonus_list.takeItem(
+            self._ui.second_t_bonus_list.row(self._current_item_general.second_team)
+        )
+        self._ui.first_t_bonus_list.takeItem(
+            self._ui.first_t_bonus_list.row(self._current_item_general.first_team)
+        )
+        self._ui.general_bonus_list.takeItem(
+            self._ui.general_bonus_list.row(self._current_item_general)
+        )
         self._bonuses.remove(self._current_item_general.bonus)
         self._ui.general_bonuses.setCurrentIndex(0)
 
@@ -163,16 +207,20 @@ class MainWindow(QMainWindow):
         self._ui.bonus_desceiption_general.setText(str(bonus))
 
     def _create_bonus_description(self, bonus: Bonus):
-        description = f'{bonus.name():15}'
+        description = f"{bonus.name():15}"
         pos = str(bonus.position())
-        description += f'{pos:8}'
+        description += f"{pos:8}"
         if type(bonus) == TimeBonus:
-            description += '(t)'
+            description += "(t)"
         return description
 
     def _display_bonus_time_left(self):
-        self._ui.bonus_time_first.setText(f'{(self._current_time_bonuses[0][1] -datetime.now()).seconds if self._current_time_bonuses[0][1] > datetime.now() else ""}')
-        self._ui.bonus_time_second.setText(f'{(self._current_time_bonuses[1][1] -datetime.now()).seconds if self._current_time_bonuses[1][1] > datetime.now() else ""}')
+        self._ui.bonus_time_first.setText(
+            f'{(self._current_time_bonuses[0][1] -datetime.now()).seconds if self._current_time_bonuses[0][1] > datetime.now() else ""}'
+        )
+        self._ui.bonus_time_second.setText(
+            f'{(self._current_time_bonuses[1][1] -datetime.now()).seconds if self._current_time_bonuses[1][1] > datetime.now() else ""}'
+        )
 
     def _set_up_go_back_buttons(self):
         def _go_back_first():
@@ -190,11 +238,20 @@ class MainWindow(QMainWindow):
 
     def _set_score(self, score_to_add: tuple):
         if datetime.now() < self._current_time_bonuses[0][1]:
-            score_to_add = (score_to_add[0] * self._current_time_bonuses[0][0], score_to_add[1])
+            score_to_add = (
+                score_to_add[0] * self._current_time_bonuses[0][0],
+                score_to_add[1],
+            )
         if datetime.now() < self._current_time_bonuses[1][1]:
-            score_to_add = (score_to_add[0], score_to_add[1] * self._current_time_bonuses[1][0])
-        self._score = (self._score[0]+score_to_add[0], self._score[1] + score_to_add[1])
-        self._ui.score.setText(f'{self._score[0]} - {self._score[1]}')
+            score_to_add = (
+                score_to_add[0],
+                score_to_add[1] * self._current_time_bonuses[1][0],
+            )
+        self._score = (
+            self._score[0] + score_to_add[0],
+            self._score[1] + score_to_add[1],
+        )
+        self._ui.score.setText(f"{self._score[0]} - {self._score[1]}")
 
     def _set_up_buttons(self):
         self._set_up_go_back_buttons()
@@ -217,12 +274,17 @@ class MainWindow(QMainWindow):
         name = self._bonus_widwo._ui.bonus_name.text()
         file_name = self._bonus_widwo._ui.file_name.text()
         bonus_vla = self._bonus_widwo._ui.bonus_value.value()
-        position = (self._bonus_widwo._ui.position_x.value(), self._bonus_widwo._ui.position_y.value())
+        position = (
+            self._bonus_widwo._ui.position_x.value(),
+            self._bonus_widwo._ui.position_y.value(),
+        )
         if self._bonus_widwo._ui.ponus_creation.currentIndex() == 0:
             self._bonuses.append(Bonus(name, bonus_vla, position, file_name))
         else:
             bonus_time = self._bonus_widwo._ui.bonus_duration.value()
-            self._bonuses.append(TimeBonus(name, bonus_vla, position, bonus_time, file_name))
+            self._bonuses.append(
+                TimeBonus(name, bonus_vla, position, bonus_time, file_name)
+            )
         self._ui.second_t_bonus_list.clear()
         self._ui.first_t_bonus_list.clear()
         self._ui.general_bonus_list.clear()
@@ -239,8 +301,7 @@ def gui_main(args):
     viewers_view = ViewersView(window)
     viewers_view.show()
     window.set_viewers_view(viewers_view)
-    chat_bot = ChatBot(viewers_view.set_latest_votes,
-                       viewers_view.get_latest_votes)
+    chat_bot = ChatBot(viewers_view.set_latest_votes, viewers_view.get_latest_votes)
     chat_bot.run()
 
     while window.isVisible():
