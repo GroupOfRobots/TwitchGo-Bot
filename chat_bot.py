@@ -13,6 +13,7 @@ class ChatBot:
         self._channel = "#knr_bionik_tv"
         self._set_votes = set_latest_votes
         self._get_latest_votes = get_latest_votes
+        self._max_reconnects = 5
 
         self.connect()
 
@@ -23,12 +24,25 @@ class ChatBot:
         self._sock.send(f"NICK {self._nickname}\n".encode('utf-8'))
         self._sock.send(f"JOIN {self._channel}\n".encode('utf-8'))
 
+    def reconnect(self):
+        for attempt in range(self._max_reconnects):
+            try:
+                logging.info(f"Reconnecting... Attempt {attempt + 1}")
+                self.connect()
+                break
+            except socket.error:
+                wait_time = 2 ** attempt
+                logging.warning(f"Reconnect failed, retrying in {wait_time} seconds...")
+                time.sleep(wait_time)
+        logging.error("Max retries reached. Could not reconnect.")
+        raise ConnectionError("Max retries reached. Could not reconnect.")
+
     def response(self):
         try:
             resp = self._sock.recv(2048).decode('utf-8')
         except ConnectionResetError:
-            self.connect()
-            resp = self._sock.recv(2048).decode('utf-8')
+            self.reconnect()
+            return
 
         if resp == "":
             self.run()
