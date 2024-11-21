@@ -1,7 +1,7 @@
 from resource_gathering_ui import Ui_MainWindow
-from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem
-from PySide2.QtGui import QBrush, QColor, QPalette, QPixmap
-from PySide2.QtCore import Qt
+from PySide6.QtWidgets import QMainWindow, QApplication, QListWidgetItem
+from PySide6.QtGui import QBrush, QColor, QPalette, QPixmap
+from PySide6.QtCore import Qt
 import sys
 from bonus_adding import BonusAdding
 from Bonus import Bonus
@@ -230,6 +230,8 @@ class MainWindow(QMainWindow):
 
     def set_viewers_view(self, viewers_view: ViewersView):
         self._viewers_view = viewers_view
+
+
 
 
 def gui_main(args):

@@ -1,5 +1,7 @@
 from viewers_view_ui import Ui_MainWindow
-from PySide2.QtWidgets import QMainWindow, QApplication, QListWidgetItem
+from PySide6.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QWidget, QGridLayout, QVBoxLayout, QLabel
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QBrush, QColor, QPalette, QPixmap
 import sys
 from datetime import datetime
 import time
@@ -7,23 +9,26 @@ import random
 from trap import Trap
 
 
-class ViewersView(QMainWindow):
+class ViewersView(QMainWindow, QGridLayout):
     def __init__(self, main_window, parent=None) -> None:
         super().__init__(parent=parent)
         self._ui = Ui_MainWindow()
         self._ui.setupUi(self)
         self._ui.score.setText('123')
-        self._stylesheet = 'background-image: url("twitch_go.png");background-repeat:no-repeat;background-position:center;'
+        self._stylesheet = 'background-image: url("picture.png");background-repeat:no-repeat;background-position:center;background-size: cover;'
         self.setStyleSheet(self._stylesheet)
         self._main_window = main_window
-        self._ui.bonus_time_first.setText("")
-        self._ui.bonus_time_second.setText("")
+
+        #self._ui.bonus_time_first.setText("")
+        #self._ui.bonus_time_second.setText("")
         self._last_bonuses = [["", "", ""], ["", "", ""]]
         self._number_of_bonuses_on_display = 3
         self._latest_votes = {}
+
         self._available_traps = [Trap("trap1"), Trap("trap2"), Trap("trap3"),
                                  Trap("trap4"), Trap("trap5"), Trap("trap6")]
         self._display_last_votes()
+
         self._time_start = int(time.time())
         self._time_between_commands = 10
         self._number_of_traps_on_display = 3
@@ -36,23 +41,23 @@ class ViewersView(QMainWindow):
 
         score = f'{self._main_window._score[0]:2} : {self._main_window._score[1]:2}'
         self._ui.score.setText(score)
-        self._ui.bonus_time_first.setText(f'{(self._main_window._current_time_bonuses[0][1] -datetime.now()).seconds if self._main_window._current_time_bonuses[0][1] > datetime.now() else ""}')
-        self._ui.bonus_time_second.setText(f'{(self._main_window._current_time_bonuses[1][1] -datetime.now()).seconds if self._main_window._current_time_bonuses[1][1] > datetime.now() else ""}')
+        #self._ui.bonus_time_first.setText(f'{(self._main_window._current_time_bonuses[0][1] -datetime.now()).seconds if self._main_window._current_time_bonuses[0][1] > datetime.now() else ""}')
+        #self._ui.bonus_time_second.setText(f'{(self._main_window._current_time_bonuses[1][1] -datetime.now()).seconds if self._main_window._current_time_bonuses[1][1] > datetime.now() else ""}')
         self._display_previous_bonuses()
         self._display_last_votes()
 
     def _display_previous_bonuses(self):
-        self._ui.last_bonuses_first.clear()
+        #self._ui.last_bonuses_first.clear()
         for bonus in self._last_bonuses[0]:
             item = QListWidgetItem(bonus)
             item.setText(bonus)
-            self._ui.last_bonuses_first.addItem(item)
+            #self._ui.last_bonuses_first.addItem(item)
 
-        self._ui.last_bonuses_second.clear()
+        #self._ui.last_bonuses_second.clear()
         for bonus in self._last_bonuses[1]:
             item = QListWidgetItem(bonus)
             item.setText(bonus)
-            self._ui.last_bonuses_second.addItem(item)
+            #self._ui.last_bonuses_second.addItem(item)
 
     def add_bonus_for_first(self, bonus):
         new_list = self._last_bonuses[0][1:self._number_of_bonuses_on_display]
@@ -111,11 +116,10 @@ class ViewersView(QMainWindow):
         self._choose_random_traps(self._number_of_traps_on_display)
         self._clear_votes()
 
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = ViewersView()
-    # window.setFixedSize(800, 600)
+    window.setFixedSize(800, 600)
     window.show()
 
     window._ui.bonus_time_first.setText("")

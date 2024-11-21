@@ -1,6 +1,6 @@
 import rclpy
 from rclpy.node import Node
-
+from rclpy.impl.implementation_singleton import rclpy_implementation as _rclpy
 from std_msgs.msg import Bool
 from typing import List
 
@@ -35,14 +35,14 @@ def main(args=None):
     rclpy.init(args=args)
     minimal_publisher = ObstacleActivator(["adx", "jjj"])
 
-    # rclpy.spin(minimal_publisher)
+    rclpy.spin(minimal_publisher)
     while True:
-        minimal_publisher.start_obstacle("adx")
+        #minimal_publisher.start_obstacle("adx")
     # Destroy the node explicitly
     # (optional - otherwise it will be done automatically
     # when the garbage collector destroys the node object)
-    minimal_publisher.destroy_node()
-    rclpy.shutdown()
+        minimal_publisher.destroy_node()
+        rclpy.shutdown()
 
 
 if __name__ == '__main__':

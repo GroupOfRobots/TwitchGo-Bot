@@ -798,7 +798,7 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>36</pointsize>
+            <pointsize>72</pointsize>
            </font>
           </property>
           <property name="text">
@@ -1945,7 +1945,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>72</pointsize>
        </font>
       </property>
       <property name="text">

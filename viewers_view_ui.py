@@ -8,9 +8,9 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import *
-from PySide2.QtGui import *
-from PySide2.QtWidgets import *
+from PySide6.QtCore import *
+from PySide6.QtGui import *
+from PySide6.QtWidgets import *
 
 
 class Ui_MainWindow(object):
@@ -25,10 +25,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.verticalLayout_4 = QVBoxLayout()
+        self.verticalLayout_7 = QVBoxLayout()
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        '''
         self.last_bonuses_first = QListWidget(self.centralwidget)
         self.last_bonuses_first.setObjectName(u"last_bonuses_first")
         self.last_bonuses_first.setMaximumSize(QSize(120, 100))
+        '''
         palette = QPalette()
         brush = QBrush(QColor(255, 255, 255, 255))
         brush.setStyle(Qt.SolidPattern)
@@ -94,27 +97,30 @@ class Ui_MainWindow(object):
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette.setBrush(QPalette.Disabled, QPalette.PlaceholderText, brush4)
 #endif
+        '''
         self.last_bonuses_first.setPalette(palette)
 
+
         self.verticalLayout_4.addWidget(self.last_bonuses_first)
+        '''
 
         self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
+
         self.verticalLayout_4.addItem(self.verticalSpacer_5)
-
-
-        self.horizontalLayout.addLayout(self.verticalLayout_4)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout.addItem(self.horizontalSpacer)
 
+
+        
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.bonus_time_first = QLabel(self.centralwidget)
         self.bonus_time_first.setObjectName(u"bonus_time_first")
         palette1 = QPalette()
-        brush5 = QBrush(QColor(0, 0, 0, 255))
+        brush5 = QBrush(QColor(255, 255, 255, 255))
         brush5.setStyle(Qt.SolidPattern)
         palette1.setBrush(QPalette.Active, QPalette.WindowText, brush5)
         brush6 = QBrush(QColor(255, 255, 0, 0))
@@ -164,7 +170,7 @@ class Ui_MainWindow(object):
         self.score = QLabel(self.centralwidget)
         self.score.setObjectName(u"score")
         palette2 = QPalette()
-        brush9 = QBrush(QColor(2, 2, 2, 255))
+        brush9 = QBrush(QColor(250, 250, 250, 255))
         brush9.setStyle(Qt.SolidPattern)
         palette2.setBrush(QPalette.Active, QPalette.WindowText, brush9)
         palette2.setBrush(QPalette.Active, QPalette.Text, brush5)
@@ -183,7 +189,7 @@ class Ui_MainWindow(object):
 #endif
         self.score.setPalette(palette2)
         font = QFont()
-        font.setPointSize(36)
+        font.setPointSize(72)
         self.score.setFont(font)
 
         self.verticalLayout_3.addWidget(self.score)
@@ -240,9 +246,11 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_7 = QVBoxLayout()
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        '''
         self.last_bonuses_second = QListWidget(self.centralwidget)
         self.last_bonuses_second.setObjectName(u"last_bonuses_second")
         self.last_bonuses_second.setMaximumSize(QSize(120, 100))
+        '''
         palette4 = QPalette()
         palette4.setBrush(QPalette.Active, QPalette.WindowText, brush)
         brush13 = QBrush(QColor(239, 239, 239, 0))
@@ -310,10 +318,11 @@ class Ui_MainWindow(object):
 #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
         palette4.setBrush(QPalette.Disabled, QPalette.PlaceholderText, brush8)
 #endif
+        '''
         self.last_bonuses_second.setPalette(palette4)
 
         self.verticalLayout_7.addWidget(self.last_bonuses_second)
-
+        '''
         self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_7.addItem(self.verticalSpacer_6)
@@ -331,6 +340,8 @@ class Ui_MainWindow(object):
         self.votesl = QLabel(self.centralwidget)
         self.votesl.setObjectName(u"votesl")
         palette5 = QPalette()
+        brush5 = QBrush(QColor(255, 255, 255, 255))
+        brush5.setStyle(Qt.SolidPattern)
         palette5.setBrush(QPalette.Active, QPalette.WindowText, brush5)
         palette5.setBrush(QPalette.Active, QPalette.Button, brush13)
         palette5.setBrush(QPalette.Active, QPalette.Light, brush14)
@@ -387,7 +398,7 @@ class Ui_MainWindow(object):
 #endif
         self.votesl.setPalette(palette5)
         font1 = QFont()
-        font1.setPointSize(12)
+        font1.setPointSize(36)
         self.votesl.setFont(font1)
         self.votesl.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
         self.votesl.setIndent(-1)
@@ -415,4 +426,5 @@ class Ui_MainWindow(object):
         self.bonus_time_second.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.votesl.setText("")
     # retranslateUi
+
 

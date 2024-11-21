@@ -1,15 +1,15 @@
-from obstacle import ObstacleActivator
+#from obstacle import ObstacleActivator
 import logging
 
 
 class Trap:
-    obstacleActivator = ObstacleActivator([])
+    #obstacleActivator = ObstacleActivator([])
 
     def __init__(self, name, command=None):
         self._name = name
         self._command = command
         self._votes = []
-        Trap.obstacleActivator.append(self._name)
+        #Trap.obstacleActivator.append(self._name)
 
     @property
     def get_name(self):
@@ -31,8 +31,8 @@ class Trap:
 
         if self._command is not None:
             self._command()
-        else:
-            Trap.obstacleActivator.start_obstacle(self._name)
+        #else:
+            #Trap.obstacleActivator.start_obstacle(self._name)
 
     def __str__(self):
         return f"{self._name}: {len(self._votes)}"

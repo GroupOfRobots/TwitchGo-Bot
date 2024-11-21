@@ -1,5 +1,5 @@
 from bonus_adding_ui import Ui_Dialog
-from PySide2.QtWidgets import QDialog
+from PySide6.QtWidgets import QDialog
 
 
 class BonusAdding(QDialog):
