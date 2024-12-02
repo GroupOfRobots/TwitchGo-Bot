@@ -1,12 +1,9 @@
-from viewers_view_ui import Ui_MainWindow
-from PySide6.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QWidget, QGridLayout, QVBoxLayout, QLabel
-from PySide6.QtCore import Qt
-from PySide6.QtGui import QBrush, QColor, QPalette, QPixmap
+from app.gui.ui.viewers_view_ui import Ui_MainWindow
+from PySide6.QtWidgets import QMainWindow, QApplication, QListWidgetItem, QGridLayout
 import sys
-from datetime import datetime
 import time
 import random
-from trap import Trap
+from app.core.trap import Trap
 
 
 class ViewersView(QMainWindow, QGridLayout):

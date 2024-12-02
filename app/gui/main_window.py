@@ -1,15 +1,15 @@
-from resource_gathering_ui import Ui_MainWindow
+from app.gui.ui.resource_gathering_ui import Ui_MainWindow
 from PySide6.QtWidgets import QMainWindow, QApplication, QListWidgetItem
 from PySide6.QtGui import QBrush, QColor, QPalette, QPixmap
 from PySide6.QtCore import Qt
 import sys
-from bonus_adding import BonusAdding
-from Bonus import Bonus
-from Time_Bonus import TimeBonus
+from app.gui.bonus_adding import BonusAdding
+from app.core.bonus import Bonus
+from app.core.Time_Bonus import TimeBonus
 from datetime import datetime, timedelta, date
 import logging
-from viewers_view import ViewersView
-from chat_bot import ChatBot
+from app.gui.viewers_view import ViewersView
+from app.core.chat_bot import ChatBot
 
 
 class MainWindow(QMainWindow):

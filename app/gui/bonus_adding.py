@@ -1,4 +1,4 @@
-from bonus_adding_ui import Ui_Dialog
+from app.gui.ui.bonus_adding_ui import Ui_Dialog
 from PySide6.QtWidgets import QDialog
 
 

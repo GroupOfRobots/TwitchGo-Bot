@@ -1,15 +1,15 @@
 from PySide6.QtWidgets import QApplication
 import sys
-from chat_bot import ChatBot
+from app.core.chat_bot import ChatBot
 import rclpy
 
 def gui_main(args):
     rclpy.init(args=args)
     app = QApplication(args)
-    from MainWindow import MainWindow
+    from app.gui.main_window import MainWindow
     window = MainWindow()
     window.show()
-    from viewers_view import ViewersView
+    from app.gui.viewers_view import ViewersView
     viewers_view = ViewersView(window)
     viewers_view.show()
     window.set_viewers_view(viewers_view)
@@ -17,7 +17,6 @@ def gui_main(args):
                        viewers_view.get_latest_votes)
     chat_bot.run()
 
-    from trap import Trap
     while window.isVisible():
         viewers_view.run_window()
         window._display_bonus_time_left()

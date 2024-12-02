@@ -1,4 +1,4 @@
-from Bonus import Bonus
+from app.core.bonus import Bonus
 
 
 class TimeBonus (Bonus):
