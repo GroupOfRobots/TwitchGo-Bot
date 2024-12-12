@@ -1,6 +1,7 @@
-from app.gui.ui.bonus_adding_ui import Ui_Dialog
-from PySide6.QtWidgets import QDialog
+# app/gui/windows/bonus_adding.py
 
+from PySide6.QtWidgets import QDialog
+from app.gui.ui.bonus_adding_ui import Ui_Dialog
 
 class BonusAdding(QDialog):
     def __init__(self, parent=None) -> None:
@@ -15,8 +16,8 @@ class BonusAdding(QDialog):
         self._ui.bonus_value.setValue(0)
         self._ui.position_x.setValue(0)
         self._ui.position_y.setValue(0)
-        self._ui.file_name.setText("Enter filename")
-        self._ui.file_name.setText("Enter name")
+        self._ui.file_name.setText("")
+        self._ui.bonus_name.setText("")
         return super().show()
 
     def _set_up_bonus_choice(self):
