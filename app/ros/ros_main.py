@@ -1,15 +1,15 @@
 from PySide6.QtWidgets import QApplication
 import sys
-from app.core.chat_bot import ChatBot
+from app.core.chat.chat_bot import ChatBot
 import rclpy
 
 def gui_main(args):
     rclpy.init(args=args)
     app = QApplication(args)
-    from app.gui.main_window import MainWindow
+    from app.gui.windows.main_window import MainWindow
     window = MainWindow()
     window.show()
-    from app.gui.viewers_view import ViewersView
+    from app.gui.windows.viewers_view import ViewersView
     viewers_view = ViewersView(window)
     viewers_view.show()
     window.set_viewers_view(viewers_view)
