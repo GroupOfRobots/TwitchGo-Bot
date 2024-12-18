@@ -1,13 +1,3 @@
-# -*- coding: utf-8 -*-
-
-################################################################################
-## Form generated from reading UI file 'bonus_adding_ui.ui'
-##
-## Created by: Qt User Interface Compiler version 5.15.2
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
-
 # app/gui/ui/bonus_adding_ui.py
 
 from PySide6.QtCore import Qt, QRect
@@ -65,9 +55,9 @@ class Ui_Dialog(object):
         self.file_name = QLineEdit(Dialog)
         self.verticalLayout.addWidget(self.file_name)
 
-        self.ponus_creation = QStackedWidget(Dialog)
+        self.bonus_creation = QStackedWidget(Dialog)
         self.page_regular = QWidget()
-        self.ponus_creation.addWidget(self.page_regular)
+        self.bonus_creation.addWidget(self.page_regular)
 
         self.page_time = QWidget()
         self.time_layout = QVBoxLayout(self.page_time)
@@ -77,15 +67,15 @@ class Ui_Dialog(object):
         self.bonus_duration.setMaximum(3600)
         self.time_layout.addWidget(self.bonus_duration_label)
         self.time_layout.addWidget(self.bonus_duration)
-        self.ponus_creation.addWidget(self.page_time)
+        self.bonus_creation.addWidget(self.page_time)
 
-        self.verticalLayout.addWidget(self.ponus_creation)
+        self.verticalLayout.addWidget(self.bonus_creation)
 
         self.decision_buttons = QDialogButtonBox(Dialog)
         self.decision_buttons.setStandardButtons(QDialogButtonBox.Cancel|QDialogButtonBox.Ok)
         self.verticalLayout.addWidget(self.decision_buttons)
 
-        self.ponus_creation.setCurrentIndex(0)
+        self.bonus_creation.setCurrentIndex(0)
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle("Add Bonus")

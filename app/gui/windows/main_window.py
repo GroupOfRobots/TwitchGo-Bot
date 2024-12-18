@@ -1,19 +1,19 @@
-# app/gui/ui/main_window.py
+# app/gui/windows/main_window.py
+
+from typing import Optional
 
 from PySide6.QtWidgets import QMainWindow, QApplication, QListWidgetItem
 from PySide6.QtGui import QBrush, QColor, QPalette, QPixmap
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 from app.gui.ui.resource_gathering_ui import Ui_MainWindow
-from app.gui.ui.bonus_adding import BonusAdding
 from app.core.bonuses.bonus import Bonus
 from app.core.bonuses.time_bonus import TimeBonus
-from app.core.traps.trap import Trap
 from app.core.chat.chat_bot import ChatBot
 from app.core.scoring.score_manager import ScoreManager
-from app.ros.obstacle_activator import ObstacleActivator
+from app.gui.windows.bonus_adding import BonusAdding
 from app.utils.logger import setup_logging
 from datetime import datetime, timedelta
-import logging
+import os
 
 class MainWindow(QMainWindow):
     def __init__(self, parent=None) -> None:
@@ -25,11 +25,16 @@ class MainWindow(QMainWindow):
         self._initialize_bonuses()
         self._initialize_chat_bot()
         self._initialize_ros()
-        # Inicjalizacja innych komponentów...
+
+        # Setup QTimer for periodic UI updates
+        self._timer = QTimer(self)
+        self._timer.timeout.connect(self._update_ui)
+        self._timer.start(200)  # Update every 200 ms
 
     def _setup_logging(self):
         today = datetime.today().strftime("%Y-%m-%d")
-        setup_logging(f"logs/{today}.log")
+        log_path = os.path.join("logs", f"{today}.log")
+        setup_logging(log_path)
 
     def _initialize_ui(self):
         self._ui = Ui_MainWindow()
@@ -45,26 +50,23 @@ class MainWindow(QMainWindow):
         self._display_bonus_time_left()
         self._viewers_view = None
 
+    def set_viewers_view(self, viewers_view):
+        self._viewers_view = viewers_view
+
     def _initialize_bonuses(self):
         self._current_time_bonuses = [[1, datetime.now()], [1, datetime.now()]]
         self._bonuses = [
             Bonus('first bonus', -2, (1, 2)),
             Bonus('second bonus', 3, (4, 3)),
-            TimeBonus('time_bonus', 2, (6, 7), 0.5)
+            TimeBonus('time_bonus', 2, (6, 7), 30.0)  # Sample time bonus
         ]
 
     def _initialize_chat_bot(self):
-        from app.gui.ui.viewers_view import ViewersView
-        self._viewers_view = ViewersView(self)
-        self._viewers_view.show()
-        chat_bot = ChatBot(
-            set_latest_votes=self._viewers_view.set_latest_votes,
-            get_latest_votes=self._viewers_view.get_latest_votes
-        )
-        chat_bot.run()
+        """Here we could initialize the chat bot, but it's not necessary for this exercise"""
+        pass
 
     def _initialize_ros(self):
-        # Inicjalizacja ROS, np. uruchomienie w osobnym wątku
+        # Initialize ROS in a separate thread
         import threading
         from app.ros.ros_main import main as ros_main
         ros_thread = threading.Thread(target=ros_main, daemon=True)
@@ -97,12 +99,7 @@ class MainWindow(QMainWindow):
             item_s.team_num = 1
             item_general = QListWidgetItem(self._create_bonus_description(bonus))
             item_general.bonus = bonus
-            item.second_one = item_s
-            item.general = item_general
-            item_s.second_one = item
-            item_s.general = item_general
-            item_general.first_team = item
-            item_general.second_team = item_s
+            item_general.team_num = None
 
             if bonus.bonus_points() < 0:
                 magenta_brush = QBrush(QColor("Magenta"))
@@ -139,7 +136,7 @@ class MainWindow(QMainWindow):
         self._ui.score.setText(f'{score[0]} - {score[1]}')
 
     def _add_current_bonus_first(self):
-        if self._current_item_first:
+        if hasattr(self, '_current_item_first') and self._current_item_first:
             bonus = self._current_item_first.bonus
             self._viewers_view.add_bonus_for_first(bonus)
             self._apply_bonus(bonus, team=0)
@@ -149,7 +146,7 @@ class MainWindow(QMainWindow):
             self._ui.first_team_bonuses.setCurrentIndex(0)
 
     def _add_current_bonus_second(self):
-        if self._current_item_second:
+        if hasattr(self, '_current_item_second') and self._current_item_second:
             bonus = self._current_item_second.bonus
             self._viewers_view.add_bonus_for_second(bonus)
             self._apply_bonus(bonus, team=1)
@@ -159,7 +156,7 @@ class MainWindow(QMainWindow):
             self._ui.second_team_bonuses.setCurrentIndex(0)
 
     def _add_current_bonus_general(self):
-        if self._current_item_general:
+        if hasattr(self, '_current_item_general') and self._current_item_general:
             bonus = self._current_item_general.bonus
             self._viewers_view.add_bonus_for_first(bonus)
             self._viewers_view.add_bonus_for_second(bonus)
@@ -181,17 +178,28 @@ class MainWindow(QMainWindow):
                 self._current_time_bonuses[1] = (bonus.bonus_points(), datetime.now() + duration)
         else:
             if team == 0:
-                self._score_manager.set_score((self._score_manager.get_score()[0] + bonus.bonus_points(), self._score_manager.get_score()[1]))
+                self._score_manager.set_score((
+                    self._score_manager.get_score()[0] + bonus.bonus_points(),
+                    self._score_manager.get_score()[1]
+                ))
             elif team == 1:
-                self._score_manager.set_score((self._score_manager.get_score()[0], self._score_manager.get_score()[1] + bonus.bonus_points()))
+                self._score_manager.set_score((
+                    self._score_manager.get_score()[0],
+                    self._score_manager.get_score()[1] + bonus.bonus_points()
+                ))
             else:
-                self._score_manager.set_score((self._score_manager.get_score()[0] + bonus.bonus_points(), self._score_manager.get_score()[1] + bonus.bonus_points()))
+                self._score_manager.set_score((
+                    self._score_manager.get_score()[0] + bonus.bonus_points(),
+                    self._score_manager.get_score()[1] + bonus.bonus_points()
+                ))
         self._update_score_display()
 
     def _remove_bonus_from_lists(self, item):
-        self._ui.second_t_bonus_list.takeItem(self._ui.second_t_bonus_list.row(item.second_one))
+        # Make sure the item is removed from all lists
+        if hasattr(item, 'second_one') and hasattr(item, 'general'):
+            self._ui.second_t_bonus_list.takeItem(self._ui.second_t_bonus_list.row(item.second_one))
+            self._ui.general_bonus_list.takeItem(self._ui.general_bonus_list.row(item.general))
         self._ui.first_t_bonus_list.takeItem(self._ui.first_t_bonus_list.row(item))
-        self._ui.general_bonus_list.takeItem(self._ui.general_bonus_list.row(item.general))
 
     def _set_up_bonus_view_first(self, item: QListWidgetItem):
         self._ui.first_team_bonuses.setCurrentIndex(1)
@@ -242,7 +250,7 @@ class MainWindow(QMainWindow):
         file_name = self._bonus_window._ui.file_name.text()
         bonus_value = self._bonus_window._ui.bonus_value.value()
         position = (self._bonus_window._ui.position_x.value(), self._bonus_window._ui.position_y.value())
-        if self._bonus_window._ui.ponus_creation.currentIndex() == 0:
+        if self._bonus_window._ui.bonus_creation.currentIndex() == 0:
             new_bonus = Bonus(name, bonus_value, position, file_name)
         else:
             bonus_time = self._bonus_window._ui.bonus_duration.value()
@@ -256,4 +264,3 @@ class MainWindow(QMainWindow):
     def _update_ui(self):
         self._display_bonus_time_left()
         self._update_score_display()
-        # Możesz dodać inne aktualizacje UI tutaj

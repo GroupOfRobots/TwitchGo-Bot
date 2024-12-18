@@ -1,8 +1,8 @@
-# app/gui/ui/viewers_view.py
+# app/gui/windows/viewers_view.py
 
 from PySide6.QtWidgets import QMainWindow, QListWidgetItem
 from PySide6.QtGui import QBrush, QColor
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, QTimer
 from app.gui.ui.viewers_view_ui import Ui_MainWindow
 from app.core.traps.trap import Trap
 from app.utils.logger import setup_logging
@@ -38,16 +38,15 @@ class ViewersView(QMainWindow):
 
     def _setup_logging(self):
         today = datetime.today().strftime("%Y-%m-%d")
-        setup_logging(f"logs/{today}.log")
+        log_path = os.path.join("logs", f"{today}.log")
+        setup_logging(log_path)
 
     def run_window(self):
-        current_time = int(time.time())
-        # Logika aktualizacji UI, bonusów, głosów itp.
         self._display_previous_bonuses()
         self._display_last_votes()
 
     def _display_previous_bonuses(self):
-        # Implementacja wyświetlania ostatnich bonusów
+        # Implement this method to display the previous bonuses
         pass
 
     def add_bonus_for_first(self, bonus):

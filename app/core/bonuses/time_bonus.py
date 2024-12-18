@@ -3,7 +3,8 @@
 from app.core.bonuses.bonus import Bonus
 
 class TimeBonus(Bonus):
-    def __init__(self, name: str, multiplier: int, position: tuple, bonus_time: float, tex_file: str = "") -> None:
+    def __init__(self, name: str, multiplier: int, position: tuple[int, int], bonus_time: float,
+                 tex_file: str = "") -> None:
         super().__init__(name, multiplier, position, tex_file)
         self._bonus_time = bonus_time
 
@@ -11,4 +12,4 @@ class TimeBonus(Bonus):
         return self._bonus_time
 
     def __str__(self) -> str:
-        return f'{self._name:15} Position: {self._position} Multiplier: {self._bonus_points} Bonus Duration: {self._bonus_time} seconds'
+        return f'{self._name:15} Pozycja: {self._position} Mnożnik: {self._bonus_points} Czas Bonusu: {self._bonus_time} sekund'

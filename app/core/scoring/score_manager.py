@@ -1,3 +1,5 @@
+# app/core/scoring/score_manager.py
+
 from typing import Tuple
 
 class ScoreManager:
