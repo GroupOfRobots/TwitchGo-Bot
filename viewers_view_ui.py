@@ -24,9 +24,24 @@ class Ui_MainWindow(object):
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.verticalLayout_4 = QVBoxLayout()
+        self.verticalLayout_4 = QVBoxLayout(self.centralwidget)
         self.verticalLayout_7 = QVBoxLayout()
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.game_logo = QLabel()
+        self.game_logo.setObjectName(u"game_logo")
+
+        self.verticalLayout_4.addWidget(self.game_logo)
+        pixmap = QPixmap("logo.png")  # Replace with the path to your image
+
+        self.verticalLayout_7.setObjectName(u"verticalLayout_4")
+        self.logo_kola = QLabel()
+        self.logo_kola.setObjectName(u"logo_kola")
+
+        self.verticalLayout_7.addWidget(self.logo_kola)
+
+        # Optional: Add some stretch to layout
+        self.verticalLayout_4.addStretch()
+
         '''
         self.last_bonuses_first = QListWidget(self.centralwidget)
         self.last_bonuses_first.setObjectName(u"last_bonuses_first")
@@ -106,8 +121,8 @@ class Ui_MainWindow(object):
 
         self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-
-        self.verticalLayout_4.addItem(self.verticalSpacer_5)
+        
+        #self.verticalLayout_4.addItem(self.verticalSpacer_5)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -339,6 +354,10 @@ class Ui_MainWindow(object):
 
         self.votesl = QLabel(self.centralwidget)
         self.votesl.setObjectName(u"votesl")
+        self.caption_label = QLabel("Dostępne komendy: !vote white, !vote yellow, !vote orange, !vote violet")
+        self.caption_label.setAlignment(Qt.AlignCenter)
+        self.caption_label.setStyleSheet("color: white; font-size: 34px;")  # Styling
+        self.verticalLayout_8.addWidget(self.caption_label)
         palette5 = QPalette()
         brush5 = QBrush(QColor(255, 255, 255, 255))
         brush5.setStyle(Qt.SolidPattern)
@@ -421,9 +440,9 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.bonus_time_first.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        #self.bonus_time_first.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.score.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.bonus_time_second.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        #self.bonus_time_second.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.votesl.setText("")
     # retranslateUi
 

@@ -214,3 +214,7 @@
 [2024-11-21 14:35:24,000] [TRAP] trap1 is running
 [2024-11-21 14:35:35,000] [TRAP] trap6 is running
 [2024-11-21 14:35:46,000] [TRAP] trap6 is running
+[2024-11-21 22:09:27,389] [MESSAGE] tmi.twitch.tv NOTICE * :Login authentication failed: mi.twitch.tv NOTICE * :Login authentication failed
+[2024-11-21 22:09:37,000] [TRAP] trap4 is running
+[2024-11-21 22:09:48,000] [TRAP] trap6 is running
+[2024-11-21 22:09:59,000] [TRAP] trap3 is running

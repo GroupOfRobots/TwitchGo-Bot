@@ -15,8 +15,9 @@ class ViewersView(QMainWindow, QGridLayout):
         self._ui = Ui_MainWindow()
         self._ui.setupUi(self)
         self._ui.score.setText('123')
-        self._stylesheet = 'background-image: url("picture.png");background-repeat:no-repeat;background-position:center;background-size: cover;'
-        self.setStyleSheet(self._stylesheet)
+        #self._stylesheet = 'background-image: url("picture.png");background-repeat:no-repeat;background-position:center'
+        self.set_background_image("picture.png")
+        #self.setStyleSheet(self._stylesheet)
         self._main_window = main_window
 
         #self._ui.bonus_time_first.setText("")
@@ -33,6 +34,17 @@ class ViewersView(QMainWindow, QGridLayout):
         self._time_between_commands = 10
         self._number_of_traps_on_display = 3
         self._choose_random_traps(self._number_of_traps_on_display)
+        self._ui.game_logo.setText("")
+        self._ui.game_logo.setPixmap(QPixmap("logo.png"))
+        self._ui.game_logo.setAlignment(Qt.AlignCenter)
+        self._ui.game_logo.setScaledContents(True)
+        self._ui.game_logo.setMinimumSize(350, 125)
+        
+        self._ui.logo_kola.setText("")
+        self._ui.logo_kola.setPixmap(QPixmap("logo_kola.png"))
+        self._ui.logo_kola.setAlignment(Qt.AlignCenter)
+        self._ui.logo_kola.setScaledContents(True)
+        self._ui.logo_kola.setMinimumSize(350, 125)
 
     def run_window(self):
         if (int(time.time()) - self._time_start) > self._time_between_commands:
@@ -115,6 +127,33 @@ class ViewersView(QMainWindow, QGridLayout):
         self._run_trap_with_most_votes()
         self._choose_random_traps(self._number_of_traps_on_display)
         self._clear_votes()
+    def set_background_image(self, image_path):
+        """
+        Sets the background image for the main window dynamically.
+        """
+        palette = QPalette()
+        pixmap = QPixmap("picture.png")
+
+        # Use QBrush to scale the image as per the window size dynamically
+        scaled_pixmap = pixmap.scaled(self.size(), Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
+        palette.setBrush(QPalette.ColorRole.Window, QBrush(scaled_pixmap))
+        self.setPalette(palette)
+
+    def resizeEvent(self, event):
+        """
+        Overrides the resize event to adjust the background dynamically.
+        """
+        self.set_background_image("picture.png")
+        super().resizeEvent(event)
+        pixmap1 = QPixmap("logo.png")
+        scaled_pixmap1 = pixmap1.scaled(self._ui.game_logo.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        self._ui.game_logo.setPixmap(scaled_pixmap1)
+        super().resizeEvent(event)
+
+        pixmap2 = QPixmap("logo_kola.png")
+        scaled_pixmap2 = pixmap2.scaled(self._ui.logo_kola.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        self._ui.logo_kola.setPixmap(scaled_pixmap2)
+        super().resizeEvent(event)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
