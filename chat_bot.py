@@ -7,9 +7,12 @@ class ChatBot:
     def __init__(self, set_latest_votes, get_latest_votes):
         self._sock = socket.socket()
         self._server = "irc.chat.twitch.tv"
+        #self._port = 6667
         self._port = 6667
         self._nickname = "TwitchGo_bot"
-        self._token = "oauth:nnz481ral6ao5zt5bqhes4mw01womg"
+        #self._token = "oauth:nnz481ral6ao5zt5bqhes4mw01womg"
+        self._token = "oauth:rxoa7ly23dwabcxax2nwycssc0mgi3"
+        #self.token = "nxngb0gnrutm13jn8sdv2jw03k9dam"
         self._channel = "#knr_bionik_tv"
         self._set_votes = set_latest_votes
         self._get_latest_votes = get_latest_votes
