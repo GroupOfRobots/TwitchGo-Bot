@@ -8,7 +8,7 @@ import os
 from app.core.chat.chat_bot import ChatBot
 from app.gui.windows.main_window import MainWindow
 from app.gui.windows.viewers_view import ViewersView
-from app.core.ros.ros_main import main as ros_main
+#from app.core.ros.ros_main import main as ros_main
 from app.utils.logger import setup_logging
 from datetime import datetime
 from PySide6.QtCore import QTimer
@@ -37,8 +37,8 @@ def gui_main(args):
     chat_bot.run()
 
     # Initialize ROS in a separate thread
-    ros_thread = threading.Thread(target=ros_main, daemon=True)
-    ros_thread.start()
+    # ros_thread = threading.Thread(target=ros_main, daemon=True)
+    # ros_thread.start()
 
     # Setup QTimer for periodic UI updates
     timer = QTimer()

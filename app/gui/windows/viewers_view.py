@@ -1,6 +1,7 @@
 # app/gui/windows/viewers_view.py
 
 from PySide6.QtWidgets import QMainWindow, QListWidgetItem
+import os
 from PySide6.QtGui import QBrush, QColor
 from PySide6.QtCore import Qt, QTimer
 from app.gui.ui.viewers_view_ui import Ui_MainWindow

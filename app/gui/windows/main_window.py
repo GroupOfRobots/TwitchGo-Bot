@@ -21,10 +21,10 @@ class MainWindow(QMainWindow):
         self._bonus_window = BonusAdding()
         self._score_manager = ScoreManager()
         self._setup_logging()
+        self._initialize_bonuses()  # Move this line before _initialize_ui()
         self._initialize_ui()
-        self._initialize_bonuses()
         self._initialize_chat_bot()
-        self._initialize_ros()
+        #self._initialize_ros()
 
         # Setup QTimer for periodic UI updates
         self._timer = QTimer(self)
@@ -65,12 +65,12 @@ class MainWindow(QMainWindow):
         """Here we could initialize the chat bot, but it's not necessary for this exercise"""
         pass
 
-    def _initialize_ros(self):
-        # Initialize ROS in a separate thread
-        import threading
-        from app.ros.ros_main import main as ros_main
-        ros_thread = threading.Thread(target=ros_main, daemon=True)
-        ros_thread.start()
+    # def _initialize_ros(self):
+    #     # Initialize ROS in a separate thread
+    #     import threading
+    #     from app.ros.ros_main import main as ros_main
+    #     ros_thread = threading.Thread(target=ros_main, daemon=True)
+    #     ros_thread.start()
 
     def _set_up_buttons(self):
         self._ui.add_goal_first.clicked.connect(self._add_goal_first)
