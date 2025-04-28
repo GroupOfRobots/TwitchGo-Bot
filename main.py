@@ -13,10 +13,12 @@ from app.utils.logger import setup_logging
 from datetime import datetime
 from PySide6.QtCore import QTimer
 
+
 def gui_main(args):
     # Setup logging once
     today = datetime.today().strftime("%Y-%m-%d")
     log_path = os.path.join("logs", f"{today}.log")
+    os.makedirs(os.path.dirname(log_path), exist_ok=True)
     setup_logging(log_path)
 
     # Initialize QApplication

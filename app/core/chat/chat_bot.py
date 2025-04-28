@@ -1,5 +1,3 @@
-# app/core/chat/chat_bot.py
-
 import logging
 import socket
 import threading
@@ -15,7 +13,8 @@ class ChatBot:
         self._set_votes = set_latest_votes
         self._get_latest_votes = get_latest_votes
 
-        self._sock = None
+        # Initialize the IRC socket and control flags
+        self._sock = socket.socket()
         self._stop_event = threading.Event()
         self._reconnect_delay = 5
         self._max_reconnect_delay = 300
@@ -25,51 +24,86 @@ class ChatBot:
         self._connect()
 
     def _connect(self):
-        """Initialize the connection to the IRC server."""
+        """Initialize or reinitialize the connection to the IRC server."""
         with self._lock:
-            if self._sock:
-                try:
-                    self._sock.close()
-                except Exception as e:
-                    logging.error(f"Error closing socket: {e}")
-            self._sock = socket.socket()
             try:
-                logging.info(f"Łączenie z {self._server}:{self._port}")
-                self._sock.connect((self._server, self._port))
-                self._sock.send(f"PASS {self._token}\n".encode('utf-8'))
-                self._sock.send(f"NICK {self._nickname}\n".encode('utf-8'))
-                self._sock.send(f"JOIN {self._channel}\n".encode('utf-8'))
-                logging.info("Połączenie nawiązane.")
-                self._reconnect_delay = 5  # Reset after successful connection
-                # Begin listening for messages
-                if not self._listen_thread or not self._listen_thread.is_alive():
-                    self._listen_thread = threading.Thread(target=self._listen, daemon=True)
-                    self._listen_thread.start()
-            except Exception as e:
-                logging.error(f"Błąd podczas łączenia: {e}")
-                self._schedule_reconnect()
+                self._sock.close()
+            except Exception:
+                pass
+
+            self._sock = socket.socket()
+            logging.info(f"Łączenie z {self._server}:{self._port}")
+            self._sock.connect((self._server, self._port))
+            # Auth and capabilities
+            self._sock.send(f"PASS {self._token}\r\n".encode('utf-8'))
+            self._sock.send(f"NICK {self._nickname}\r\n".encode('utf-8'))
+            self._sock.send(
+                "CAP REQ :twitch.tv/tags twitch.tv/commands twitch.tv/membership\r\n".encode('utf-8')
+            )
+            self._sock.send(f"JOIN {self._channel}\r\n".encode('utf-8'))
+            logging.info("Połączenie nawiązane.")
+
+            # Reset delay and start listener
+            self._reconnect_delay = 5
+            if not self._listen_thread or not self._listen_thread.is_alive():
+                self._listen_thread = threading.Thread(
+                    target=self._listen, daemon=True
+                )
+                self._listen_thread.start()
+
+    def _handle_message(self, message: str):
+        """Handle PING/PONG and chat messages."""
+        if message.startswith("PING"):
+            # Proper CRLF-terminated PONG
+            server_token = message.split(' ', 1)[1]
+            self._sock.send(f"PONG {server_token}\r\n".encode('utf-8'))
+            logging.debug(
+                f"Wysłano PONG {server_token.strip()} w odpowiedzi na PING."
+            )
+            return
+
+        # Chat message processing
+        parts = message.split(' PRIVMSG ')
+        if len(parts) < 2:
+            return
+
+        prefix, msg_content = parts[0], parts[1].strip()
+        if not prefix.startswith(':'):
+            return
+
+        username = prefix.split('!')[0][1:]
+        message_list = msg_content.split()
+        logging.info(f"[WIADOMOŚĆ] {username}: {msg_content}")
+
+        # Vote command handling
+        if len(message_list) > 1 and message_list[0].startswith('!'):
+            command = message_list[0].lower()
+            argument = message_list[1]
+            if command == "!vote":
+                self.vote(username, argument)
 
     def _schedule_reconnect(self):
-        """Plan the reconnection to the IRC server."""
+        """Schedule the next reconnect attempt."""
         if self._stop_event.is_set():
             return
         logging.info(f"Ponawianie połączenia za {self._reconnect_delay} sekund.")
         threading.Thread(target=self._reconnect, daemon=True).start()
 
     def _reconnect(self):
-        """Trying to reconnect to the IRC server."""
+        """Attempt reconnection until successful or stopped."""
         while not self._stop_event.is_set():
+            time.sleep(self._reconnect_delay)
             try:
-                time.sleep(self._reconnect_delay)
                 self._connect()
-                if self._sock:
-                    break  # Udane połączenie
+                return
             except Exception as e:
                 logging.error(f"Błąd podczas ponownego łączenia: {e}")
-            self._reconnect_delay = min(self._reconnect_delay * 2, self._max_reconnect_delay)
+            self._reconnect_delay = min(
+                self._reconnect_delay * 2, self._max_reconnect_delay
+            )
 
     def _listen(self):
-        """Infinitive loop listening for messages from the IRC server."""
+        """Listen loop for incoming IRC messages."""
         while not self._stop_event.is_set():
             try:
                 resp = self._sock.recv(2048).decode('utf-8')
@@ -89,34 +123,6 @@ class ChatBot:
                 self._schedule_reconnect()
                 break
 
-    def _handle_message(self, message: str):
-        """Handle the incoming message from the IRC server."""
-        if message.startswith("PING"):
-            self._sock.send("PONG\n".encode('utf-8'))
-            logging.debug("Wysłano PONG w odpowiedzi na PING.")
-            return
-
-        parts = message.split(' PRIVMSG ')
-        if len(parts) < 2:
-            return
-
-        prefix = parts[0]
-        msg_content = parts[1].strip()
-        if not prefix.startswith(':'):
-            return
-
-        username = prefix.split('!')[0][1:]
-        message_list = msg_content.split()
-
-        logging.info(f"[WIADOMOŚĆ] {username}: {msg_content}")
-
-        if len(message_list) > 1 and message_list[0].startswith('!'):
-            command = message_list[0]
-            argument = message_list[1]
-
-            if command.lower() == "!vote":
-                self.vote(username, argument)
-
     def run(self):
         logging.info("ChatBot działa.")
 
@@ -124,27 +130,28 @@ class ChatBot:
         logging.info("Zatrzymywanie ChatBot...")
         self._stop_event.set()
         with self._lock:
-            if self._sock:
-                try:
-                    self._sock.close()
-                except Exception as e:
-                    logging.error(f"Błąd podczas zamykania socketu: {e}")
+            try:
+                self._sock.close()
+            except Exception as e:
+                logging.error(f"Błąd przy zamykaniu socketu: {e}")
         if self._listen_thread:
             self._listen_thread.join()
         logging.info("ChatBot zatrzymany.")
 
     def vote(self, username: str, vote_argument: str):
-        """Support for voting."""
+        """Handle a user vote if they're eligible."""
         if self.can_vote(username):
             votes = self._get_latest_votes()
             if vote_argument in votes:
                 votes[vote_argument].add_vote(username)
                 logging.info(f"{username} głosuje na {vote_argument}")
             else:
-                logging.warning(f"{username} próbował głosować na nieistniejący bonus: {vote_argument}")
+                logging.warning(
+                    f"{username} próbował głosować na nieistniejący bonus: {vote_argument}"
+                )
 
     def can_vote(self, username: str) -> bool:
-        """Check if the user can vote."""
+        """Check if user hasn't voted yet."""
         votes = self._get_latest_votes()
         for option in votes.values():
             if username in option.get_votes():

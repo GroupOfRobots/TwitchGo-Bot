@@ -28,3 +28,12 @@ class Trap:
         print(f"{self._name} is running")
         if self._command:
             self._command()
+
+    def __str__(self) -> str:
+        """Return the full vote command string with the current vote count."""
+        count = len(self._votes)
+        return f"!vote {self._name} ({count})"
+
+    def __repr__(self) -> str:
+        """Return the same as __str__ for display purposes."""
+        return self.__str__()

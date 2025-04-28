@@ -26,16 +26,19 @@ class ViewersView(QMainWindow):
         self._latest_votes = {}
 
         self._available_traps = [
-            Trap("trap1"),
-            Trap("trap2"),
-            Trap("trap3"),
-            Trap("trap4"),
-            Trap("trap5"),
-            Trap("trap6")
+            Trap("white"),
+            Trap("yellow"),
+            Trap("orange"),
+            Trap("violet")
         ]
 
         self._setup_logging()
         self._choose_random_traps(3)
+
+        # Periodically update score display to reflect host panel changes
+        self._score_timer = QTimer(self)
+        self._score_timer.timeout.connect(self._update_score)
+        self._score_timer.start(200)
 
     def _setup_logging(self):
         today = datetime.today().strftime("%Y-%m-%d")
@@ -62,8 +65,14 @@ class ViewersView(QMainWindow):
 
     def _display_last_votes(self):
         vote_string = ""
-        for vote in self._latest_votes.keys():
-            vote_string += f'{str(self._latest_votes[vote])}        '
+        # Sort traps by vote count descending
+        sorted_traps = sorted(
+            self._latest_votes.values(),
+            key=lambda t: len(t.votes),   # lub: key=lambda t: len(t.get_votes())
+            reverse=True
+        )
+        for trap in sorted_traps:
+            vote_string += f"{str(trap)}    "
         self._ui.votesl.setText(vote_string)
 
     def set_latest_votes(self, latest_votes: dict):
@@ -103,3 +112,8 @@ class ViewersView(QMainWindow):
         self._run_trap_with_most_votes()
         self._choose_random_traps(self._number_of_traps_on_display)
         self._clear_votes()
+
+    def _update_score(self):
+        """Refresh the score display from the host's ScoreManager."""
+        score = self._main_window._score_manager.get_score()
+        self._ui.score.setText(f"{score[0]} - {score[1]}")
