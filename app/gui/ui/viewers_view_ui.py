@@ -1,3 +1,433 @@
+# # -*- coding: utf-8 -*-
+
+# ################################################################################
+# ## Form generated from reading UI file 'viewers_view.ui'
+# ##
+# ## Created by: Qt User Interface Compiler version 5.15.2
+# ##
+# ## WARNING! All changes made in this file will be lost when recompiling UI file!
+# ################################################################################
+
+# from PySide6.QtCore import *
+# from PySide6.QtGui import *
+# from PySide6.QtWidgets import *
+
+
+# class Ui_MainWindow(object):
+#     def setupUi(self, MainWindow):
+#         if not MainWindow.objectName():
+#             MainWindow.setObjectName(u"MainWindow")
+#         MainWindow.resize(800, 600)
+#         self.centralwidget = QWidget(MainWindow)
+#         self.centralwidget.setObjectName(u"centralwidget")
+#         self.verticalLayout_8 = QVBoxLayout(self.centralwidget)
+#         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+#         self.horizontalLayout = QHBoxLayout()
+#         self.horizontalLayout.setObjectName(u"horizontalLayout")
+#         self.verticalLayout_4 = QVBoxLayout()
+#         self.verticalLayout_7 = QVBoxLayout()
+#         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+#         '''
+#         self.last_bonuses_first = QListWidget(self.centralwidget)
+#         self.last_bonuses_first.setObjectName(u"last_bonuses_first")
+#         self.last_bonuses_first.setMaximumSize(QSize(120, 100))
+#         '''
+#         palette = QPalette()
+#         brush = QBrush(QColor(255, 255, 255, 255))
+#         brush.setStyle(Qt.SolidPattern)
+#         palette.setBrush(QPalette.Active, QPalette.WindowText, brush)
+#         brush1 = QBrush(QColor(0, 0, 0, 0))
+#         brush1.setStyle(Qt.SolidPattern)
+#         palette.setBrush(QPalette.Active, QPalette.Button, brush1)
+#         palette.setBrush(QPalette.Active, QPalette.Light, brush1)
+#         palette.setBrush(QPalette.Active, QPalette.Midlight, brush1)
+#         palette.setBrush(QPalette.Active, QPalette.Dark, brush1)
+#         palette.setBrush(QPalette.Active, QPalette.Mid, brush1)
+#         palette.setBrush(QPalette.Active, QPalette.Text, brush)
+#         palette.setBrush(QPalette.Active, QPalette.BrightText, brush)
+#         palette.setBrush(QPalette.Active, QPalette.ButtonText, brush)
+#         palette.setBrush(QPalette.Active, QPalette.Base, brush1)
+#         palette.setBrush(QPalette.Active, QPalette.Window, brush1)
+#         palette.setBrush(QPalette.Active, QPalette.Shadow, brush1)
+#         brush2 = QBrush(QColor(0, 0, 0, 127))
+#         brush2.setStyle(Qt.SolidPattern)
+#         palette.setBrush(QPalette.Active, QPalette.AlternateBase, brush2)
+#         brush3 = QBrush(QColor(255, 255, 220, 255))
+#         brush3.setStyle(Qt.SolidPattern)
+#         palette.setBrush(QPalette.Active, QPalette.ToolTipBase, brush3)
+#         palette.setBrush(QPalette.Active, QPalette.ToolTipText, brush1)
+#         brush4 = QBrush(QColor(255, 255, 255, 128))
+#         brush4.setStyle(Qt.SolidPattern)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette.setBrush(QPalette.Active, QPalette.PlaceholderText, brush4)
+# #endif
+#         palette.setBrush(QPalette.Inactive, QPalette.WindowText, brush)
+#         palette.setBrush(QPalette.Inactive, QPalette.Button, brush1)
+#         palette.setBrush(QPalette.Inactive, QPalette.Light, brush1)
+#         palette.setBrush(QPalette.Inactive, QPalette.Midlight, brush1)
+#         palette.setBrush(QPalette.Inactive, QPalette.Dark, brush1)
+#         palette.setBrush(QPalette.Inactive, QPalette.Mid, brush1)
+#         palette.setBrush(QPalette.Inactive, QPalette.Text, brush)
+#         palette.setBrush(QPalette.Inactive, QPalette.BrightText, brush)
+#         palette.setBrush(QPalette.Inactive, QPalette.ButtonText, brush)
+#         palette.setBrush(QPalette.Inactive, QPalette.Base, brush1)
+#         palette.setBrush(QPalette.Inactive, QPalette.Window, brush1)
+#         palette.setBrush(QPalette.Inactive, QPalette.Shadow, brush1)
+#         palette.setBrush(QPalette.Inactive, QPalette.AlternateBase, brush2)
+#         palette.setBrush(QPalette.Inactive, QPalette.ToolTipBase, brush3)
+#         palette.setBrush(QPalette.Inactive, QPalette.ToolTipText, brush1)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette.setBrush(QPalette.Inactive, QPalette.PlaceholderText, brush4)
+# #endif
+#         palette.setBrush(QPalette.Disabled, QPalette.WindowText, brush1)
+#         palette.setBrush(QPalette.Disabled, QPalette.Button, brush1)
+#         palette.setBrush(QPalette.Disabled, QPalette.Light, brush1)
+#         palette.setBrush(QPalette.Disabled, QPalette.Midlight, brush1)
+#         palette.setBrush(QPalette.Disabled, QPalette.Dark, brush1)
+#         palette.setBrush(QPalette.Disabled, QPalette.Mid, brush1)
+#         palette.setBrush(QPalette.Disabled, QPalette.Text, brush1)
+#         palette.setBrush(QPalette.Disabled, QPalette.BrightText, brush)
+#         palette.setBrush(QPalette.Disabled, QPalette.ButtonText, brush1)
+#         palette.setBrush(QPalette.Disabled, QPalette.Base, brush1)
+#         palette.setBrush(QPalette.Disabled, QPalette.Window, brush1)
+#         palette.setBrush(QPalette.Disabled, QPalette.Shadow, brush1)
+#         palette.setBrush(QPalette.Disabled, QPalette.AlternateBase, brush1)
+#         palette.setBrush(QPalette.Disabled, QPalette.ToolTipBase, brush3)
+#         palette.setBrush(QPalette.Disabled, QPalette.ToolTipText, brush1)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette.setBrush(QPalette.Disabled, QPalette.PlaceholderText, brush4)
+# #endif
+#         '''
+#         self.last_bonuses_first.setPalette(palette)
+
+
+#         self.verticalLayout_4.addWidget(self.last_bonuses_first)
+#         '''
+
+#         self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+
+#         self.verticalLayout_4.addItem(self.verticalSpacer_5)
+
+#         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+#         self.horizontalLayout.addItem(self.horizontalSpacer)
+
+
+        
+#         self.verticalLayout_2 = QVBoxLayout()
+#         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+#         self.bonus_time_first = QLabel(self.centralwidget)
+#         self.bonus_time_first.setObjectName(u"bonus_time_first")
+#         palette1 = QPalette()
+#         brush5 = QBrush(QColor(255, 255, 255, 255))
+#         brush5.setStyle(Qt.SolidPattern)
+#         palette1.setBrush(QPalette.Active, QPalette.WindowText, brush5)
+#         brush6 = QBrush(QColor(255, 255, 0, 0))
+#         brush6.setStyle(Qt.SolidPattern)
+#         palette1.setBrush(QPalette.Active, QPalette.Button, brush6)
+#         palette1.setBrush(QPalette.Active, QPalette.Text, brush)
+#         palette1.setBrush(QPalette.Active, QPalette.Base, brush6)
+#         palette1.setBrush(QPalette.Active, QPalette.Window, brush6)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette1.setBrush(QPalette.Active, QPalette.PlaceholderText, brush4)
+# #endif
+#         palette1.setBrush(QPalette.Inactive, QPalette.WindowText, brush5)
+#         palette1.setBrush(QPalette.Inactive, QPalette.Button, brush6)
+#         palette1.setBrush(QPalette.Inactive, QPalette.Text, brush)
+#         palette1.setBrush(QPalette.Inactive, QPalette.Base, brush6)
+#         palette1.setBrush(QPalette.Inactive, QPalette.Window, brush6)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette1.setBrush(QPalette.Inactive, QPalette.PlaceholderText, brush4)
+# #endif
+#         brush7 = QBrush(QColor(190, 190, 190, 255))
+#         brush7.setStyle(Qt.SolidPattern)
+#         palette1.setBrush(QPalette.Disabled, QPalette.WindowText, brush7)
+#         palette1.setBrush(QPalette.Disabled, QPalette.Button, brush6)
+#         palette1.setBrush(QPalette.Disabled, QPalette.Text, brush7)
+#         palette1.setBrush(QPalette.Disabled, QPalette.Base, brush6)
+#         palette1.setBrush(QPalette.Disabled, QPalette.Window, brush6)
+#         brush8 = QBrush(QColor(0, 0, 0, 128))
+#         brush8.setStyle(Qt.SolidPattern)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette1.setBrush(QPalette.Disabled, QPalette.PlaceholderText, brush8)
+# #endif
+#         self.bonus_time_first.setPalette(palette1)
+#         self.bonus_time_first.setStyleSheet(u"")
+#         self.bonus_time_first.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+
+#         self.verticalLayout_2.addWidget(self.bonus_time_first)
+
+#         self.verticalSpacer_3 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+#         self.verticalLayout_2.addItem(self.verticalSpacer_3)
+
+
+#         self.horizontalLayout.addLayout(self.verticalLayout_2)
+
+#         self.verticalLayout_3 = QVBoxLayout()
+#         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+#         self.score = QLabel(self.centralwidget)
+#         self.score.setObjectName(u"score")
+#         palette2 = QPalette()
+#         brush9 = QBrush(QColor(250, 250, 250, 255))
+#         brush9.setStyle(Qt.SolidPattern)
+#         palette2.setBrush(QPalette.Active, QPalette.WindowText, brush9)
+#         palette2.setBrush(QPalette.Active, QPalette.Text, brush5)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette2.setBrush(QPalette.Active, QPalette.PlaceholderText, brush4)
+# #endif
+#         palette2.setBrush(QPalette.Inactive, QPalette.WindowText, brush9)
+#         palette2.setBrush(QPalette.Inactive, QPalette.Text, brush5)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette2.setBrush(QPalette.Inactive, QPalette.PlaceholderText, brush4)
+# #endif
+#         palette2.setBrush(QPalette.Disabled, QPalette.WindowText, brush7)
+#         palette2.setBrush(QPalette.Disabled, QPalette.Text, brush7)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette2.setBrush(QPalette.Disabled, QPalette.PlaceholderText, brush8)
+# #endif
+#         self.score.setPalette(palette2)
+#         font = QFont()
+#         font.setPointSize(72)
+#         self.score.setFont(font)
+
+#         self.verticalLayout_3.addWidget(self.score)
+
+#         self.verticalSpacer_4 = QSpacerItem(20, 264, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+#         self.verticalLayout_3.addItem(self.verticalSpacer_4)
+
+
+#         self.horizontalLayout.addLayout(self.verticalLayout_3)
+
+#         self.verticalLayout = QVBoxLayout()
+#         self.verticalLayout.setObjectName(u"verticalLayout")
+#         self.bonus_time_second = QLabel(self.centralwidget)
+#         self.bonus_time_second.setObjectName(u"bonus_time_second")
+#         palette3 = QPalette()
+#         palette3.setBrush(QPalette.Active, QPalette.WindowText, brush5)
+#         brush10 = QBrush(QColor(85, 170, 255, 0))
+#         brush10.setStyle(Qt.SolidPattern)
+#         palette3.setBrush(QPalette.Active, QPalette.Button, brush10)
+#         palette3.setBrush(QPalette.Active, QPalette.Base, brush10)
+#         palette3.setBrush(QPalette.Active, QPalette.Window, brush10)
+#         brush11 = QBrush(QColor(48, 140, 198, 0))
+#         brush11.setStyle(Qt.SolidPattern)
+#         palette3.setBrush(QPalette.Active, QPalette.Highlight, brush11)
+#         palette3.setBrush(QPalette.Inactive, QPalette.WindowText, brush5)
+#         palette3.setBrush(QPalette.Inactive, QPalette.Button, brush10)
+#         palette3.setBrush(QPalette.Inactive, QPalette.Base, brush10)
+#         palette3.setBrush(QPalette.Inactive, QPalette.Window, brush10)
+#         palette3.setBrush(QPalette.Inactive, QPalette.Highlight, brush11)
+#         palette3.setBrush(QPalette.Disabled, QPalette.WindowText, brush7)
+#         palette3.setBrush(QPalette.Disabled, QPalette.Button, brush10)
+#         palette3.setBrush(QPalette.Disabled, QPalette.Base, brush10)
+#         palette3.setBrush(QPalette.Disabled, QPalette.Window, brush10)
+#         brush12 = QBrush(QColor(145, 145, 145, 255))
+#         brush12.setStyle(Qt.SolidPattern)
+#         palette3.setBrush(QPalette.Disabled, QPalette.Highlight, brush12)
+#         self.bonus_time_second.setPalette(palette3)
+#         self.bonus_time_second.setStyleSheet(u"")
+#         self.bonus_time_second.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
+
+#         self.verticalLayout.addWidget(self.bonus_time_second)
+
+#         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+#         self.verticalLayout.addItem(self.verticalSpacer)
+
+
+#         self.horizontalLayout.addLayout(self.verticalLayout)
+
+#         self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+#         self.horizontalLayout.addItem(self.horizontalSpacer_2)
+
+#         self.verticalLayout_7 = QVBoxLayout()
+#         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+#         '''
+#         self.last_bonuses_second = QListWidget(self.centralwidget)
+#         self.last_bonuses_second.setObjectName(u"last_bonuses_second")
+#         self.last_bonuses_second.setMaximumSize(QSize(120, 100))
+#         '''
+#         palette4 = QPalette()
+#         palette4.setBrush(QPalette.Active, QPalette.WindowText, brush)
+#         brush13 = QBrush(QColor(239, 239, 239, 0))
+#         brush13.setStyle(Qt.SolidPattern)
+#         palette4.setBrush(QPalette.Active, QPalette.Button, brush13)
+#         brush14 = QBrush(QColor(255, 255, 255, 0))
+#         brush14.setStyle(Qt.SolidPattern)
+#         palette4.setBrush(QPalette.Active, QPalette.Light, brush14)
+#         brush15 = QBrush(QColor(247, 247, 247, 0))
+#         brush15.setStyle(Qt.SolidPattern)
+#         palette4.setBrush(QPalette.Active, QPalette.Midlight, brush15)
+#         brush16 = QBrush(QColor(119, 119, 119, 0))
+#         brush16.setStyle(Qt.SolidPattern)
+#         palette4.setBrush(QPalette.Active, QPalette.Dark, brush16)
+#         brush17 = QBrush(QColor(159, 159, 159, 0))
+#         brush17.setStyle(Qt.SolidPattern)
+#         palette4.setBrush(QPalette.Active, QPalette.Mid, brush17)
+#         palette4.setBrush(QPalette.Active, QPalette.Text, brush5)
+#         palette4.setBrush(QPalette.Active, QPalette.BrightText, brush)
+#         palette4.setBrush(QPalette.Active, QPalette.ButtonText, brush5)
+#         palette4.setBrush(QPalette.Active, QPalette.Base, brush14)
+#         palette4.setBrush(QPalette.Active, QPalette.Window, brush13)
+#         palette4.setBrush(QPalette.Active, QPalette.Shadow, brush5)
+#         brush18 = QBrush(QColor(247, 247, 247, 127))
+#         brush18.setStyle(Qt.SolidPattern)
+#         palette4.setBrush(QPalette.Active, QPalette.AlternateBase, brush18)
+#         palette4.setBrush(QPalette.Active, QPalette.ToolTipBase, brush3)
+#         palette4.setBrush(QPalette.Active, QPalette.ToolTipText, brush5)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette4.setBrush(QPalette.Active, QPalette.PlaceholderText, brush8)
+# #endif
+#         palette4.setBrush(QPalette.Inactive, QPalette.WindowText, brush)
+#         palette4.setBrush(QPalette.Inactive, QPalette.Button, brush13)
+#         palette4.setBrush(QPalette.Inactive, QPalette.Light, brush14)
+#         palette4.setBrush(QPalette.Inactive, QPalette.Midlight, brush15)
+#         palette4.setBrush(QPalette.Inactive, QPalette.Dark, brush16)
+#         palette4.setBrush(QPalette.Inactive, QPalette.Mid, brush17)
+#         palette4.setBrush(QPalette.Inactive, QPalette.Text, brush5)
+#         palette4.setBrush(QPalette.Inactive, QPalette.BrightText, brush)
+#         palette4.setBrush(QPalette.Inactive, QPalette.ButtonText, brush5)
+#         palette4.setBrush(QPalette.Inactive, QPalette.Base, brush14)
+#         palette4.setBrush(QPalette.Inactive, QPalette.Window, brush13)
+#         palette4.setBrush(QPalette.Inactive, QPalette.Shadow, brush5)
+#         palette4.setBrush(QPalette.Inactive, QPalette.AlternateBase, brush18)
+#         palette4.setBrush(QPalette.Inactive, QPalette.ToolTipBase, brush3)
+#         palette4.setBrush(QPalette.Inactive, QPalette.ToolTipText, brush5)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette4.setBrush(QPalette.Inactive, QPalette.PlaceholderText, brush8)
+# #endif
+#         palette4.setBrush(QPalette.Disabled, QPalette.WindowText, brush16)
+#         palette4.setBrush(QPalette.Disabled, QPalette.Button, brush13)
+#         palette4.setBrush(QPalette.Disabled, QPalette.Light, brush14)
+#         palette4.setBrush(QPalette.Disabled, QPalette.Midlight, brush15)
+#         palette4.setBrush(QPalette.Disabled, QPalette.Dark, brush16)
+#         palette4.setBrush(QPalette.Disabled, QPalette.Mid, brush17)
+#         palette4.setBrush(QPalette.Disabled, QPalette.Text, brush16)
+#         palette4.setBrush(QPalette.Disabled, QPalette.BrightText, brush)
+#         palette4.setBrush(QPalette.Disabled, QPalette.ButtonText, brush16)
+#         palette4.setBrush(QPalette.Disabled, QPalette.Base, brush13)
+#         palette4.setBrush(QPalette.Disabled, QPalette.Window, brush13)
+#         palette4.setBrush(QPalette.Disabled, QPalette.Shadow, brush5)
+#         palette4.setBrush(QPalette.Disabled, QPalette.AlternateBase, brush13)
+#         palette4.setBrush(QPalette.Disabled, QPalette.ToolTipBase, brush3)
+#         palette4.setBrush(QPalette.Disabled, QPalette.ToolTipText, brush5)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette4.setBrush(QPalette.Disabled, QPalette.PlaceholderText, brush8)
+# #endif
+#         '''
+#         self.last_bonuses_second.setPalette(palette4)
+
+#         self.verticalLayout_7.addWidget(self.last_bonuses_second)
+#         '''
+#         self.verticalSpacer_6 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+#         self.verticalLayout_7.addItem(self.verticalSpacer_6)
+
+
+#         self.horizontalLayout.addLayout(self.verticalLayout_7)
+
+
+#         self.verticalLayout_8.addLayout(self.horizontalLayout)
+
+#         self.verticalSpacer_2 = QSpacerItem(20, 216, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+#         self.verticalLayout_8.addItem(self.verticalSpacer_2)
+
+#         self.votesl = QLabel(self.centralwidget)
+#         self.votesl.setObjectName(u"votesl")
+#         palette5 = QPalette()
+#         brush5 = QBrush(QColor(255, 255, 255, 255))
+#         brush5.setStyle(Qt.SolidPattern)
+#         palette5.setBrush(QPalette.Active, QPalette.WindowText, brush5)
+#         palette5.setBrush(QPalette.Active, QPalette.Button, brush13)
+#         palette5.setBrush(QPalette.Active, QPalette.Light, brush14)
+#         palette5.setBrush(QPalette.Active, QPalette.Midlight, brush15)
+#         palette5.setBrush(QPalette.Active, QPalette.Dark, brush16)
+#         palette5.setBrush(QPalette.Active, QPalette.Mid, brush17)
+#         palette5.setBrush(QPalette.Active, QPalette.Text, brush)
+#         palette5.setBrush(QPalette.Active, QPalette.BrightText, brush)
+#         palette5.setBrush(QPalette.Active, QPalette.ButtonText, brush5)
+#         palette5.setBrush(QPalette.Active, QPalette.Base, brush)
+#         palette5.setBrush(QPalette.Active, QPalette.Window, brush13)
+#         palette5.setBrush(QPalette.Active, QPalette.Shadow, brush5)
+#         palette5.setBrush(QPalette.Active, QPalette.AlternateBase, brush18)
+#         palette5.setBrush(QPalette.Active, QPalette.ToolTipBase, brush3)
+#         palette5.setBrush(QPalette.Active, QPalette.ToolTipText, brush5)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette5.setBrush(QPalette.Active, QPalette.PlaceholderText, brush4)
+# #endif
+#         palette5.setBrush(QPalette.Inactive, QPalette.WindowText, brush5)
+#         palette5.setBrush(QPalette.Inactive, QPalette.Button, brush13)
+#         palette5.setBrush(QPalette.Inactive, QPalette.Light, brush14)
+#         palette5.setBrush(QPalette.Inactive, QPalette.Midlight, brush15)
+#         palette5.setBrush(QPalette.Inactive, QPalette.Dark, brush16)
+#         palette5.setBrush(QPalette.Inactive, QPalette.Mid, brush17)
+#         palette5.setBrush(QPalette.Inactive, QPalette.Text, brush)
+#         palette5.setBrush(QPalette.Inactive, QPalette.BrightText, brush)
+#         palette5.setBrush(QPalette.Inactive, QPalette.ButtonText, brush5)
+#         palette5.setBrush(QPalette.Inactive, QPalette.Base, brush)
+#         palette5.setBrush(QPalette.Inactive, QPalette.Window, brush13)
+#         palette5.setBrush(QPalette.Inactive, QPalette.Shadow, brush5)
+#         palette5.setBrush(QPalette.Inactive, QPalette.AlternateBase, brush18)
+#         palette5.setBrush(QPalette.Inactive, QPalette.ToolTipBase, brush3)
+#         palette5.setBrush(QPalette.Inactive, QPalette.ToolTipText, brush5)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette5.setBrush(QPalette.Inactive, QPalette.PlaceholderText, brush4)
+# #endif
+#         palette5.setBrush(QPalette.Disabled, QPalette.WindowText, brush16)
+#         palette5.setBrush(QPalette.Disabled, QPalette.Button, brush13)
+#         palette5.setBrush(QPalette.Disabled, QPalette.Light, brush14)
+#         palette5.setBrush(QPalette.Disabled, QPalette.Midlight, brush15)
+#         palette5.setBrush(QPalette.Disabled, QPalette.Dark, brush16)
+#         palette5.setBrush(QPalette.Disabled, QPalette.Mid, brush17)
+#         palette5.setBrush(QPalette.Disabled, QPalette.Text, brush16)
+#         palette5.setBrush(QPalette.Disabled, QPalette.BrightText, brush)
+#         palette5.setBrush(QPalette.Disabled, QPalette.ButtonText, brush16)
+#         palette5.setBrush(QPalette.Disabled, QPalette.Base, brush13)
+#         palette5.setBrush(QPalette.Disabled, QPalette.Window, brush13)
+#         palette5.setBrush(QPalette.Disabled, QPalette.Shadow, brush5)
+#         palette5.setBrush(QPalette.Disabled, QPalette.AlternateBase, brush13)
+#         palette5.setBrush(QPalette.Disabled, QPalette.ToolTipBase, brush3)
+#         palette5.setBrush(QPalette.Disabled, QPalette.ToolTipText, brush5)
+# #if QT_VERSION >= QT_VERSION_CHECK(5, 12, 0)
+#         palette5.setBrush(QPalette.Disabled, QPalette.PlaceholderText, brush8)
+# #endif
+#         self.votesl.setPalette(palette5)
+#         font1 = QFont()
+#         font1.setPointSize(36)
+#         self.votesl.setFont(font1)
+#         self.votesl.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
+#         self.votesl.setIndent(-1)
+
+#         self.verticalLayout_8.addWidget(self.votesl)
+
+#         MainWindow.setCentralWidget(self.centralwidget)
+#         self.menubar = QMenuBar(MainWindow)
+#         self.menubar.setObjectName(u"menubar")
+#         self.menubar.setGeometry(QRect(0, 0, 800, 20))
+#         MainWindow.setMenuBar(self.menubar)
+#         self.statusbar = QStatusBar(MainWindow)
+#         self.statusbar.setObjectName(u"statusbar")
+#         MainWindow.setStatusBar(self.statusbar)
+
+#         self.retranslateUi(MainWindow)
+
+#         QMetaObject.connectSlotsByName(MainWindow)
+#     # setupUi
+
+#     def retranslateUi(self, MainWindow):
+#         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+#         self.bonus_time_first.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+#         self.score.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+#         self.bonus_time_second.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+#         self.votesl.setText("")
+#     # retranslateUi
+
+
 # -*- coding: utf-8 -*-
 
 ################################################################################
@@ -24,9 +454,24 @@ class Ui_MainWindow(object):
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.verticalLayout_4 = QVBoxLayout()
+        self.verticalLayout_4 = QVBoxLayout(self.centralwidget)
         self.verticalLayout_7 = QVBoxLayout()
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.game_logo = QLabel()
+        self.game_logo.setObjectName(u"game_logo")
+
+        self.verticalLayout_4.addWidget(self.game_logo)
+        pixmap = QPixmap("logo.png")  # Replace with the path to your image
+
+        self.verticalLayout_7.setObjectName(u"verticalLayout_4")
+        self.logo_kola = QLabel()
+        self.logo_kola.setObjectName(u"logo_kola")
+
+        self.verticalLayout_7.addWidget(self.logo_kola)
+
+        # Optional: Add some stretch to layout
+        self.verticalLayout_4.addStretch()
+
         '''
         self.last_bonuses_first = QListWidget(self.centralwidget)
         self.last_bonuses_first.setObjectName(u"last_bonuses_first")
@@ -106,8 +551,8 @@ class Ui_MainWindow(object):
 
         self.verticalSpacer_5 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-
-        self.verticalLayout_4.addItem(self.verticalSpacer_5)
+        
+        #self.verticalLayout_4.addItem(self.verticalSpacer_5)
 
         self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -339,6 +784,10 @@ class Ui_MainWindow(object):
 
         self.votesl = QLabel(self.centralwidget)
         self.votesl.setObjectName(u"votesl")
+        self.caption_label = QLabel("Dostępne komendy: !vote white, !vote yellow, !vote orange, !vote violet")
+        self.caption_label.setAlignment(Qt.AlignCenter)
+        self.caption_label.setStyleSheet("color: white; font-size: 34px;")  # Styling
+        self.verticalLayout_8.addWidget(self.caption_label)
         palette5 = QPalette()
         brush5 = QBrush(QColor(255, 255, 255, 255))
         brush5.setStyle(Qt.SolidPattern)
@@ -421,9 +870,9 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.bonus_time_first.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        #self.bonus_time_first.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.score.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.bonus_time_second.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        #self.bonus_time_second.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.votesl.setText("")
     # retranslateUi
 
