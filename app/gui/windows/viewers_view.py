@@ -2,7 +2,7 @@
 
 from PySide6.QtWidgets import QMainWindow, QListWidgetItem
 import os
-from PySide6.QtGui import QBrush, QColor
+from PySide6.QtGui import QBrush, QColor, QPalette, QPixmap
 from PySide6.QtCore import Qt, QTimer
 from app.gui.ui.viewers_view_ui import Ui_MainWindow
 from app.core.traps.trap import Trap
@@ -19,6 +19,7 @@ class ViewersView(QMainWindow):
         self._ui.setupUi(self)
         self._ui.score.setText('0 - 0')
         self.setStyleSheet('background-image: url("assets/images/picture.png");background-repeat:no-repeat;background-position:center;background-size: cover;')
+        #self.set_background_image("assets/images/picture.png")
         self._main_window = main_window
 
         self._last_bonuses = [["", "", ""], ["", "", ""]]
@@ -117,3 +118,11 @@ class ViewersView(QMainWindow):
         """Refresh the score display from the host's ScoreManager."""
         score = self._main_window._score_manager.get_score()
         self._ui.score.setText(f"{score[0]} - {score[1]}")
+    def set_background_image(self, image_path):
+        palette = QPalette()
+        pixmap = QPixmap(image_path)
+
+        scaled_pixmap = pixmap.scaled(self.width(), self.height(), Qt.KeepAspectRatioByExpanding, Qt.SmoothTransformation)
+        palette.setBrush(QPalette.Window, QBrush(scaled_pixmap))
+        self.setPalette(palette)
+        self.setAutoFillBackground(True)

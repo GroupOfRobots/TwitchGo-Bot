@@ -8,7 +8,8 @@ class ChatBot:
         self._server = "irc.chat.twitch.tv"
         self._port = 6667
         self._nickname = "TwitchGo_bot"
-        self._token = "oauth:nnz481ral6ao5zt5bqhes4mw01womg"
+        #self._token = "oauth:nnz481ral6ao5zt5bqhes4mw01womg"
+        self._token = "oauth:kafn8egcdy7824d0pjd4e9dkvbcmmi"
         self._channel = "#knr_bionik_tv"
         self._set_votes = set_latest_votes
         self._get_latest_votes = get_latest_votes
@@ -37,9 +38,10 @@ class ChatBot:
             # Auth and capabilities
             self._sock.send(f"PASS {self._token}\r\n".encode('utf-8'))
             self._sock.send(f"NICK {self._nickname}\r\n".encode('utf-8'))
-            self._sock.send(
-                "CAP REQ :twitch.tv/tags twitch.tv/commands twitch.tv/membership\r\n".encode('utf-8')
-            )
+            # self._sock.send(
+            #     "CAP REQ :twitch.tv/tags twitch.tv/commands twitch.tv/membership\r\n".encode('utf-8')
+            # )
+
             self._sock.send(f"JOIN {self._channel}\r\n".encode('utf-8'))
             logging.info("Połączenie nawiązane.")
 
