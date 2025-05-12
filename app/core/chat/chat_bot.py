@@ -3,6 +3,7 @@ import os
 import socket
 import threading
 import time
+from PySide6.QtCore import QTimer
 
 class ChatBot:
     def __init__(self, set_latest_votes, get_latest_votes):
@@ -127,6 +128,63 @@ class ChatBot:
                 self._schedule_reconnect()
                 break
 
+    def _process_obstacle_round(self):
+    # 1. Sprawdź, który kolor ma najwięcej głosów
+        votes = self._get_latest_votes()
+        if not votes:
+            logging.info("Brak głosów w tej rundzie.")
+            return
+
+        # 2. Znajdź kolor z największą liczbą głosów
+        top_color = None
+        top_count = 0
+        for color in ["white", "yellow", "blue", "violet"]:
+            if color in votes:
+                count = votes[color].count_votes()
+                if count > top_count:
+                    top_color = color
+                    top_count = count
+
+        # 3. Aktywuj przeszkodę
+        if top_color:
+            logging.info(f"Aktywowano przeszkodę: {top_color} z {top_count} głosami.")
+            self._activate_obstacle(top_color)
+        else:
+            logging.info("Brak ważnych głosów do aktywacji przeszkody.")
+
+        # 4. Wyczyść głosy
+        self._reset_votes()
+
+    def _activate_obstacle(self, color):
+            self.active_obstacle = color
+            self.obstacle_active = True
+            self._start_obstacle_effect(color)
+
+            # Timer do wyłączenia po 30 sekundach
+            self.obstacle_deactivation_timer = QTimer()
+            self.obstacle_deactivation_timer.setSingleShot(True)
+            self.obstacle_deactivation_timer.timeout.connect(self._deactivate_obstacle)
+            self.obstacle_deactivation_timer.start(30000)
+
+    def _deactivate_obstacle(self):
+        if self.active_obstacle:
+            logging.info(f"Dezaktywowano przeszkodę: {self.active_obstacle}")
+            self._stop_obstacle_effect(self.active_obstacle)
+            self.obstacle_active = False
+            self.active_obstacle = None
+
+    def _reset_votes(self):
+        self._set_votes({})  # lub jakikolwiek format domyślny
+
+
+    def _collect_votes_from_chat(self):
+        messages = self._chat_listener.get_new_messages()
+        for username, message in messages:
+            if message.startswith("!vote "):
+                color = message[6:].strip().lower()
+                if color in ["white", "yellow", "blue", "violet"]:
+                    self._vote_storage.add_vote(color, username)
+
     def run(self):
         logging.info("ChatBot działa.")
 
@@ -154,7 +212,7 @@ class ChatBot:
 
     def can_vote(self, username: str) -> bool:
         """Check if user hasn't voted yet."""
-        votes = self._get_latest_votes()
+        votes = self._get_lcdatest_votes()
         for option in votes.values():
             if username in option.get_votes():
                 return False

@@ -8,14 +8,14 @@ import os
 from app.core.chat.chat_bot import ChatBot
 from app.gui.windows.main_window import MainWindow
 from app.gui.windows.viewers_view import ViewersView
-#from app.core.ros.ros_main import main as ros_main
+#from app.ros.ros_main import main as ros_main
 from app.utils.logger import setup_logging
 from datetime import datetime
 from PySide6.QtCore import QTimer
 
-
 def gui_main(args):
     # Setup logging once
+
     today = datetime.today().strftime("%Y-%m-%d")
     log_path = os.path.join("logs", f"{today}.log")
     os.makedirs(os.path.dirname(log_path), exist_ok=True)
@@ -38,6 +38,10 @@ def gui_main(args):
     )
     chat_bot.run()
 
+    # Timer co 30s do aktywacji przeszkód i resetu głosów
+    obstacle_round_timer = QTimer()
+    obstacle_round_timer.timeout.connect(chat_bot._process_obstacle_round)
+    obstacle_round_timer.start(30000)  # 30 sekund
     # Initialize ROS in a separate thread
     # ros_thread = threading.Thread(target=ros_main, daemon=True)
     # ros_thread.start()

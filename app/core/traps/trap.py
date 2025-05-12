@@ -23,6 +23,9 @@ class Trap:
     def add_vote(self, username: str) -> None:
         self._votes.append(username)
 
+    def count_votes(self):
+        return len(self._votes)
+
     def run(self) -> None:
         logging.info(f"[TRAP] {self._name} is running")
         print(f"{self._name} is running")
