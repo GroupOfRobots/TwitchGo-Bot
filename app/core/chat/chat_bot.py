@@ -4,12 +4,14 @@ import socket
 import threading
 import time
 from PySide6.QtCore import QTimer
+from queue import Queue
 
 class ChatBot:
-    def __init__(self, set_latest_votes, get_latest_votes):
+    def __init__(self, set_latest_votes, get_latest_votes, ros_command_queue: Queue):
         self._server = "irc.chat.twitch.tv"
         self._port = 6667
         self._nickname = "TwitchGo_bot"
+        self._ros_command_queue = ros_command_queue
 
         # Load Twitch OAuth token from file or prompt the user
         token_file = "token.txt"
@@ -159,6 +161,7 @@ class ChatBot:
             self.active_obstacle = color
             self.obstacle_active = True
             self._start_obstacle_effect(color)
+            # self._ros_command_queue.put(("start", color))
 
             # Timer do wyłączenia po 30 sekundach
             self.obstacle_deactivation_timer = QTimer()
@@ -172,6 +175,7 @@ class ChatBot:
             self._stop_obstacle_effect(self.active_obstacle)
             self.obstacle_active = False
             self.active_obstacle = None
+            # self._ros_command_queue.put(("stop", self.active_obstacle))
 
     def _reset_votes(self):
         self._set_votes({})  # lub jakikolwiek format domyślny

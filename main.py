@@ -8,10 +8,11 @@ import os
 from app.core.chat.chat_bot import ChatBot
 from app.gui.windows.main_window import MainWindow
 from app.gui.windows.viewers_view import ViewersView
-#from app.ros.ros_main import main as ros_main
+from app.ros.ros_main import main as ros_main
 from app.utils.logger import setup_logging
 from datetime import datetime
 from PySide6.QtCore import QTimer
+import queue
 
 def gui_main(args):
     # Setup logging once
@@ -31,10 +32,16 @@ def gui_main(args):
     viewers_view.show()
     window.set_viewers_view(viewers_view)
 
+    command_queue = queue.Queue()
+     # Initialize ROS in a separate thread
+    # ros_thread = threading.Thread(target=ros_main, args=(None, command_queue), daemon=True)
+    # ros_thread.start()
+
     # Initialize ChatBot
     chat_bot = ChatBot(
         set_latest_votes=viewers_view.set_latest_votes,
-        get_latest_votes=viewers_view.get_latest_votes
+        get_latest_votes=viewers_view.get_latest_votes,
+        ros_command_queue=command_queue
     )
     chat_bot.run()
 
@@ -42,9 +49,7 @@ def gui_main(args):
     obstacle_round_timer = QTimer()
     obstacle_round_timer.timeout.connect(chat_bot._process_obstacle_round)
     obstacle_round_timer.start(30000)  # 30 sekund
-    # Initialize ROS in a separate thread
-    # ros_thread = threading.Thread(target=ros_main, daemon=True)
-    # ros_thread.start()
+    
 
     # Setup QTimer for periodic UI updates
     timer = QTimer()

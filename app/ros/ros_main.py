@@ -4,6 +4,10 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Bool
 from typing import List
+import queue
+import logging
+
+TIME_OUT = 30.0  # seconds 
 
 class ObstacleActivator(Node):
 
@@ -35,17 +39,28 @@ class ObstacleActivator(Node):
         else:
             logging.warning(f"Obstacle {obstacle_name} not found.")
 
-def main(args=None):
+def main(args=None, command_queue=None):
     rclpy.init(args=args)
-    minimal_publisher = ObstacleActivator(["adx", "jjj"])
+    node = ObstacleActivator(["adx", "jjj"])
+    while True:
+        try:
+            command, obstacle = command_queue.get(timeout=TIME_OUT)
+            rclpy.spin_once(node, timeout_sec=1.0)
 
-    try:
-        rclpy.spin(minimal_publisher)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        minimal_publisher.destroy_node()
-        rclpy.shutdown()
+            if command == 'start':
+                node.start_obstacle(obstacle)
+            elif command == 'stop':
+                node.stop_obstacle(obstacle)
+            else:
+                logging.warning(f"Unknown command: {command}")
+
+        except queue.Empty:
+            continue
+        except KeyboardInterrupt:
+            break
+    
+    node.destroy_node()
+    rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
