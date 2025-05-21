@@ -38,7 +38,7 @@ class TrapManager:
         return self.traps
 
     def get_winning_trap(self) -> Trap:
-        max_votes = 0
+        max_votes = 1 # co najmniej jeden głos aby aktywować przeszkode
         winners = []
         for trap in self.traps.values():
             votes = trap.count_votes()
@@ -64,5 +64,3 @@ class TrapManager:
             StringBuilder.append(str(trap))
 
         return ", ".join(StringBuilder)
-
-        

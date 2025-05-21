@@ -34,6 +34,9 @@ class ChatBot:
         self._stop_event = threading.Event()
         self._reconnect_delay = 5
         self._max_reconnect_delay = 300
+        self._chat_running = True
+        selecting_thread = threading.Thread(target=self.handle_selection_round, daemon=True)
+        selecting_thread.start() 
         self._lock = threading.Lock()
         self._listen_thread = None
         self._connect()
@@ -60,7 +63,6 @@ class ChatBot:
             logging.info("Połączenie nawiązane.")
 
             # Reset delay and start listener
-            self._reconnect_delay = 5
             if not self._listen_thread or not self._listen_thread.is_alive():
                 self._listen_thread = threading.Thread(target=self._listen, daemon=True)
                 self._listen_thread.start()
@@ -78,17 +80,22 @@ class ChatBot:
         if len(parts) < 2:
             return
 
-        prefix, msg_content = parts[0], parts[1].strip()
-        if not prefix.startswith(":"):
-            return
+        metadatas = parts[0].split(";")
+        userId = None
+        for metadata in metadatas:
+            if metadata.startswith("user-id="):
+                userId = metadata
 
-        username = prefix.split("!")[0][1:]
-        message_list = msg_content.split()
-        logging.info(f"[WIADOMOŚĆ] {username}: {msg_content}")
+        vote = None 
+        voteParts = parts[1].split(":!vote ")
 
-        # Vote command handling
-        if len(message_list) > 1 and message_list[0].lower() == "!vote":
-            self.trap_manager.add_vote(username=username, trap_name=message_list[1])
+        if len(voteParts) == 2:
+            vote = voteParts[1]
+
+        if userId!= None and vote != None:
+            self.trap_manager.add_vote(username=userId, trap_name=vote)
+
+        
 
     def _schedule_reconnect(self):
         """Schedule the next reconnect attempt."""
@@ -110,7 +117,7 @@ class ChatBot:
 
     def _listen(self):
         """Listen loop for incoming IRC messages."""
-        while not self._stop_event.is_set():
+        while self._chat_running and not self._stop_event.is_set():
             try:
                 resp = self._sock.recv(2048).decode("utf-8")
                 if not resp:
@@ -130,14 +137,15 @@ class ChatBot:
                 self._schedule_reconnect()
                 break
 
-    def _init_choicing_round(self):
-        timer = QTimer()
-        timer.timeout.connect(self.next_choicing_round)
-        timer.setInterval(ROUND_DURATION_IN_SECONDS * 1000)
-        timer.start()
+    def handle_selection_round(self):
+        while self._chat_running:
+            time.sleep(ROUND_DURATION_IN_SECONDS)
+            self.trap_manager.next_choicing_round()
 
+        
     def stop(self):
         logging.info("Zatrzymywanie ChatBot...")
+        self._chat_running = False
         self._stop_event.set()
         if self._listen_thread:
             self._listen_thread.join()

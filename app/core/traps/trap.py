@@ -47,7 +47,7 @@ class Trap(Node):
     def __str__(self) -> str:
         """Return the full vote command string with the current vote count."""
         count = len(self._votes)
-        return f"!vote {self._name} ({count})"
+        return f"{self._label} ({count})"
 
     def __repr__(self) -> str:
         """Return the same as __str__ for display purposes."""

@@ -6,3 +6,6 @@ traps:
   - name: yellow
     label: "Żółta"
     ros_topic: "/traps/yellow"
+  - name: green
+    label: "Zielona"
+    ros_topic: "/traps/green"
