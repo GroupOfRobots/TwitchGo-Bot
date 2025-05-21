@@ -1,0 +1,8 @@
+traps:
+  - name: white
+    label: "Biała"
+    ros_topic: "/traps/white"
+
+  - name: yellow
+    label: "Żółta"
+    ros_topic: "/traps/yellow"

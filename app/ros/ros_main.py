@@ -45,7 +45,6 @@ def main(args=None, command_queue=None):
     while True:
         try:
             command, obstacle = command_queue.get(timeout=TIME_OUT)
-            rclpy.spin_once(node, timeout_sec=1.0)
 
             if command == 'start':
                 node.start_obstacle(obstacle)

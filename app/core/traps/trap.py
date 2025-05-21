@@ -2,13 +2,17 @@
 
 import logging
 from typing import Optional, Callable
+from rclpy.node import Node
+from std_msgs.msg import Bool
 
-class Trap:
-    def __init__(self, name: str, command: Optional[Callable] = None):
+class Trap(Node):
+    def __init__(self, name: str, label:str, topicName: str):
+        super().__init__(name)
         self._name = name
-        self._command = command
+        self._label = label
         self._votes = []
-
+        self.publisher = self.create_publisher(Bool, topicName, 10)
+        
     @property
     def name(self) -> str:
         return self._name
@@ -21,17 +25,25 @@ class Trap:
         self._votes = []
 
     def add_vote(self, username: str) -> None:
-        self._votes.append(username)
+        if username not in self._votes:
+            self._votes.append(username)
 
     def count_votes(self):
         return len(self._votes)
 
     def run(self) -> None:
+        msg = Bool()
+        msg.data = True
+        self.publisher.publish(msg)
         logging.info(f"[TRAP] {self._name} is running")
-        print(f"{self._name} is running")
-        if self._command:
-            self._command()
 
+
+    def stop(self) -> None:
+        msg = Bool()
+        msg.data = False
+        self.publisher.publish(msg)
+        logging.info(f"[TRAP] {self._name} is stopping")
+        
     def __str__(self) -> str:
         """Return the full vote command string with the current vote count."""
         count = len(self._votes)

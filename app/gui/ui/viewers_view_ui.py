@@ -441,7 +441,8 @@
 from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWidgets import *
-
+import yaml
+import os
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -784,7 +785,7 @@ class Ui_MainWindow(object):
 
         self.votesl = QLabel(self.centralwidget)
         self.votesl.setObjectName(u"votesl")
-        self.caption_label = QLabel("Dostępne komendy: !vote white, !vote yellow, !vote orange, !vote violet")
+        self.caption_label = QLabel(f"Dostępne komendy: {self.generate_avaliable_commands()}")
         self.caption_label.setAlignment(Qt.AlignCenter)
         self.caption_label.setStyleSheet("color: white; font-size: 34px;")  # Styling
         self.verticalLayout_8.addWidget(self.caption_label)
@@ -875,5 +876,18 @@ class Ui_MainWindow(object):
         #self.bonus_time_second.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.votesl.setText("")
     # retranslateUi
+
+    def generate_avaliable_commands(self) -> str:
+        # Example: Generate a list of available commands
+        commands_builder = []
+
+        config_path = os.path.join("app", "config", "traps.yaml")
+        with open(config_path, "r") as file:
+            config = yaml.safe_load(file)
+            for trap_data in config.get("traps", []):
+                name = trap_data["name"]
+                commands_builder.append(f"!vote {name}")
+
+        return ", ".join(commands_builder)
 
 

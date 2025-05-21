@@ -1,17 +1,20 @@
+from PySide6.QtCore import QTimer
+from app.core.traps.trap_manager import TrapManager
+
 import logging
 import os
 import socket
 import threading
 import time
-from PySide6.QtCore import QTimer
-from queue import Queue
+
+ROUND_DURATION_IN_SECONDS = 60
 
 class ChatBot:
-    def __init__(self, set_latest_votes, get_latest_votes, ros_command_queue: Queue):
+    def __init__(self):
         self._server = "irc.chat.twitch.tv"
         self._port = 6667
         self._nickname = "TwitchGo_bot"
-        self._ros_command_queue = ros_command_queue
+        self._channel = "#knr_bionik_tv"
 
         # Load Twitch OAuth token from file or prompt the user
         token_file = "token.txt"
@@ -24,9 +27,7 @@ class ChatBot:
             with open(token_file, "w") as f:
                 f.write(self._token)
 
-        self._channel = "#knr_bionik_tv"
-        self._set_votes = set_latest_votes
-        self._get_latest_votes = get_latest_votes
+        self.trap_manager = TrapManager()
 
         # Initialize the IRC socket and control flags
         self._sock = socket.socket()
@@ -35,7 +36,6 @@ class ChatBot:
         self._max_reconnect_delay = 300
         self._lock = threading.Lock()
         self._listen_thread = None
-
         self._connect()
 
     def _connect(self):
@@ -88,7 +88,7 @@ class ChatBot:
 
         # Vote command handling
         if len(message_list) > 1 and message_list[0].lower() == "!vote":
-            self.vote(username, message_list[1])
+            self.trap_manager.add_vote(username=username, trap_name=message_list[1])
 
     def _schedule_reconnect(self):
         """Schedule the next reconnect attempt."""
@@ -130,67 +130,11 @@ class ChatBot:
                 self._schedule_reconnect()
                 break
 
-    def _process_obstacle_round(self):
-    # 1. Sprawdź, który kolor ma najwięcej głosów
-        votes = self._get_latest_votes()
-        if not votes:
-            logging.info("Brak głosów w tej rundzie.")
-            return
-
-        # 2. Znajdź kolor z największą liczbą głosów
-        top_color = None
-        top_count = 0
-        for color in ["white", "yellow", "blue", "violet"]:
-            if color in votes:
-                count = votes[color].count_votes()
-                if count > top_count:
-                    top_color = color
-                    top_count = count
-
-        # 3. Aktywuj przeszkodę
-        if top_color:
-            logging.info(f"Aktywowano przeszkodę: {top_color} z {top_count} głosami.")
-            self._activate_obstacle(top_color)
-        else:
-            logging.info("Brak ważnych głosów do aktywacji przeszkody.")
-
-        # 4. Wyczyść głosy
-        self._reset_votes()
-
-    def _activate_obstacle(self, color):
-            self.active_obstacle = color
-            self.obstacle_active = True
-            self._start_obstacle_effect(color)
-            # self._ros_command_queue.put(("start", color))
-
-            # Timer do wyłączenia po 30 sekundach
-            self.obstacle_deactivation_timer = QTimer()
-            self.obstacle_deactivation_timer.setSingleShot(True)
-            self.obstacle_deactivation_timer.timeout.connect(self._deactivate_obstacle)
-            self.obstacle_deactivation_timer.start(30000)
-
-    def _deactivate_obstacle(self):
-        if self.active_obstacle:
-            logging.info(f"Dezaktywowano przeszkodę: {self.active_obstacle}")
-            self._stop_obstacle_effect(self.active_obstacle)
-            self.obstacle_active = False
-            self.active_obstacle = None
-            # self._ros_command_queue.put(("stop", self.active_obstacle))
-
-    def _reset_votes(self):
-        self._set_votes({})  # lub jakikolwiek format domyślny
-
-
-    def _collect_votes_from_chat(self):
-        messages = self._chat_listener.get_new_messages()
-        for username, message in messages:
-            if message.startswith("!vote "):
-                color = message[6:].strip().lower()
-                if color in ["white", "yellow", "blue", "violet"]:
-                    self._vote_storage.add_vote(color, username)
-
-    def run(self):
-        logging.info("ChatBot działa.")
+    def _init_choicing_round(self):
+        timer = QTimer()
+        timer.timeout.connect(self.next_choicing_round)
+        timer.setInterval(ROUND_DURATION_IN_SECONDS * 1000)
+        timer.start()
 
     def stop(self):
         logging.info("Zatrzymywanie ChatBot...")
@@ -203,21 +147,3 @@ class ChatBot:
             except Exception as e:
                 logging.error(f"Błąd przy zamykaniu socketu: {e}")
         logging.info("ChatBot zatrzymany.")
-
-    def vote(self, username: str, vote_argument: str):
-        """Handle a user vote if they're eligible."""
-        if self.can_vote(username):
-            votes = self._get_latest_votes()
-            if vote_argument in votes:
-                votes[vote_argument].add_vote(username)
-                logging.info(f"{username} głosuje na {vote_argument}")
-            else:
-                logging.warning(f"{username} próbował głosować na nieistniejący bonus: {vote_argument}")
-
-    def can_vote(self, username: str) -> bool:
-        """Check if user hasn't voted yet."""
-        votes = self._get_lcdatest_votes()
-        for option in votes.values():
-            if username in option.get_votes():
-                return False
-        return True
