@@ -8,6 +8,18 @@ import threading
 import time
 
 ROUND_DURATION_IN_SECONDS = 60
+# for handler in logging.root.handlers[:]:
+#     logging.root.removeHandler(handler)
+
+# Configure logging to write to a file and the console
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler("chatbot.log"),
+        logging.StreamHandler()
+    ]
+)
 
 class ChatBot:
     def __init__(self):
@@ -86,13 +98,14 @@ class ChatBot:
             if metadata.startswith("user-id="):
                 userId = metadata
 
-        vote = None 
+        vote = None
         voteParts = parts[1].split(":!vote ")
 
         if len(voteParts) == 2:
             vote = voteParts[1]
 
-        if userId!= None and vote != None:
+        if userId is not None and vote is not None:
+            logging.info(f"Otrzymano głos: {vote.strip()} od użytkownika {userId}")
             self.trap_manager.add_vote(username=userId, trap_name=vote)
 
         
