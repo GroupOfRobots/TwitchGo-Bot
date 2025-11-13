@@ -213,15 +213,29 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_2)
 
+
+        # Pallette for throwing ball
+        palette_ball = QPalette()
+        brush_ball = QBrush(QColor(0, 43, 191, 36))
+        brush_ball.setStyle(Qt.SolidPattern)
+        palette_ball.setBrush(QPalette.Active, QPalette.Button, brush_ball)
+        palette_ball.setBrush(QPalette.Inactive, QPalette.Button, brush_ball)
+        palette_ball.setBrush(QPalette.Disabled, QPalette.Button, brush_ball)
+
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
         self.add_goal_second = QPushButton(self.centralwidget)
         self.add_goal_second.setObjectName(u"add_goal_second")
+        # Throw ball button
+        self.throw_ball_button = QPushButton(self.centralwidget)
+        self.throw_ball_button.setObjectName(u"throw_ball_button")
+
         palette2 = QPalette()
         palette2.setBrush(QPalette.Active, QPalette.Button, brush1)
         palette2.setBrush(QPalette.Inactive, QPalette.Button, brush1)
         palette2.setBrush(QPalette.Disabled, QPalette.Button, brush1)
         self.add_goal_second.setPalette(palette2)
+        self.throw_ball_button.setPalette(palette_ball)
         font1 = QFont()
         font1.setBold(False)
         #font1.setWeight(50)
@@ -230,7 +244,13 @@ class Ui_MainWindow(object):
         self.add_goal_second.setCursor(QCursor(Qt.PointingHandCursor))
         self.add_goal_second.setAutoFillBackground(True)
 
+        self.throw_ball_button.setFont(font1)
+        self.throw_ball_button.setCursor(QCursor(Qt.PointingHandCursor))
+        self.throw_ball_button.setAutoFillBackground(True)
+
         self.gridLayout.addWidget(self.add_goal_second, 0, 1, 1, 1)
+        # Wymyslic ustawienie
+        self.gridLayout.addWidget(self.throw_ball_button, 0, 2, 1, 1)
 
         self.add_goal_first = QPushButton(self.centralwidget)
         self.add_goal_first.setObjectName(u"add_goal_first")
@@ -318,6 +338,7 @@ class Ui_MainWindow(object):
         self.add_goal_first.setText(QCoreApplication.translate("MainWindow", u"Add Goal", None))
         self.subtract_goal_first.setText(QCoreApplication.translate("MainWindow", u"Subtract", None))
         self.subtract_goal_second.setText(QCoreApplication.translate("MainWindow", u"Subtract", None))
+        self.throw_ball_button.setText(QCoreApplication.translate("MainWindow", u"Throw Ball", None))
         self.menuAdd_Bonus.setTitle(QCoreApplication.translate("MainWindow", u"Options", None))
     # retranslateUi
 
