@@ -34,7 +34,7 @@ def gui_main(args):
     # Setup QTimer for periodic UI updates
     timer = QTimer()
     timer.timeout.connect(lambda: (viewers_view.run_window(),
-                                   viewers_view._display_last_votes(chat_bot.trap_manager.current_voiting_state()),
+                                   viewers_view._display_last_votes(chat_bot.board_manager.current_voiting_state()),
                                    window._display_bonus_time_left(),
                                    window._update_score_display()))
     timer.start(200)  # Update every 200 ms

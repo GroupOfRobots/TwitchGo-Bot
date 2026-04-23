@@ -1,5 +1,5 @@
 from PySide6.QtCore import QTimer
-from app.core.traps.trap_manager import TrapManager
+from app.core.traps.board_manager import board_manager
 
 import logging
 import os
@@ -39,7 +39,7 @@ class ChatBot:
             with open(token_file, "w") as f:
                 f.write(self._token)
 
-        self.trap_manager = TrapManager()
+        self.board_manager = board_manager
 
         # Initialize the IRC socket and control flags
         self._sock = socket.socket()
@@ -106,7 +106,7 @@ class ChatBot:
 
         if userId is not None and vote is not None:
             logging.info(f"Otrzymano głos: {vote.strip()} od użytkownika {userId}")
-            self.trap_manager.add_vote(username=userId, trap_name=vote)
+            self.board_manager.add_vote(username=userId, trap_name=vote)
 
         
 
@@ -153,7 +153,7 @@ class ChatBot:
     def handle_selection_round(self):
         while self._chat_running:
             time.sleep(ROUND_DURATION_IN_SECONDS)
-            self.trap_manager.next_choicing_round()
+            self.board_manager.next_choicing_round()
 
         
     def stop(self):

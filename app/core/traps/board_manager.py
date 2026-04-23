@@ -1,13 +1,15 @@
 import yaml
 import os
 from app.core.traps.trap import Trap
+from app.core.traps.tower import Tower 
 from typing import Dict
 import random
 import rclpy
 
-class TrapManager:
+class BoardManager:
     def __init__(self):
         self._init_ros()
+        self._tower = Tower()
         self.traps: Dict[str, Trap] = {}
         self._load_traps()
         self.current_running_trap = None
@@ -64,3 +66,8 @@ class TrapManager:
             StringBuilder.append(str(trap))
 
         return ", ".join(StringBuilder)
+    
+    def throw_ball(self):
+        self._tower.throw_ball()
+    
+board_manager = BoardManager()

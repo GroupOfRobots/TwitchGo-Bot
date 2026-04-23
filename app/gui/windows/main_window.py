@@ -8,7 +8,7 @@ from PySide6.QtCore import Qt, QTimer
 from app.gui.ui.resource_gathering_ui import Ui_MainWindow
 from app.core.bonuses.bonus import Bonus
 from app.core.bonuses.time_bonus import TimeBonus
-from app.core.chat.chat_bot import ChatBot
+from app.core.traps.board_manager import board_manager
 from app.core.scoring.score_manager import ScoreManager
 from app.gui.windows.bonus_adding import BonusAdding
 from app.utils.logger import setup_logging
@@ -80,6 +80,7 @@ class MainWindow(QMainWindow):
         self._ui.add_resource_to_first.clicked.connect(self._add_current_bonus_first)
         self._ui.add_resource_to_second.clicked.connect(self._add_current_bonus_second)
         self._ui.add_bonus_all.clicked.connect(self._add_current_bonus_general)
+        self._ui.throw_ball_button.clicked.connect(self._throw_ball_button)
         self._ui.actionAdd_Bonus.triggered.connect(self._show_bonus_adding)
         self._bonus_window._ui.decision_buttons.accepted.connect(self._add_bonus)
 
@@ -165,7 +166,10 @@ class MainWindow(QMainWindow):
             self._bonuses.remove(bonus)
             self._current_item_general = None
             self._ui.general_bonuses.setCurrentIndex(0)
-
+    
+    def _throw_ball_button(self):
+        board_manager.throw_ball()
+        
     def _apply_bonus(self, bonus, team: Optional[int]):
         if isinstance(bonus, TimeBonus):
             duration = timedelta(seconds=bonus.bonus_time())
